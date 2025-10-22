@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Lato:wght@400;700&family=Source+Code+Pro:wght@400;500&display=swap');
+/*Poppins for titles, Lato for main text and Source Code Pro for buttons text,etc.*/
+
+/* Variables for Light Mode (default) */
+:root {
+  --bg-color: #FAF0E6;              
+  --text-color: #4E342E;         
+  --primary-color: #AF642D;         
+  --secondary-color: #A1887F;     
+  --accent-color: #C0A062;        
+  
+  /* Derived/Auxiliary Colors for Light Mode */
+  --card-bg-color: #FDF6E3;         
+  --card-border-color: #D7CCC8;     
+  --btn-text-color: #FAF0E6;         
+  --star-inactive-color: #D7CCC8;   
+  --input-bg-color: #FDF6E3;       
+}
+
+/* Variables for Dark Mode */
+html.dark {
+  --bg-color: #211A16;          
+  --text-color: #E0D5C7;        
+  --primary-color: #D58444;         
+  --secondary-color: #6D4C41;      
+  --accent-color: #EBC075;         
+  
+  /* Derived/Auxiliary Colors for Dark Mode */
+  --card-bg-color: #2C2A2A;         
+  --card-border-color: #493F3A;      
+  --btn-text-color: #211A16;        
+  --star-inactive-color: #493F3A;  
+  --input-bg-color: #2C2A2A;       
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Lato', sans-serif; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif; 
+  color: var(--primary-color);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button.primary {
+    background-color: var(--primary-color);
+    color: var(--btn-text-color);
+}
+
+.card {
+    background-color: var(--card-bg-color);
+    border: 0.5rem solid var(--card-border-color);
+}
