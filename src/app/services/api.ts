@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../enviroments/enviroment';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 /**
  * @class ApiService
