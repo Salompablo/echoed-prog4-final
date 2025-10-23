@@ -1,0 +1,55 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: var(--primary-color);
+  color: var(--btn-text-color);
+  font-family: 'Source Code Pro', sans-serif;
+  font-weight: 500;
+  padding: 0;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 3.125rem;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropbtn:hover {
+  background-color: var(--accent-color);
+}
+
+.dropbtn .material-symbols-rounded {
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  display: block;
+}
+
+.dropdown-content {
+  margin-top: 0.5rem;
+  position: absolute;
+  right: 0;
+  z-index: 999;
+  background-color: var(--card-bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+  min-width: 11.25rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: var(--text-color);
+  font-family: 'Lato', sans-serif;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: var(--card-border-color);
+}
