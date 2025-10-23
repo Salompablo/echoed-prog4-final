@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Theme } from '../../services/theme';
+import { SearchBar } from "../search-bar/search-bar";
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [SearchBar],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })

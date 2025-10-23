@@ -4,4 +4,7 @@ export const API_ENDPOINTS = {
     REGISTER: '/auth/register',
     REFRESH: '/auth/refresh',
   },
+  SPOTIFY: { 
+    UNIFIED_SEARCH: '/spotify/unified-search' 
+  },
 } as const;

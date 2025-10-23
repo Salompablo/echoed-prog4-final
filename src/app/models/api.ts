@@ -1,12 +1,19 @@
 export interface PagedResponse<T> {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-  first: boolean;
-  last: boolean;
-  empty: boolean;
+  content: T[];          
+  totalElements: number; 
+  totalPages: number;    
+  size: number;          
+  number: number;        
+  first: boolean;        
+  last: boolean;         
+  empty: boolean;        
+  numberOfElements?: number; 
+  sort?: {
+    sorted: boolean;
+    unsorted: boolean;
+    empty: boolean;
+  };
+  pageable?: any;
 }
 
 export interface ApiError {
