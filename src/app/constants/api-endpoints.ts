@@ -1,3 +1,5 @@
+import { environment } from "../../environments/environment";
+
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth',
@@ -7,4 +9,9 @@ export const API_ENDPOINTS = {
   SPOTIFY: { 
     UNIFIED_SEARCH: '/spotify/unified-search' 
   },
+} as const;
+
+
+export const OAUTH2_LINKS = {
+  GOOGLE: `${environment.apiUrl}/oauth2/authorization/google`,
 } as const;
