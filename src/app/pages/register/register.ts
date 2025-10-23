@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
 import { Auth } from '../../services/auth';
@@ -8,7 +7,7 @@ import { SignupRequest } from '../../models/auth';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -16,6 +15,7 @@ export class Register {
   private fb = inject(FormBuilder);
   private authService = inject(Auth);
   private router = inject(Router);
+  public passwordsHidden = true;
 
   public errorMessage: string | null = null;
 
@@ -53,6 +53,10 @@ export class Register {
         console.log(err);
       },
     });
+  }
+
+  public togglePasswordVisibility(): void {
+    this.passwordsHidden = !this.passwordsHidden;
   }
 
   get email() {

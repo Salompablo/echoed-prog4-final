@@ -1,0 +1,68 @@
+<div class="login-container">
+    <h2>Welcome Back</h2>
+    <p class="subtitle">Sign in to continue to Echoed.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="emailOrUsername">Username or Email</label>
+            <input type="text" id="emailOrUsername" formControlName="emailOrUsername" />
+            @if (emailOrUsername?.invalid && (emailOrUsername?.dirty || emailOrUsername?.touched)) {
+            <div class="error-validation">
+                @if (emailOrUsername?.errors?.['required']) {
+                <small>This field is required.</small>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="label-wrapper">
+                <label for="password">Password</label>
+            </div>
+
+            <div class="password-input-wrapper">
+                <input [type]="passwordsHidden ? 'password' : 'text'" id="password" formControlName="password" />
+                <button type="button" class="toggle-password" (click)="togglePasswordsVisibility()">
+                    @if (passwordsHidden) {
+                    <span>Show</span>
+                    } @else {
+                    <span>Hide</span>
+                    }
+                </button>
+            </div>
+            @if (password?.invalid && (password?.dirty || password?.touched)) {
+            <div class="error-validation">
+                @if (password?.errors?.['required']) {
+                <small>Password is required.</small>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+            <label for="rememberMe">Remember me</label>
+        </div>
+
+        @if (errorMessage) {
+        <div class="error-api">
+            {{ errorMessage }}
+        </div>
+        }
+
+        <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
+    </form>
+
+    <div class="separator">Or continue with</div>
+
+    <div class="oauth-buttons">
+        <a [href]="googleOAuthUrl" class="oauth-btn google">
+
+
+            <img src="/assets/google-logo.svg" alt="Google logo" class="oauth-icon" /> Google </a>
+    </div>
+
+    <div class="redirect-link">
+        Don't have an account? <a href="/register">Sign Up</a>
+    </div>
+</div>

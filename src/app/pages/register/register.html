@@ -1,5 +1,6 @@
 <div class="register-container">
     <h2>Create Account</h2>
+    <p class="subtitle">Join Echoed and discover your next musical obsession.</p>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
@@ -40,7 +41,19 @@
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" formControlName="password" />
+
+            <div class="password-input-wrapper">
+                <input [type]="passwordsHidden ? 'password' : 'text'" id="password" formControlName="password" />
+
+                <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+
+                    @if (passwordsHidden) {
+                    <span>Show</span>
+                    } @else {
+                    <span>Hide</span>
+                    }
+                </button>
+            </div>
 
             @if (password?.invalid && (password?.dirty || password?.touched)) {
             <div class="error-validation">
@@ -59,7 +72,8 @@
 
         <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" formControlName="confirmPassword" />
+            <input [type]="passwordsHidden ? 'password' : 'text'" id="confirmPassword"
+                formControlName="confirmPassword" />
 
             @if (confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
             <div class="error-validation">
@@ -86,4 +100,8 @@
             Sign Up
         </button>
     </form>
+
+    <div class="redirect-link">
+        Already have an account? <a href="/login">Sign In</a>
+    </div>
 </div>
