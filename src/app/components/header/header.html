@@ -1,7 +1,7 @@
 <header>
-  <div><h2>Echoed</h2></div>
-  <div>Barra de navegacion</div>
-  <div>
+  <div class="title-container"><h2>Echoed</h2></div>
+  <div class="search-container"><app-search-bar></app-search-bar></div>
+  <div class="buttons-container">
     <button class="theme-toggle-btn" (click)="themeService.toggleMode()">
       @if (themeService.isLightMode) {
       <span class="material-symbols-rounded"> bedtime </span>
@@ -9,8 +9,6 @@
       <span class="material-symbols-rounded"> clear_day </span>
       }
     </button>
-    <button>
-      <span class="material-symbols-rounded"> person </span>
-    </button>
+    <app-profile-dropdown></app-profile-dropdown>
   </div>
 </header>

@@ -39,20 +39,23 @@ export interface ArtistRequest {
 export interface AlbumRequest {
   spotifyId: string;
   title: string;
-  artistName: string;
+  artistName?: string;
   imageUrl?: string;
   spotifyLink?: string;
   releaseDate: string;
+  artistSpotifyId: string;
 }
 
 export interface SongRequest {
   spotifyId: string;
   name: string;
-  artistName: string;
-  albumName: string;
+  artistName?: string;
+  albumName?: string;
   imageUrl?: string;
   durationMs?: number;
   previewUrl?: string;
   spotifyLink?: string;
   releaseDate: string;
+  albumSpotifyId: string;
+  artistSpotifyId: string;
 }
