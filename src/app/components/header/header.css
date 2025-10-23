@@ -1,0 +1,14 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 12vh;
+}
+button {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+}
+.material-symbols-rounded {
+  padding: 0.5rem;
+}

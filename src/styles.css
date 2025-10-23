@@ -1,47 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Lato:wght@400;700&family=Source+Code+Pro:wght@400;500&display=swap');
 /*Poppins for titles, Lato for main text and Source Code Pro for buttons text,etc.*/
 
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0');
+/*Google icons*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 /* Variables for Light Mode (default) */
 :root {
-  --bg-color: #FAF0E6;              
-  --text-color: #4E342E;         
-  --primary-color: #AF642D;         
-  --secondary-color: #A1887F;     
-  --accent-color: #C0A062;        
-  
+  --bg-color: #faf0e6;
+  --text-color: #4e342e;
+  --primary-color: #af642d;
+  --secondary-color: #a1887f;
+  --accent-color: #c0a062;
+
   /* Derived/Auxiliary Colors for Light Mode */
-  --card-bg-color: #FDF6E3;         
-  --card-border-color: #D7CCC8;     
-  --btn-text-color: #FAF0E6;         
-  --star-inactive-color: #D7CCC8;   
-  --input-bg-color: #FDF6E3;       
+  --card-bg-color: #fdf6e3;
+  --card-border-color: #d7ccc8;
+  --btn-text-color: #faf0e6;
+  --star-inactive-color: #d7ccc8;
+  --input-bg-color: #fdf6e3;
 }
 
 /* Variables for Dark Mode */
 html.dark {
-  --bg-color: #211A16;          
-  --text-color: #E0D5C7;        
-  --primary-color: #D58444;         
-  --secondary-color: #6D4C41;      
-  --accent-color: #EBC075;         
-  
+  --bg-color: #211a16;
+  --text-color: #e0d5c7;
+  --primary-color: #d58444;
+  --secondary-color: #6d4c41;
+  --accent-color: #ebc075;
+
   /* Derived/Auxiliary Colors for Dark Mode */
-  --card-bg-color: #2C2A2A;         
-  --card-border-color: #493F3A;      
-  --btn-text-color: #211A16;        
-  --star-inactive-color: #493F3A;  
-  --input-bg-color: #2C2A2A;       
+  --card-bg-color: #2c2a2a;
+  --card-border-color: #493f3a;
+  --btn-text-color: #211a16;
+  --star-inactive-color: #493f3a;
+  --input-bg-color: #2c2a2a;
 }
 
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Lato', sans-serif; 
-  transition: background-color 0.3s ease, color 0.3s ease; 
+  font-family: 'Lato', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif; 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
   color: var(--primary-color);
 }
 
@@ -54,11 +67,11 @@ a:hover {
 }
 
 button.primary {
-    background-color: var(--primary-color);
-    color: var(--btn-text-color);
+  background-color: var(--primary-color);
+  color: var(--btn-text-color);
 }
 
 .card {
-    background-color: var(--card-bg-color);
-    border: 0.5rem solid var(--card-border-color);
+  background-color: var(--card-bg-color);
+  border: 0.5rem solid var(--card-border-color);
 }
