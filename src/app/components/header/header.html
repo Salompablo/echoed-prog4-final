@@ -1,1 +1,16 @@
-<p>header works!</p>
+<header>
+  <div><h2>Echoed</h2></div>
+  <div>Barra de navegacion</div>
+  <div>
+    <button class="theme-toggle-btn" (click)="themeService.toggleMode()">
+      @if (themeService.isLightMode) {
+      <span class="material-symbols-rounded"> bedtime </span>
+      } @else {
+      <span class="material-symbols-rounded"> clear_day </span>
+      }
+    </button>
+    <button>
+      <span class="material-symbols-rounded"> person </span>
+    </button>
+  </div>
+</header>
