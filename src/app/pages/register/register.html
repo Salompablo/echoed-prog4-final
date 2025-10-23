@@ -1,0 +1,89 @@
+<div class="register-container">
+    <h2>Create Account</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" />
+
+            @if (email?.invalid && (email?.dirty || email?.touched)) {
+            <div class="error-validation">
+                @if (email?.errors?.['required']) {
+                <small>Email is required.</small>
+                }
+                @if (email?.errors?.['email']) {
+                <small>Must be a valid email.</small>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" formControlName="username" />
+
+            @if (username?.invalid && (username?.dirty || username?.touched)) {
+            <div class="error-validation">
+                @if (username?.errors?.['required']) {
+                <small>Username is required.</small>
+                }
+                @if (username?.errors?.['minlength']) {
+                <small>Must be at least 3 characters.</small>
+                }
+                @if (username?.errors?.['maxlength']) {
+                <small>Must not exceed 50 characters.</small>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password" />
+
+            @if (password?.invalid && (password?.dirty || password?.touched)) {
+            <div class="error-validation">
+                @if (password?.errors?.['required']) {
+                <small>Password is required.</small>
+                }
+                @if (password?.errors?.['minlength']) {
+                <small>Must be at least 8 characters.</small>
+                }
+                @if (password?.errors?.['maxlength']) {
+                <small>Must not exceed 120 characters.</small>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" formControlName="confirmPassword" />
+
+            @if (confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
+            <div class="error-validation">
+                @if (confirmPassword?.errors?.['required']) {
+                <small>You must confirm the password.</small>
+                }
+            </div>
+            }
+        </div>
+
+        @if (registerForm.errors?.['passwordMismatch'] && confirmPassword?.touched) {
+        <div class="error-validation">
+            <small>Passwords do not match.</small>
+        </div>
+        }
+
+        @if (errorMessage) {
+        <div class="error-api">
+            {{ errorMessage }}
+        </div>
+        }
+
+        <button type="submit" [disabled]="registerForm.invalid">
+            Sign Up
+        </button>
+    </form>
+</div>
