@@ -29,8 +29,8 @@
     <div class="results-section songs">
       <h4><span class="material-symbols-rounded">music_note</span>Songs</h4>
       <ul>
-        @for (song of results.songs.content | slice:0:3; track song.spotifyId) {
-        <li (click)="selectItem(song, 'song')">
+        @for (song of results.songs.content; track song.spotifyId) {
+        <li (click)="selectItem(song, 'songs')">
           @if(song.imageUrl) {
           <img [src]="song.imageUrl" alt="Song cover" width="40" height="40" loading="lazy" />
           } @else {
@@ -40,9 +40,7 @@
           }
           <div class="item-info">
             <span class="item-title">{{ song.name }}</span>
-            <span class="item-subtitle">
-              {{ song.artistName ?? 'Unknown Artist' }} - {{ song.albumName ?? 'Unknown Album' }}
-            </span>
+            <span class="item-subtitle"> {{ song.artistName }} - {{ song.albumName }} </span>
           </div>
         </li>
         } @empty { }
@@ -52,8 +50,8 @@
     <div class="results-section albums">
       <h4><span class="material-symbols-rounded">album</span>Albums</h4>
       <ul>
-        @for (album of results.albums.content | slice:0:2; track album.spotifyId) {
-        <li (click)="selectItem(album, 'album')">
+        @for (album of results.albums.content; track album.spotifyId) {
+        <li (click)="selectItem(album, 'albums')">
           @if(album.imageUrl) {
           <img
             [src]="album.imageUrl"
@@ -67,7 +65,7 @@
           }
           <div class="item-info">
             <span class="item-title">{{ album.title }}</span>
-            <span class="item-subtitle">{{ album.artistName ?? 'Unknown Artist' }}</span>
+            <span class="item-subtitle">{{ album.artistName }}</span>
           </div>
         </li>
         } @empty { }
@@ -77,8 +75,8 @@
     <div class="results-section artists">
       <h4><span class="material-symbols-rounded">person</span>Artists</h4>
       <ul>
-        @for (artist of results.artists.content | slice:0:1; track artist.spotifyId) {
-        <li (click)="selectItem(artist, 'artist')">
+        @for (artist of results.artists.content; track artist.spotifyId) {
+        <li (click)="selectItem(artist, 'artists')">
           @if(artist.imageUrl) {
           <img
             class="artist-img"
@@ -110,4 +108,3 @@
   </div>
   }
 </div>
-

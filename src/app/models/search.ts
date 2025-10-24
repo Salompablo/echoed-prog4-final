@@ -1,9 +1,9 @@
 import { PagedResponse } from '../models/api'; 
-import { AlbumRequest, ArtistRequest, SongRequest } from '../models/music'; 
+import { SongSearchResponse,ArtistSearchResponse,AlbumSearchResponse } from '../models/music';
 
 export interface UnifiedSearchResponse {
-    songs: PagedResponse<SongRequest>;
-    artists: PagedResponse<ArtistRequest>;
-    albums: PagedResponse<AlbumRequest>;
+    songs: PagedResponse<SongSearchResponse>;
+    artists: PagedResponse<ArtistSearchResponse>;
+    albums: PagedResponse<AlbumSearchResponse>;
     query: string;
 }
