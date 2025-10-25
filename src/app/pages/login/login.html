@@ -4,7 +4,9 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label for="emailOrUsername">Username or Email</label>
+            <div class="label-wrapper">
+                <label for="emailOrUsername">Username or Email</label>
+            </div>
             <input type="text" id="emailOrUsername" formControlName="emailOrUsername" />
             @if (emailOrUsername?.invalid && (emailOrUsername?.dirty || emailOrUsername?.touched)) {
             <div class="error-validation">
