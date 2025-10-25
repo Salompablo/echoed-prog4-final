@@ -1,0 +1,12 @@
+<div class="dropdown">
+  <button (click)="toggleDropdown()" class="dropbtn">
+    <span class="material-symbols-rounded"> person </span>
+  </button>
+
+  @if (isDropdownOpen) {
+  <div class="dropdown-content">
+    <a (click)="isDropdownOpen = false"> View profile </a>
+    <a (click)="isDropdownOpen = false"> Log out </a>
+  </div>
+  }
+</div>

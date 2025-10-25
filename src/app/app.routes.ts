@@ -2,10 +2,18 @@ import { Routes } from '@angular/router';
 import { Register } from './pages/register/register';
 import { Home } from './pages/home/home';
 import { Login } from './pages/login/login';
+import { AboutUs } from './pages/about-us/about-us';
+import { SongDetails } from './pages/song-details/song-details';
+import { AlbumDetails } from './pages/album-details/album-details';
+import { ArtistDetails } from './pages/artist-details/artist-details';
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'register', component: Register },
   { path: 'login', component: Login },
+  { path: 'about-us', component: AboutUs },
+  { path: `songs/:spotifyId`, component: SongDetails },
+  { path: `albums/:spotifyId`, component: AlbumDetails },
+  { path: `artists/:spotifyId`, component: ArtistDetails },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
