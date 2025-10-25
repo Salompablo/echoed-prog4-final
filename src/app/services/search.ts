@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Api } from './api'; 
+import { Api } from './api';
 import { UnifiedSearchResponse } from '../models/search';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
+import { SongSearchResponse } from '../models/music';
 
 @Injectable({
-  providedIn: 'root', 
+  providedIn: 'root',
 })
 export class SearchService {
   private api = inject(Api);
@@ -21,7 +22,7 @@ export class SearchService {
   unifiedSearch(
     query: string,
     page: number = 0,
-    size: number = 5 
+    size: number = 5
   ): Observable<UnifiedSearchResponse> {
     const params = new URLSearchParams({
       query: query,
@@ -29,7 +30,12 @@ export class SearchService {
       size: size.toString(),
     });
 
-    const endpoint = `${API_ENDPOINTS.SPOTIFY.UNIFIED_SEARCH}?${params.toString()}`; 
+    const endpoint = `${API_ENDPOINTS.SPOTIFY.UNIFIED_SEARCH}?${params.toString()}`;
     return this.api.get<UnifiedSearchResponse>(endpoint);
+  }
+
+  getSongDetail(id: string): Observable<SongSearchResponse> {
+    const endpoint = `${API_ENDPOINTS.SPOTIFY.SONG(id)}`
+    return this.api.get<SongSearchResponse>(endpoint);
   }
 }

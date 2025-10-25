@@ -7,7 +7,8 @@ export const API_ENDPOINTS = {
     REFRESH: '/auth/refresh',
   },
   SPOTIFY: { 
-    UNIFIED_SEARCH: '/spotify/unified-search' 
+    UNIFIED_SEARCH: '/spotify/unified-search',
+    SONG: (id: string)  => `/spotify/songs/${id}`
   },
 } as const;
 
