@@ -1,6 +1,8 @@
 <header>
-  <div class="title-container"><h2>Echoed</h2></div>
-  <div class="search-container" *ngIf="!isAuthRoute()"><app-search-bar></app-search-bar></div>
+  <div class="title-container"><app-logo></app-logo></div>
+  @if (!isAuthRoute()) {
+  <div class="search-container"><app-search-bar></app-search-bar></div>
+  }
   <div class="buttons-container">
     <button class="theme-toggle-btn" (click)="themeService.toggleMode()">
       @if (themeService.isLightMode) {

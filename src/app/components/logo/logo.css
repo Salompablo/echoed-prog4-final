@@ -1,0 +1,15 @@
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.logo-link:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+h2 {
+  transform-origin: center;
+}
