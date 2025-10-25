@@ -4,6 +4,7 @@ import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
 import { AuthRequest } from '../../models/auth';
 import { OAUTH2_LINKS } from '../../constants/api-endpoints';
+import { ErrorService } from '../../services/error';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class Login {
   private fb = inject(FormBuilder);
   private authService = inject(Auth);
   private router = inject(Router);
+  private errorService = inject(ErrorService);
 
   public errorMessage: string | null = null;
   public passwordsHidden = true;
@@ -46,12 +48,8 @@ export class Login {
         this.router.navigate(['']);
       },
       error: (err) => {
-        if (err.status === 401) {
-          this.errorMessage = 'Invalid username or password';
-        } else {
-          this.errorMessage = 'An unexpected error occurred. Please try again';
-        }
-        console.error(err);
+        this.errorMessage = this.errorService.getErrorMessage(err);
+        this.errorService.logError(err, 'Login');
       },
     });
   }

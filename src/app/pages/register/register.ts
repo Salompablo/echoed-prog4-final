@@ -4,6 +4,7 @@ import { Auth } from '../../services/auth';
 import { Router } from '@angular/router';
 import { passwordMatcher } from '../../validators/password-matcher';
 import { SignupRequest } from '../../models/auth';
+import { ErrorService } from '../../services/error';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +16,7 @@ export class Register {
   private fb = inject(FormBuilder);
   private authService = inject(Auth);
   private router = inject(Router);
+  private errorService = inject(ErrorService);
   public passwordsHidden = true;
 
   public errorMessage: string | null = null;
@@ -45,12 +47,8 @@ export class Register {
         this.router.navigate(['']);
       },
       error: (err) => {
-        if (err.status === 400) {
-          this.errorMessage = 'The email or username is already in use';
-        } else {
-          this.errorMessage = 'An unexpected error occurred. Please try again';
-        }
-        console.log(err);
+        this.errorMessage = this.errorService.getErrorMessage(err);
+        this.errorService.logError(err, 'Register');
       },
     });
   }
