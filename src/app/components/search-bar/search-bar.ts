@@ -7,6 +7,8 @@ import { UnifiedSearchResponse } from '../../models/search';
 import { SearchService } from '../../services/search';
 import { AlbumSearchResponse, SongSearchResponse, ArtistSearchResponse } from '../../models/music';
 import { Router } from '@angular/router';
+import { ErrorService } from '../../services/error';
+
 @Component({
   selector: 'app-search-bar',
   standalone: true,
@@ -17,6 +19,7 @@ import { Router } from '@angular/router';
 export class SearchBar {
   private searchService = inject(SearchService);
   private router = inject(Router);
+  private errorService = inject(ErrorService);
 
   searchTerm = signal('');
   searchResults = signal<UnifiedSearchResponse | null>(null);
@@ -42,8 +45,9 @@ export class SearchBar {
           }
           return this.searchService.unifiedSearch(term, 0, 5).pipe(
             catchError((err) => {
-              console.error('Error during search:', err);
-              this.error.set('Search failed. Please try again.');
+              const errorMessage = this.errorService.getErrorMessage(err);
+              this.errorService.logError(err, 'Search');
+              this.error.set(errorMessage);
               this.isLoading.set(false);
               this.searchResults.set(null);
               return [];
