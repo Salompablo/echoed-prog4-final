@@ -3,10 +3,16 @@
     <span class="material-symbols-rounded"> person </span>
   </button>
 
-  @if (isDropdownOpen) {
+  @if (isDropdownOpen()) {
   <div class="dropdown-content">
-    <a (click)="isDropdownOpen = false"> View profile </a>
-    <a (click)="isDropdownOpen = false"> Log out </a>
+
+    @if (authService.currentUser()) {
+    <a routerLink="/profile" (click)="closeDropdown()"> My Profile </a>
+    <a (click)="logout()"> Logout </a>
+    } @else {
+    <a routerLink="/register" (click)="closeDropdown()"> Sign Up </a>
+    <a routerLink="/login" (click)="closeDropdown()"> Login </a>
+    }
   </div>
   }
 </div>

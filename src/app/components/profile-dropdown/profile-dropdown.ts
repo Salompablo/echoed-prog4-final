@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -8,17 +9,28 @@ import { RouterLink } from '@angular/router';
   styleUrl: './profile-dropdown.css',
 })
 export class ProfileDropdown {
-  isDropdownOpen = false;
+  isDropdownOpen = signal(false);
   private eRef = inject(ElementRef);
 
+  public authService = inject(Auth);
+
   toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+    this.isDropdownOpen.update((value) => !value);
   }
 
   @HostListener(`document:click`, [`$event`])
   clickout(event: Event) {
     if (!this.eRef.nativeElement.contains(event.target)) {
-      this.isDropdownOpen = false;
+      this.isDropdownOpen.set(false);
     }
+  }
+
+  logout(): void {
+    this.isDropdownOpen.set(false);
+    this.authService.logout();
+  }
+
+  closeDropdown(): void {
+    this.isDropdownOpen.set(false);
   }
 }

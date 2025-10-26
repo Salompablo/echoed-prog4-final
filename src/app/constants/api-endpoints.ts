@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 export const API_ENDPOINTS = {
   AUTH: {
@@ -6,11 +6,14 @@ export const API_ENDPOINTS = {
     REGISTER: '/auth/register',
     REFRESH: '/auth/refresh',
   },
-  SPOTIFY: { 
-    UNIFIED_SEARCH: '/spotify/unified-search' 
+  USERS: {
+    ME: '/users/me',
+    BY_USERNAME: (username: string) => `/users/username/${username}`
+  },
+  SPOTIFY: {
+    UNIFIED_SEARCH: '/spotify/unified-search',
   },
 } as const;
-
 
 export const OAUTH2_LINKS = {
   GOOGLE: `${environment.apiUrl}/oauth2/authorization/google`,

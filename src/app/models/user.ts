@@ -1,5 +1,5 @@
-import { AuthProvider, RoleEntity } from "./auth";
-import { Reaction, Review } from "./interaction";
+import { AuthProvider, RoleEntity } from './auth';
+import { Reaction, Review } from './interaction';
 
 export interface User {
   userId: number;
@@ -33,6 +33,18 @@ export interface UserProfile {
   permissions: string[];
 }
 
+export interface FullUserProfile {
+  id: number;
+  username: string;
+  email: string;
+  biography?: string | null;
+  profilePictureUrl?: string | null;
+  joinDate: string;
+  roles: string[];
+  permissions: string[];
+  userStats: UserStats | null;
+}
+
 export interface UserSummary {
   userId: number;
   username: string;
@@ -49,33 +61,23 @@ export interface UpdateUserProfileRequest {
 }
 
 export interface UserStats {
-  id: number;
-  username: string;
-  biography?: string;
-  profilePictureUrl?: string;
-  joinDate: string;
-
-  totalAlbumReviews: number;
-  totalSongReviews: number;
-  totalReviews: number;
-  averageRating: number;
-
-  totalComments: number;
-  albumComments: number;
-  songComments: number;
-
-  totalReactions: number;
-  likesGiven: number;
-  lovesGiven: number;
-  wowsGiven: number;
-  dislikesGiven: number;
-
-  likesReceived: number;
-  lovesReceived: number;
-  wowsReceived: number;
-  dislikesReceived: number;
-
-  reviewsThisMonth: number;
-  commentsThisMonth: number;
-  reactionsThisMonth: number;
+  totalAlbumReviews: number | null;
+  totalSongReviews: number | null;
+  totalReviews: number | null;
+  averageRating: number | null;
+  totalComments: number | null;
+  albumComments: number | null;
+  songComments: number | null;
+  totalReactions: number | null;
+  likesGiven: number | null;
+  lovesGiven: number | null;
+  wowsGiven: number | null;
+  dislikesGiven: number | null;
+  likesReceived: number | null;
+  lovesReceived: number | null;
+  wowsReceived: number | null;
+  dislikesReceived: number | null;
+  reviewsThisMonth: number | null;
+  commentsThisMonth: number | null;
+  reactionsThisMonth: number | null;
 }
