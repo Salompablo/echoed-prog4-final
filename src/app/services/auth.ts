@@ -2,14 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Api } from './api';
 import { Router } from '@angular/router';
 import { User, UserProfile } from '../models/user';
-import {
-  AuthProvider,
-  AuthRequest,
-  AuthResponse,
-  Permit,
-  Role,
-  SignupRequest,
-} from '../models/auth';
+import { AuthProvider, AuthRequest, AuthResponse, SignupRequest } from '../models/auth';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
@@ -28,7 +21,7 @@ export class Auth {
   private currentUserSignal = signal<User | null>(null);
 
   // Expose a readonly version of the signal to prevent outside modification
-  public currentuser = this.currentUserSignal.asReadonly();
+  public currentUser = this.currentUserSignal.asReadonly();
 
   constructor() {
     // Initialize the signal's state from storage

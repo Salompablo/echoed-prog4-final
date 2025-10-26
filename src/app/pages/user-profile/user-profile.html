@@ -1,0 +1,48 @@
+<div class="profile-container">
+    @if (isLoading()) {
+    <p>Loading profile...</p>
+    } @else if (errorLoading()) {
+    <div class="error-api">
+        {{ errorLoading() }}
+    </div>
+    } @else if (userProfile) {
+    <div class="profile-header">
+        <img [src]="userProfile?.profilePictureUrl || '/assets/default-avatar.svg'" alt="Profile Picture"
+            class="profile-picture">
+        <div class="profile-info">
+            <h2>{{ userProfile.username }}</h2>
+            <p>{{ userProfile.email }}</p> @if (userProfile.biography) {
+            <p class="bio">{{ userProfile.biography }}</p>
+            }
+        </div>
+        <div class="profile-actions">
+            <a routerLink="/profile/edit" class="btn-edit">Edit Profile</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3>Statistics</h3>
+    @if (userProfile.userStats) {
+    <div class="stats-grid">
+        <div><span>{{ userProfile.userStats.totalReviews ?? 0 }}</span> Total Reviews</div>
+        <div><span>{{ userProfile.userStats.totalComments ?? 0 }}</span> Total Comments</div>
+        <div><span>{{ userProfile.userStats.totalReactions ?? 0 }}</span> Total Reactions</div>
+        <div><span>{{ userProfile.userStats.averageRating?.toFixed(1) ?? 'N/A' }}</span> Avg Rating</div>
+    </div>
+    } @else {
+    <p>Statistics not available.</p>
+    }
+
+    <hr>
+
+    <h3>Roles & Permissions</h3>
+    <div class="roles-permissions">
+        <p><strong>Roles:</strong> {{ userProfile.roles.join(', ') }}</p>
+        <p><strong>Permissions:</strong> {{ userProfile.permissions.join(', ') }}</p>
+    </div>
+
+    } @else {
+    <p>User profile not found.</p>
+    }
+</div>
