@@ -8,10 +8,13 @@ export const API_ENDPOINTS = {
   },
   USERS: {
     ME: '/users/me',
-    BY_USERNAME: (username: string) => `/users/username/${username}`
+    BY_USERNAME: (username: string) => `/users/username/${username}`,
   },
   SPOTIFY: {
     UNIFIED_SEARCH: '/spotify/unified-search',
+    SONG: (id: string) => `/spotify/songs/${id}`,
+    ALBUM: (id: string) => `/spotify/albums/${id}`,
+    ARTIST: (id: string) => `/spotify/artists/${id}`
   },
 } as const;
 

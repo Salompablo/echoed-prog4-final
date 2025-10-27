@@ -1,1 +1,42 @@
-<p>song-details works!</p>
+@if (!isLoading) {
+@if (song) {
+<section class="song-detail-container">
+    <div class="song-header-block card">
+        <div class="cover-container">
+            <img [src]="song?.imageUrl" [alt]="'Cover of ' + song?.albumName" class="album-cover">
+        </div>
+
+        <div class="metadata-info">
+            <span class="music-type">SONG</span>
+
+            <h1>{{ song?.name }}</h1>
+
+            <p class="artist-name">
+                <a [routerLink]="['/artists', song?.artistSpotifyId]">{{ song?.artistName }}</a>
+            </p>
+            <p class="album-name">
+                <a [routerLink]="['/albums', song?.albumSpotifyId]">{{ song?.albumName }}</a>
+            </p>
+
+            <div class="song-meta">
+                <span>Release date: <span class="meta-value">{{ song?.releaseDate}} </span></span>
+                <span> | </span>
+                <span> Duration: <span class="meta-value">{{ formatDuration(song?.durationMs) }}</span></span>
+                <span> | </span>
+                <span> <a href={{song.spotifyLink}}>Listen in Spotify</a></span>
+
+            </div>
+            <button class="primary write-review-btn">
+                Make an Echo
+            </button>
+        </div>
+    </div>
+
+    <div class="community-reviews">
+        <h2>Our Community's Echoes:</h2>
+    </div>
+</section>
+}
+}@else {
+<p class="song-detail-container">Loading song details...</p>
+}

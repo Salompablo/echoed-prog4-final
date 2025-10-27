@@ -1,1 +1,38 @@
-<p>album-details works!</p>
+@if (!isLoading) {
+@if (album) {
+<section class="album-detail-container">
+    <div class="album-header-block card">
+        <div class="cover-container">
+            <img [src]="album?.imageUrl" [alt]="'Cover of ' + album?.title" class="album-cover">
+        </div>
+
+        <div class="metadata-info">
+            <span class="music-type">ALBUM</span>
+
+            <h1>{{ album?.title }}</h1>
+
+            <p class="artist-name">
+                <a [routerLink]="['/artists', album?.artistSpotifyId]">{{ album?.artistName }}</a>
+            </p>
+
+            <div class="album-meta">
+                <span>Release date: <span class="meta-value">{{ album?.releaseDate}} </span></span>
+                <span> | </span>
+                <span> | </span>
+                <span> <a href={{album.spotifyLink}}>Listen in Spotify</a></span>
+
+            </div>
+            <button class="primary write-review-btn">
+                Make an Echo
+            </button>
+        </div>
+    </div>
+
+    <div class="community-reviews">
+        <h2>Our Community's Echoes:</h2>
+    </div>
+</section>
+}
+}@else {
+<p class="album-detail-container">Loading album details...</p>
+}
