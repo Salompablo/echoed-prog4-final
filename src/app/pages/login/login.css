@@ -10,12 +10,12 @@
 
 .login-container {
   width: 100%;
-  max-width: 26.25rem; 
+  max-width: 26.25rem;
   display: flex;
   flex-direction: column;
   padding: 2.5rem 2rem;
   background-color: var(--card-bg-color);
-  border: 1px solid var(--card-border-color); 
+  border: 1px solid var(--card-border-color);
   border-radius: 1.5rem;
   box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
 }
@@ -178,7 +178,7 @@ button[type='submit']:disabled {
   background-color: color-mix(in srgb, #d9534f 15%, transparent);
   border: 1px solid #d9534f;
   padding: 0.75rem;
-  border-radius: 0.5rem; 
+  border-radius: 0.5rem;
   text-align: center;
   font-weight: 500;
 }
@@ -208,11 +208,11 @@ button[type='submit']:disabled {
 
 .oauth-buttons {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   gap: 1rem;
 }
 .oauth-btn {
-  flex-grow: 1; 
+  flex-grow: 1;
   max-width: 11.25rem;
   display: flex;
   align-items: center;
@@ -233,8 +233,8 @@ button[type='submit']:disabled {
   text-decoration: none;
 }
 .oauth-btn .oauth-icon {
-  width: 1.125rem; 
-  height: 1.125rem; 
+  width: 1.125rem;
+  height: 1.125rem;
   vertical-align: middle;
 }
 
