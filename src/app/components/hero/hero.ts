@@ -1,12 +1,25 @@
-import { Component } from '@angular/core';
-import { SearchBar } from "../search-bar/search-bar";
+import { Component, inject } from '@angular/core';
+import { Auth } from '../../services/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-hero',
-  imports: [SearchBar],
+  imports: [],
   templateUrl: './hero.html',
-  styleUrl: './hero.css'
+  styleUrl: './hero.css',
 })
 export class Hero {
+  private authService = inject(Auth);
+  private router = inject(Router);
 
+  startEchoing() {
+    if (!this.authService.currentUser()) {
+      this.router.navigate(['/login']);
+    } else {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth',
+      });
+    }
+  }
 }
