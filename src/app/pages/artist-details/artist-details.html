@@ -1,1 +1,30 @@
-<p>artist-details works!</p>
+@if (!isLoading) {
+@if (artist) {
+<section class="artist-detail-container">
+    <div class="artist-header-block card">
+        <div class="cover-container">
+            <img [src]="artist.imageUrl" [alt]="'Cover of ' + artist.name" class="album-cover">
+        </div>
+
+        <div class="metadata-info">
+            <span class="music-type">ARTIST</span>
+
+            <h1>{{ artist.name }}</h1>
+
+            <div class="artist-meta">
+                <span>Followers in Spotify: <span class="meta-value">{{ artist.followers}} </span></span>
+                <!-- Agregar el link a spotify, pedir al back -->
+                <span> | </span>
+                <span>
+                    <a [href]="artist.spotifyLink" target="_blank">Listen in Spotify</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+}
+}@else {
+<p class="artist-detail-container">Loading artist details...</p>
+}

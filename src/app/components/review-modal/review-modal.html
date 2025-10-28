@@ -1,0 +1,75 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <button type="button" class="close-button" (click)="onCancel()" aria-label="Close modal">
+      ×
+    </button>
+
+    <div class="modal-body">
+      <div class="content-wrapper">
+        <div class="left-section">
+          <img
+            [src]="item().imageUrl"
+            [alt]="displayTitle()"
+            class="item-image" />
+
+          <div class="item-metadata">
+            <h2 class="item-title">{{ displayTitle() }}</h2>
+            <p class="item-artist">{{ displayArtist() }}</p>
+            @if (isSong() && songItem()) {
+              <p class="item-album">{{ songItem()!.albumName }}</p>
+            }
+            <p class="item-year">{{ displayYear() }}</p>
+          </div>
+        </div>
+
+        <div class="right-section">
+          <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()" class="review-form">
+            <div class="form-group rating-group">
+              <app-star-rating formControlName="rating"></app-star-rating>
+              @if (rating?.invalid && rating?.touched) {
+                <span class="error-message">Please select a rating</span>
+              }
+            </div>
+
+            <div class="form-group">
+              <label for="description">Your Echo</label>
+              <textarea
+                id="description"
+                formControlName="description"
+                [placeholder]="'Share your thoughts...'"
+                rows="5"
+                [maxlength]="MAX_CHARS"></textarea>
+
+              <div class="character-counter" [class.invalid]="!isCharCountValid()">
+                {{ characterCount() }} / {{ MAX_CHARS }}
+                @if (characterCount() < MIN_CHARS) {
+                  <span class="hint">(min {{ MIN_CHARS }})</span>
+                }
+              </div>
+
+              @if (description?.invalid && description?.touched) {
+                <span class="error-message">
+                  @if (description?.errors?.['required']) {
+                    Description is required
+                  }
+                  @if (description?.errors?.['minlength']) {
+                    Must be at least {{ MIN_CHARS }} characters
+                  }
+                </span>
+              }
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="button secondary" (click)="onCancel()">
+                Cancel
+              </button>
+              <button type="submit" class="button primary" [disabled]="reviewForm.invalid">
+                Submit Echo
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

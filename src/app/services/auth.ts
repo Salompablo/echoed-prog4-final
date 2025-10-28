@@ -157,7 +157,7 @@ export class Auth {
    */
   private buildUserProfileFromOAuth(decodedToken: any): UserProfile {
     return {
-      userId: decodedToken.id,
+      userId: decodedToken.userId,
       username: decodedToken.sub,
       email: decodedToken.email,
       active: true,

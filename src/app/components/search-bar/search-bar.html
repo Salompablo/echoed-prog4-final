@@ -25,7 +25,7 @@
     <div class="error-message">
       <span class="material-symbols-rounded">error</span> {{ error() }}
     </div>
-    } @if (searchResults(); as results) { @if (results.songs?.content?.length) {
+    } @if (searchResults(); as results) { @if (results.songs.content.length) {
     <div class="results-section songs">
       <h4><span class="material-symbols-rounded">music_note</span>Songs</h4>
       <ul>
@@ -46,7 +46,7 @@
         } @empty { }
       </ul>
     </div>
-    } @if (results.albums?.content?.length) {
+    } @if (results.albums.content.length) {
     <div class="results-section albums">
       <h4><span class="material-symbols-rounded">album</span>Albums</h4>
       <ul>
@@ -71,7 +71,7 @@
         } @empty { }
       </ul>
     </div>
-    } @if (results.artists?.content?.length) {
+    } @if (results.artists.content.length) {
     <div class="results-section artists">
       <h4><span class="material-symbols-rounded">person</span>Artists</h4>
       <ul>
@@ -98,8 +98,8 @@
         } @empty { }
       </ul>
     </div>
-    } @if (!isLoading() && searchTerm() && !results.songs?.content?.length &&
-    !results.artists?.content?.length && !results.albums?.content?.length) {
+    } @if (!isLoading() && searchTerm() && !results.songs.content.length &&
+    !results.artists.content.length && !results.albums.content.length) {
     <div class="no-results">
       <span class="material-symbols-rounded">search_off</span>
       No results found for "{{ searchTerm() }}".

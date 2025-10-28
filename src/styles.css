@@ -76,3 +76,19 @@ button.primary {
   background-color: var(--card-bg-color);
   border: 0.5rem solid var(--card-border-color);
 }
+
+html, body{
+  height: 100%;
+}
+
+
+app-root{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+main{
+  flex-grow: 1;
+}

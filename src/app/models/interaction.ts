@@ -1,4 +1,5 @@
 import { Album, Song } from "./music";
+import { UserSummary } from "./user";
 
 
 export interface Reaction {
@@ -69,4 +70,36 @@ export enum CommentType {
 
 export interface CommentRequest {
   text: string;
+}
+
+export interface SongReviewRequest {
+  userId: number;
+  rating: number;
+  description: string;
+}
+
+export interface AlbumReviewRequest {
+  userId: number;
+  rating: number;
+  description: string;
+}
+
+export interface SongReviewResponse {
+  songReviewId: number;
+  rating: number;
+  description: string;
+  date: string;
+  active: boolean;
+  user: UserSummary;
+  song: Song;
+}
+
+export interface AlbumReviewResponse {
+  albumReviewId: number;
+  rating: number;
+  description: string;
+  date: string;
+  active: boolean;
+  user: UserSummary;
+  album: Album;
 }

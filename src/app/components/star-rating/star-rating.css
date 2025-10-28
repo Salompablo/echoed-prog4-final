@@ -1,0 +1,55 @@
+.star-rating-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stars-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rating-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 2.5rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.star-button:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.star-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.star-icon {
+  display: block;
+  color: var(--card-border-color);
+  transition: color 0.2s ease;
+}
+
+.star-button.full .star-icon {
+  color: var(--primary-color);
+}
+
+.star-button.half .star-icon {
+  background: linear-gradient(90deg, var(--primary-color) 50%, var(--card-border-color) 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

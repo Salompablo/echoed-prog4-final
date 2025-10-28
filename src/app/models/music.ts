@@ -4,6 +4,7 @@ export interface Artist {
   name: string;
   followers?: number;
   imageUrl?: string;
+  spotifyLink?: string;
 }
 
 export interface Album {
@@ -34,6 +35,7 @@ export interface ArtistRequest {
   name: string;
   followers?: number;
   imageUrl?: string;
+  spotifyLink?: string;
 }
 
 export interface AlbumRequest {
@@ -64,8 +66,9 @@ export interface ArtistSearchResponse {
   artistId: number;
   spotifyId: string;
   name: string;
-  followers?: number;
+  followers: number;
   imageUrl?: string;
+  spotifyLink?: string;
 }
 
 export interface AlbumSearchResponse {
@@ -88,7 +91,7 @@ export interface SongSearchResponse {
   albumName: string;
   albumSpotifyId: string;
   imageUrl?: string;
-  durationMs?: number;
+  durationMs: number;
   previewUrl?: string;
   spotifyLink?: string;
   releaseDate: string;
