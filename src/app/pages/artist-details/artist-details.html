@@ -12,11 +12,12 @@
             <h1>{{ artist?.name }}</h1>
 
             <div class="artist-meta">
-                <span>Followers in Spotify: <span class="meta-value">{{ artist?.followers}} </span></span> 
+                <span>Followers in Spotify: <span class="meta-value">{{ artist?.followers}} </span></span>
                 <!-- Agregar el link a spotify, pedir al back -->
                 <span> | </span>
-                <span> <a href="">Listen in Spotify</a></span>
-
+                <span>
+                    <a [href]="artist.spotifyLink" target="_blank">Listen in Spotify</a>
+                </span>
             </div>
         </div>
     </div>

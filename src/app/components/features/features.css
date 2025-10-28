@@ -1,0 +1,116 @@
+article {
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    margin: 0 5rem;
+    padding: 2rem 0;
+    gap: 0;
+
+    align-items: flex-start;
+    /* ¡CLAVE! Permite que los features salten de línea */
+    /* Centra las filas de features */
+    /* Aseguramos que el gap sea 0 y las líneas se controlen con border */
+    /* Añade un poco de espacio vertical */
+}
+
+.feature-container {
+    width: calc(25% - 2px);
+    height: auto;
+    min-width: 18rem;
+    padding: 2rem 1rem;
+    margin: 0;
+    /* background-color: yellow; */
+
+    border-left: 0.2rem solid var(--card-border-color);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+article .feature-container:first-child {
+    border-left: none;
+}
+
+h3 {
+    margin-bottom: 0.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+.icon-container {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.icon {
+    font-size: 5rem;
+    line-height: 1;
+    display: block;
+}
+
+* {
+    margin-bottom: 1rem;
+    /* background-color: violet; */
+    text-align: center;
+}
+
+@media (max-width: 1200px) {
+
+    article {
+        margin: 0 2rem;
+    }
+
+    .feature-container {
+        width: calc(50% - 2px);
+        height: auto;
+
+        border-right: 2px solid var(--card-border-color);
+        /* Separador entre features 1/2 y 3/4 */
+        border-bottom: 1px solid var(--card-border-color);
+        /* Separador entre fila 1 y fila 2 */
+        border-left: none;
+        /* Quitamos el borde izquierdo que se vuelve horizontal */
+        margin-bottom: 0;
+    }
+
+    article .feature-container:nth-child(2n) {
+        border-right: none;
+    }
+
+    article .feature-container:nth-child(2n + 1) {
+        border-left: none;
+    }
+
+}
+
+@media (max-width: 600px) {
+    article {
+        margin: 0 1 rem;
+    }
+
+    .feature-container {
+        width: 100%;
+        /* Una feature por fila en móviles */
+        border-left: none !important;
+        border-right: none !important;
+        padding: 1.5rem 1rem;
+        margin: 0;
+        border-bottom: 1px solid var(--card-border-color);
+    }
+
+    .feature-container:last-child {
+        border-bottom: none;
+    }
+}
