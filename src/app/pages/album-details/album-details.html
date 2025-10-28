@@ -1,37 +1,83 @@
 @if (!isLoading) {
-@if (album) {
+@if (loadError()) {
+  <div class="album-detail-container">
+    <div class="error-alert">
+      {{ loadError() }}
+    </div>
+  </div>
+} @else if (album) {
 <section class="album-detail-container">
     <div class="album-header-block card">
         <div class="cover-container">
-            <img [src]="album?.imageUrl" [alt]="'Cover of ' + album?.title" class="album-cover">
+            <img [src]="album.imageUrl" [alt]="'Cover of ' + album.title" class="album-cover">
         </div>
 
         <div class="metadata-info">
             <span class="music-type">ALBUM</span>
 
-            <h1>{{ album?.title }}</h1>
+            <h1>{{ album.title }}</h1>
 
             <p class="artist-name">
-                <a [routerLink]="['/artists', album?.artistSpotifyId]">{{ album?.artistName }}</a>
+                <a [routerLink]="['/artists', album.artistSpotifyId]">{{ album.artistName }}</a>
             </p>
 
             <div class="album-meta">
-                <span>Release date: <span class="meta-value">{{ album?.releaseDate}} </span></span>
+                <span>Release date: <span class="meta-value">{{ album.releaseDate}} </span></span>
                 <span> | </span>
                 <span> | </span>
                 <span> <a href={{album.spotifyLink}} target="_blank">Listen in Spotify</a></span>
 
             </div>
-            <button class="primary write-review-btn">
+            <button class="primary write-review-btn" (click)="openReviewModal()">
                 Make an Echo
             </button>
+
+            @if (errorMessage()) {
+              <div class="error-alert">
+                {{ errorMessage() }}
+              </div>
+            }
         </div>
     </div>
 
     <div class="community-reviews">
         <h2>Our Community's Echoes:</h2>
+
+        @if (isLoadingReviews()) {
+          <p>Loading reviews...</p>
+        } @else if (reviews().length === 0) {
+          <p class="no-reviews">No reviews yet. Be the first to make an echo!</p>
+        } @else {
+          <div class="reviews-list">
+            @for (review of reviews(); track review.albumReviewId) {
+              <div class="review-card card">
+                <div class="review-header">
+                  <div class="user-info">
+                    <strong>{{ review.user.username }}</strong>
+                    <span class="review-date">{{ review.date | date:'short' }}</span>
+                  </div>
+                  <div class="rating">
+                    <span class="stars">★ {{ review.rating }}/5</span>
+                  </div>
+                </div>
+                <div class="review-content">
+                  <p>{{ review.description }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        }
     </div>
 </section>
+
+@if (isModalOpen() && album) {
+  <app-review-modal
+    [type]="'album'"
+    [item]="album"
+    (closed)="closeReviewModal()"
+    (submitted)="handleReviewSubmit($event)">
+  </app-review-modal>
+}
 }
 }@else {
 <p class="album-detail-container">Loading album details...</p>

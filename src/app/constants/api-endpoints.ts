@@ -16,6 +16,12 @@ export const API_ENDPOINTS = {
     ALBUM: (id: string) => `/spotify/albums/${id}`,
     ARTIST: (id: string) => `/spotify/artists/${id}`
   },
+  REVIEWS: {
+    SONG_REVIEWS: '/songreviews',
+    ALBUM_REVIEWS: '/albumreviews',
+    GET_SONG_REVIEWS: '/songreviews/songs',
+    GET_ALBUM_REVIEWS: '/albumreviews/albums',
+  },
 } as const;
 
 export const OAUTH2_LINKS = {

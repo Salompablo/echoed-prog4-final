@@ -1,0 +1,18 @@
+<div class="star-rating-container">
+  <div class="stars-wrapper" (mouseleave)="onMouseLeave()">
+    @for (star of stars; track star) {
+      <button
+        type="button"
+        class="star-button"
+        [class.full]="getStarFill(star) === 'full'"
+        [class.half]="getStarFill(star) === 'half'"
+        [class.empty]="getStarFill(star) === 'empty'"
+        [disabled]="disabled()"
+        (click)="onStarClick(star, $event)"
+        (mousemove)="onStarHover(star, $event)"
+        [attr.aria-label]="star + ' stars'">
+        <span class="star-icon">★</span>
+      </button>
+    }
+  </div>
+</div>
