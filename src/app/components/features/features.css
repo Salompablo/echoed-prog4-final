@@ -30,6 +30,18 @@ article {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
+    /* Animation */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeSlideUp 0.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+}
+
+@keyframes fadeSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 article .feature-container:first-child {
@@ -58,6 +70,18 @@ p {
     font-size: 5rem;
     line-height: 1;
     display: block;
+
+    /* Icon scale animation */
+    opacity: 0;
+    transform: scale(0.5);
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+}
+
+@keyframes scaleIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 * {
