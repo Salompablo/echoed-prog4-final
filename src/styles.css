@@ -16,6 +16,7 @@
   --primary-color: #af642d;
   --secondary-color: #a1887f;
   --accent-color: #c0a062;
+  --overlay-color-rgb: 33, 26, 22;
 
   /* Derived/Auxiliary Colors for Light Mode */
   --card-bg-color: #fdf6e3;
