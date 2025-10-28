@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Auth } from '../../services/auth';
+import { Hero } from "../../components/hero/hero";
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Hero],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
