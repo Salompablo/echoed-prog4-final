@@ -17,6 +17,7 @@
   --secondary-color: #a1887f;
   --accent-color: #c0a062;
   --overlay-color-rgb: 33, 26, 22;
+  --toast-box-shadow: rgba(0, 0, 0, 0.1);
 
   /* Derived/Auxiliary Colors for Light Mode */
   --card-bg-color: #fdf6e3;
@@ -24,6 +25,23 @@
   --btn-text-color: #faf0e6;
   --star-inactive-color: #d7ccc8;
   --input-bg-color: #fdf6e3;
+
+  /* Toast colors */
+  --toast-success-bg: #d4edda;
+  --toast-success-border: #c3e6cb;
+  --toast-success-text: #155724;
+
+  --toast-error-bg: #f8d7da;
+  --toast-error-border: #f5c6cb;
+  --toast-error-text: #721c24;
+
+  --toast-info-bg: #d1ecf1;
+  --toast-info-border: #bee5eb;
+  --toast-info-text: #0c5460;
+
+  --toast-warning-bg: #fff3cd;
+  --toast-warning-border: #ffeeba;
+  --toast-warning-text: #856404;
 }
 
 /* Variables for Dark Mode */
@@ -40,6 +58,23 @@ html.dark {
   --btn-text-color: #211a16;
   --star-inactive-color: #493f3a;
   --input-bg-color: #2c2a2a;
+
+  /* Toast colors */
+  --toast-success-bg: #1a3c26;
+  --toast-success-border: #2a6f41;
+  --toast-success-text: #a7e0b6;
+
+  --toast-error-bg: #4d1c21;
+  --toast-error-border: #8b323c;
+  --toast-error-text: #f7b3b9;
+
+  --toast-info-bg: #1c3d45;
+  --toast-info-border: #367b8a;
+  --toast-info-text: #a6ddee;
+
+  --toast-warning-bg: #52441c;
+  --toast-warning-border: #997f2c;
+  --toast-warning-text: #fbe59d;
 }
 
 body {

@@ -1,0 +1,10 @@
+<div class="toast-container">
+    @for (toast of toasts(); track toast.id) {
+    <div class="toast toast-{{ toast.type }}" role="alert" aria-live="assertive">
+        <span class="toast-message">{{ toast.message }}</span>
+        @if(!toast.duration){
+        <button class="toast-close-btn" (click)="removeToast(toast.id)" aria-label="Close">&times;</button>
+        }
+    </div>
+    }
+</div>
