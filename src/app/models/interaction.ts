@@ -1,6 +1,5 @@
-import { Album, Song } from "./music";
-import { UserSummary } from "./user";
-
+import { Album, Song } from './music';
+import { FullUserProfile, UserSummary } from './user';
 
 export interface Reaction {
   reactionId: number;
@@ -9,7 +8,6 @@ export interface Reaction {
   reactionType: ReactionType;
   reactedType: ReactedType;
   reactedId: number;
-  createdAt?: string;
 }
 
 export interface Comment {
@@ -20,62 +18,32 @@ export interface Comment {
   text: string;
   createdAt: string;
   commentType: CommentType;
-  active: boolean;
 }
 
-export interface Review {
-  reviewId: number;
+export interface ReviewSong {
+  songId: number | null;
+  spotifyId: string;
+  name: string;
+  artistName: string;
+  artistSpotifyId?: string;
+  albumName?: string;
+  albumSpotifyId?: string;
+  imageUrl?: string | null;
+  durationMs?: number;
+  releaseDate?: string;
+}
+
+export interface BaseReviewResponse {
   rating: number;
-  description?: string;
+  description?: string | null;
   date: string;
   active: boolean;
-  userId: number;
-  username?: string;
+  user: FullUserProfile;
 }
 
 export interface CreateReviewRequest {
   rating: number;
   description?: string;
-}
-
-export interface SongReview extends Review {
-  songId: number;
-  song?: Song;
-}
-
-export interface AlbumReview extends Review {
-  albumId: number;
-  album?: Album;
-}
-
-
-export type MusicReview = SongReview | AlbumReview;
-
-export enum ReactionType {
-  LIKE = 'LIKE',
-  LOVE = 'LOVE',
-  WOW = 'WOW',
-  DISLIKE = 'DISLIKE',
-}
-
-export enum ReactedType {
-  COMMENT = 'COMMENT',
-  REVIEW = 'REVIEW',
-}
-
-export enum CommentType {
-  SONG = 'SONG',
-  ALBUM = 'ALBUM',
-}
-
-export interface CommentRequest {
-  text: string;
-}
-
-export interface SongReviewRequest {
-  userId: number;
-  rating: number;
-  description: string;
 }
 
 export interface AlbumReviewRequest {
@@ -102,4 +70,33 @@ export interface AlbumReviewResponse {
   active: boolean;
   user: UserSummary;
   album: Album;
+}
+
+export type MusicReview = SongReviewResponse | AlbumReviewResponse;
+
+export enum ReactionType {
+  LIKE = 'LIKE',
+  LOVE = 'LOVE',
+  WOW = 'WOW',
+  DISLIKE = 'DISLIKE',
+}
+
+export enum ReactedType {
+  COMMENT = 'COMMENT',
+  REVIEW = 'REVIEW',
+}
+
+export enum CommentType {
+  SONG = 'SONG',
+  ALBUM = 'ALBUM',
+}
+
+export interface CommentRequest {
+  text: string;
+}
+
+export interface SongReviewRequest {
+  userId: number;
+  rating: number;
+  description: string;
 }

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Api } from './api';
+import { ApiService } from './api';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import {
   SongReviewRequest,
@@ -19,7 +19,7 @@ import { PagedResponse } from '../models/api';
   providedIn: 'root',
 })
 export class ReviewService {
-  private api = inject(Api);
+  private api = inject(ApiService);
 
   /**
    * Creates a new song review.
@@ -27,10 +27,7 @@ export class ReviewService {
    * @param request The review data (userId, rating, description)
    * @returns Observable containing the created song review
    */
-  createSongReview(
-    spotifyId: string,
-    request: SongReviewRequest
-  ): Observable<SongReviewResponse> {
+  createSongReview(spotifyId: string, request: SongReviewRequest): Observable<SongReviewResponse> {
     return this.api.post<SongReviewResponse>(
       `${API_ENDPOINTS.REVIEWS.SONG_REVIEWS}?spotifyId=${spotifyId}`,
       request
@@ -81,9 +78,7 @@ export class ReviewService {
    * @returns Observable that completes when the review is deleted
    */
   deleteSongReview(reviewId: number): Observable<void> {
-    return this.api.delete<void>(
-      `${API_ENDPOINTS.REVIEWS.SONG_REVIEWS}/${reviewId}`
-    );
+    return this.api.delete<void>(`${API_ENDPOINTS.REVIEWS.SONG_REVIEWS}/${reviewId}`);
   }
 
   /**
@@ -92,8 +87,6 @@ export class ReviewService {
    * @returns Observable that completes when the review is deleted
    */
   deleteAlbumReview(reviewId: number): Observable<void> {
-    return this.api.delete<void>(
-      `${API_ENDPOINTS.REVIEWS.ALBUM_REVIEWS}/${reviewId}`
-    );
+    return this.api.delete<void>(`${API_ENDPOINTS.REVIEWS.ALBUM_REVIEWS}/${reviewId}`);
   }
 }

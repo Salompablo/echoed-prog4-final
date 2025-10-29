@@ -1,14 +1,4 @@
 import { AuthProvider, RoleEntity } from './auth';
-import { Reaction, Review } from './interaction';
-
-export interface User {
-  userId: number;
-  username: string;
-  active: boolean;
-  credential?: Credential;
-  reactions?: Reaction[];
-  reviews?: Review[];
-}
 
 export interface Credential {
   id: number;
@@ -27,22 +17,21 @@ export interface UserProfile {
   active: boolean;
   email: string;
   provider: AuthProvider;
-  profilePictureUrl?: string;
-  biography?: string;
+  profilePictureUrl?: string | null;
+  biography?: string | null;
   roles: string[];
   permissions: string[];
 }
 
 export interface FullUserProfile {
-  id: number;
+  id: number; 
   username: string;
-  email: string;
-  biography?: string | null;
-  profilePictureUrl?: string | null;
-  joinDate: string;
-  roles: string[];
+  biography?: string | null; 
+  profilePictureUrl?: string | null; 
+  joinDate: string; 
+  roles: string[]; 
   permissions: string[];
-  userStats: UserStats | null;
+  userStats: UserStats | null; 
 }
 
 export interface UserSummary {

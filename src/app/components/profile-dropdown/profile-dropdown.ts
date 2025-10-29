@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -12,7 +12,7 @@ export class ProfileDropdown {
   isDropdownOpen = signal(false);
   private eRef = inject(ElementRef);
 
-  public authService = inject(Auth);
+  public authService = inject(AuthService);
 
   toggleDropdown() {
     this.isDropdownOpen.update((value) => !value);

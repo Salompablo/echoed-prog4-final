@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-oauth2-callback',
@@ -11,10 +11,9 @@ import { Auth } from '../../services/auth';
 export class Oauth2Callback implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
 
   ngOnInit(): void {
-
     const token = this.route.snapshot.queryParamMap.get('token');
 
     const refreshToken = this.route.snapshot.queryParamMap.get('refresh_token');

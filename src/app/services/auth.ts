@@ -1,11 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { Api } from './api';
+import { ApiService } from './api';
 import { Router } from '@angular/router';
-import { User, UserProfile } from '../models/user';
+import { FullUserProfile, UserProfile } from '../models/user';
 import { AuthProvider, AuthRequest, AuthResponse, SignupRequest } from '../models/auth';
 import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
+import { ToastService } from './toast';
 
 const USER_KEY = 'current-user';
 const TOKEN_KEY = 'auth-token';
@@ -14,11 +15,12 @@ const REFRESH_TOKEN_KEY = 'auth-refresh-token';
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
-  private apiService = inject(Api);
+export class AuthService {
+  private apiService = inject(ApiService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
-  private currentUserSignal = signal<User | null>(null);
+  private currentUserSignal = signal<UserProfile | null>(null);
 
   // Expose a readonly version of the signal to prevent outside modification
   public currentUser = this.currentUserSignal.asReadonly();
@@ -85,8 +87,12 @@ export class Auth {
    * Clears the user session from both storage types and updates the app state.
    */
   public logout(): void {
-    localStorage.clear();
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+
     sessionStorage.clear();
+
     this.currentUserSignal.set(null);
     this.router.navigate(['/login']);
   }
@@ -105,7 +111,9 @@ export class Auth {
     rememberMe: boolean
   ): void {
     const storage = rememberMe ? localStorage : sessionStorage;
-    localStorage.clear();
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
     sessionStorage.clear();
 
     storage.setItem(USER_KEY, JSON.stringify(profile));
@@ -125,6 +133,51 @@ export class Auth {
     }
     // Type assertion to ensure the parsed object matches UserProfile
     return userJson ? (JSON.parse(userJson) as UserProfile) : null;
+  }
+
+  /**
+   * Updates the locally stored user profile information (localStorage/sessionStorage and signal).
+   * Use this after successfully updating the profile on the backend.
+   * @param updatedProfile The user profile data object with the latest information.
+   * Could be FullUserProfile or just UserProfile depending on what you have.
+   */
+  public updateLocalUser(updatedProfileData: Partial<UserProfile | FullUserProfile>): void {
+    const currentSessionUser = this.currentUserSignal();
+    if (!currentSessionUser) {
+      console.warn('Cannot update local user, no user is currently logged in.');
+      return;
+    }
+
+    const updatedUser: UserProfile = {
+      ...currentSessionUser,
+      username: updatedProfileData.username ?? currentSessionUser.username,
+      profilePictureUrl:
+        'profilePictureUrl' in updatedProfileData
+          ? updatedProfileData.profilePictureUrl
+          : currentSessionUser.profilePictureUrl,
+      biography:
+        'biography' in updatedProfileData
+          ? updatedProfileData.biography
+          : currentSessionUser.biography,
+    };
+
+    let storageToUpdate: Storage | null = null;
+    if (localStorage.getItem(USER_KEY)) {
+      storageToUpdate = localStorage;
+    } else if (sessionStorage.getItem(USER_KEY)) {
+      storageToUpdate = sessionStorage;
+    }
+
+    if (storageToUpdate) {
+      storageToUpdate.setItem(USER_KEY, JSON.stringify(updatedUser));
+      this.currentUserSignal.set(updatedUser);
+    
+    } else {
+      this.toastService.warning(
+        'Could not determine storage type (localStorage/sessionStorage) to update user profile.'
+      );
+      this.currentUserSignal.set(updatedUser);
+    }
   }
 
   /**
