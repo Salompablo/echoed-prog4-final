@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Toast } from '../../services/toast';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-toast-container',
@@ -8,7 +8,7 @@ import { Toast } from '../../services/toast';
   styleUrl: './toast-container.css',
 })
 export class ToastContainer {
-  private toastService = inject(Toast);
+  private toastService = inject(ToastService);
 
   toasts = this.toastService.toasts.asReadonly();
 

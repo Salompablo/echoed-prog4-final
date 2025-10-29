@@ -1,11 +1,11 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
-import ToastInfo, { ToastType } from '../models/toast';
+import Toast, { ToastType } from '../models/toast';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Toast {
-  toasts: WritableSignal<ToastInfo[]> = signal([]);
+export class ToastService {
+  toasts: WritableSignal<Toast[]> = signal([]);
   private nextId = 0;
 
   /**
@@ -15,7 +15,7 @@ export class Toast {
    * @param duration - Optional duration in milliseconds. If not provided, toast might need manual dismissal.
    */
   show(type: ToastType, message: string, duration?: number): void {
-    const newToast: ToastInfo = {
+    const newToast: Toast = {
       id: this.nextId++,
       type,
       message,

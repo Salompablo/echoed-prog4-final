@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 import { AuthRequest } from '../../models/auth';
 import { OAUTH2_LINKS } from '../../constants/api-endpoints';
@@ -14,7 +14,7 @@ import { ErrorService } from '../../services/error';
 })
 export class Login {
   private fb = inject(FormBuilder);
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private errorService = inject(ErrorService);
 
