@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ArtistSearchResponse } from '../../models/music';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-artist-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './artist-details.html',
   styleUrl: './artist-details.css',
 })

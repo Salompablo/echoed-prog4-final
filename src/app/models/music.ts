@@ -69,6 +69,7 @@ export interface ArtistSearchResponse {
   followers: number;
   imageUrl?: string;
   spotifyLink?: string;
+  albums: Album[]
 }
 
 export interface AlbumSearchResponse {
