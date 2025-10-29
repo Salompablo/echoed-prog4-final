@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ArtistSearchResponse } from '../../models/music';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-artist-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './artist-details.html',
   styleUrl: './artist-details.css',
 })
@@ -18,7 +18,8 @@ export class ArtistDetails implements OnInit {
   private searchService = inject(SearchService);
 
   ngOnInit(): void {
-    this.route.params.pipe(
+    this.route.params
+      .pipe(
         switchMap((params) => {
           const artistId = params['spotifyId'];
           this.isLoading = true;
@@ -28,7 +29,8 @@ export class ArtistDetails implements OnInit {
           }
           return of(null);
         })
-      ).subscribe({
+      )
+      .subscribe({
         next: (data) => {
           this.artist = data;
           this.isLoading = false;

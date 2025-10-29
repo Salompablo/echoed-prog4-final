@@ -70,6 +70,7 @@ a:hover {
 button.primary {
   background-color: var(--primary-color);
   color: var(--btn-text-color);
+  cursor: pointer;
 }
 
 .card {
