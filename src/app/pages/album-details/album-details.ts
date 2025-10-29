@@ -52,6 +52,7 @@ export class AlbumDetails implements OnInit {
       .subscribe({
         next: (data) => {
           this.album = data;
+          console.log(this.album);
           this.isLoading = false;
           if (data) {
             this.loadReviews(data.spotifyId);
@@ -67,7 +68,7 @@ export class AlbumDetails implements OnInit {
             // Optionally redirect to login after a delay
             setTimeout(() => {
               this.router.navigate(['/login'], {
-                queryParams: { returnUrl: this.router.url }
+                queryParams: { returnUrl: this.router.url },
               });
             }, 2000);
           } else {
@@ -75,7 +76,7 @@ export class AlbumDetails implements OnInit {
             this.loadError.set(message);
           }
         },
-      })
+      });
   }
 
   loadReviews(spotifyId: string): void {
@@ -88,7 +89,7 @@ export class AlbumDetails implements OnInit {
       error: (err) => {
         console.error('Error loading reviews:', err);
         this.isLoadingReviews.set(false);
-      }
+      },
     });
   }
 
@@ -129,5 +130,21 @@ export class AlbumDetails implements OnInit {
         this.errorService.logError(err, 'AlbumDetails - Create Review');
       },
     });
+  }
+
+  formatDuration(ms: number | undefined): string {
+    if (ms === undefined || ms === null) {
+      return '--:--';
+    }
+
+    const totalSeconds = Math.floor(ms / 1000);
+
+    const minutes = Math.floor(totalSeconds / 60);
+
+    const seconds = totalSeconds % 60;
+
+    const formattedSeconds = String(seconds).padStart(2, '0');
+
+    return `${minutes}:${formattedSeconds}`;
   }
 }

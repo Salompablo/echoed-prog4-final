@@ -81,6 +81,7 @@ export interface AlbumSearchResponse {
   imageUrl?: string;
   spotifyLink?: string;
   releaseDate: string;
+  songs: Song[]
 }
 
 export interface SongSearchResponse {

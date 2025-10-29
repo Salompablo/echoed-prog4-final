@@ -1,82 +1,130 @@
 @if (!isLoading) {
 @if (loadError()) {
-  <div class="album-detail-container">
-    <div class="error-alert">
-      {{ loadError() }}
-    </div>
+<div class="album-detail-container">
+  <div class="error-alert">
+    {{ loadError() }}
   </div>
+</div>
 } @else if (album) {
 <section class="album-detail-container">
-    <div class="album-header-block card">
-        <div class="cover-container">
-            <img [src]="album.imageUrl" [alt]="'Cover of ' + album.title" class="album-cover">
-        </div>
-
-        <div class="metadata-info">
-            <span class="music-type">ALBUM</span>
-
-            <h1>{{ album.title }}</h1>
-
-            <p class="artist-name">
-                <a [routerLink]="['/artists', album.artistSpotifyId]">{{ album.artistName }}</a>
-            </p>
-
-            <div class="album-meta">
-                <span>Release date: <span class="meta-value">{{ album.releaseDate}} </span></span>
-                <span> | </span>
-                <span> | </span>
-                <span> <a href={{album.spotifyLink}} target="_blank">Listen in Spotify</a></span>
-
-            </div>
-            <button class="primary write-review-btn" (click)="openReviewModal()">
-                Make an Echo
-            </button>
-
-            @if (errorMessage()) {
-              <div class="error-alert">
-                {{ errorMessage() }}
-              </div>
-            }
-        </div>
+  <div class="album-header-block card">
+    <div class="cover-container">
+      <img [src]="album.imageUrl" [alt]="'Cover of ' + album.title" class="album-cover">
     </div>
 
-    <div class="community-reviews">
-        <h2>Our Community's Echoes:</h2>
+    <div class="metadata-info">
+      <span class="music-type">ALBUM</span>
 
-        @if (isLoadingReviews()) {
-          <p>Loading reviews...</p>
-        } @else if (reviews().length === 0) {
-          <p class="no-reviews">No reviews yet. Be the first to make an echo!</p>
-        } @else {
-          <div class="reviews-list">
-            @for (review of reviews(); track review.albumReviewId) {
-              <div class="review-card card">
-                <div class="review-header">
-                  <div class="user-info">
-                    <strong>{{ review.user.username }}</strong>
-                    <span class="review-date">{{ review.date | date:'short' }}</span>
-                  </div>
-                  <div class="rating">
-                    <span class="stars">★ {{ review.rating }}/5</span>
-                  </div>
-                </div>
-                <div class="review-content">
-                  <p>{{ review.description }}</p>
-                </div>
-              </div>
-            }
+      <h1>{{ album.title }}</h1>
+
+      <p class="artist-name">
+        <a [routerLink]="['/artists', album.artistSpotifyId]">{{ album.artistName }}</a>
+      </p>
+
+      <div class="album-meta">
+        <span>Release date: <span class="meta-value">{{ album.releaseDate}} </span></span>
+        <span> | </span>
+        <span> <a href={{album.spotifyLink}} target="_blank">Listen in Spotify</a></span>
+
+      </div>
+      <button class="primary write-review-btn" (click)="openReviewModal()">
+        Make an Echo
+      </button>
+
+      @if (errorMessage()) {
+      <div class="error-alert">
+        {{ errorMessage() }}
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="track-section card"> <!-- Cambiado de song-section -->
+    <h2>Tracks</h2>
+    <ol class="track-list"> <!-- Cambiado de song-list a ol.track-list -->
+      <!-- Encabezado de la tabla (Opcional, pero recomendado para claridad) -->
+      <li class="track-header">
+        <span class="track-number">#</span>
+        <span class="track-title-header">Title</span>
+        <span class="track-duration">Duration</span>
+      </li>
+      <!-- Iteración sobre las canciones -->
+      @for (track of album.songs; track track.spotifyId; let i = $index) { <!-- Cambiado a album.tracks -->
+      <li class="track-row" [routerLink]="['/songs', track.spotifyId]"> <!-- Cambiado a li.track-row -->
+        <span class="track-number">{{ i + 1 }}</span>
+        <div class="track-info">
+          <span class="track-title">{{ track.name }}</span>
+          <span class="track-artist">{{ track.artistName }}</span> <!-- Mostrar artista debajo del título -->
+        </div>
+        <span class="track-duration">{{ formatDuration(track.durationMs) }}</span>
+      </li>
+      } @empty {
+      <p class="empty-list-message">No tracks found for this album.</p>
+      }
+    </ol>
+  </div>
+  <!-- Fin Sección de la lista de canciones -->
+
+
+  <!-- <div class="song-section card">
+    <h2>{{album.title}}'s tracks:</h2>
+    <div class="song-list">
+
+      @for (item of album.songs; track item.spotifyId; let i = $index) {
+
+      <div class="song-row" [routerLink]="['/songs', item.spotifyId]">
+
+        <span class="album-index">{{ i + 1 }}</span>
+
+        <img [src]="item.imageUrl" [alt]="item.name" class="song-row-img" />
+
+        <div class="song-row-info">
+          <h3>{{ item.name }}</h3>
+          <p>{{ formatDuration(item.durationMs) }}</p>
+          <p>{{item.artistName}}</p>
+        </div>
+
+      </div>
+      } @empty {
+      <p class="empty-list-message">No albums found for this artist.</p>
+      }
+    </div>
+  </div> -->
+
+  <div class="community-reviews">
+    <h2>Our Community's Echoes:</h2>
+
+    @if (isLoadingReviews()) {
+    <p>Loading reviews...</p>
+    } @else if (reviews().length === 0) {
+    <p class="no-reviews">No reviews yet. Be the first to make an echo!</p>
+    } @else {
+    <div class="reviews-list">
+      @for (review of reviews(); track review.albumReviewId) {
+      <div class="review-card card">
+        <div class="review-header">
+          <div class="user-info">
+            <strong>{{ review.user.username }}</strong>
+            <span class="review-date">{{ review.date | date:'short' }}</span>
           </div>
-        }
+          <div class="rating">
+            <span class="stars">★ {{ review.rating }}/5</span>
+          </div>
+        </div>
+        <div class="review-content">
+          <p>{{ review.description }}</p>
+        </div>
+      </div>
+      }
     </div>
+    }
+  </div>
 </section>
 
 @if (isModalOpen() && album) {
-  <app-review-modal
-    [type]="'album'"
-    [item]="album"
-    (closed)="closeReviewModal()"
-    (submitted)="handleReviewSubmit($event)">
-  </app-review-modal>
+<app-review-modal [type]="'album'" [item]="album" (closed)="closeReviewModal()"
+  (submitted)="handleReviewSubmit($event)">
+</app-review-modal>
 }
 }
 }@else {
