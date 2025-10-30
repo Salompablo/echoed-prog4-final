@@ -13,12 +13,25 @@
 
             <div class="artist-meta">
                 <span>Followers in Spotify: <span class="meta-value">{{ artist.followers}} </span></span>
-                <!-- Agregar el link a spotify, pedir al back -->
                 <span> | </span>
                 <span>
                     <a [href]="artist.spotifyLink" target="_blank">Listen in Spotify</a>
                 </span>
             </div>
+        </div>
+    </div>
+    <div class="discography-section card">
+        <h2>Discography: </h2>
+        <div class="album-carousel">
+            @for (item of artist.albums; track $index) {
+            <div class="album-card" [routerLink]="['/albums', item.spotifyId]">
+                <img [src]="item.imageUrl" [alt]="item.title" class="album-img" />
+                <div class="album-info">
+                    <h3>{{ item.title }}</h3>
+
+                </div>
+            </div>
+            }
         </div>
     </div>
 

@@ -9,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 /* Variables for Light Mode (default) */
 :root {
   --bg-color: #faf0e6;
@@ -98,6 +99,7 @@ a {
   color: var(--primary-color);
   text-decoration: none;
 }
+
 a:hover {
   text-decoration: underline;
 }
@@ -105,25 +107,28 @@ a:hover {
 button.primary {
   background-color: var(--primary-color);
   color: var(--btn-text-color);
+  cursor: pointer;
 }
 
 .card {
   background-color: var(--card-bg-color);
-  border: 0.5rem solid var(--card-border-color);
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-html, body{
+html,
+body {
   height: 100%;
 }
 
 
-app-root{
+app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 
-main{
+main {
   flex-grow: 1;
 }

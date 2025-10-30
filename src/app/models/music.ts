@@ -26,6 +26,7 @@ export interface Song {
   imageUrl?: string;
   durationMs?: number;
   previewUrl?: string;
+  explicit: boolean;
   spotifyLink?: string;
   releaseDate: string;
 }
@@ -69,6 +70,7 @@ export interface ArtistSearchResponse {
   followers: number;
   imageUrl?: string;
   spotifyLink?: string;
+  albums: Album[];
 }
 
 export interface AlbumSearchResponse {
@@ -80,6 +82,7 @@ export interface AlbumSearchResponse {
   imageUrl?: string;
   spotifyLink?: string;
   releaseDate: string;
+  songs: Song[];
 }
 
 export interface SongSearchResponse {
@@ -92,6 +95,7 @@ export interface SongSearchResponse {
   albumSpotifyId: string;
   imageUrl?: string;
   durationMs: number;
+  explicit: boolean;
   previewUrl?: string;
   spotifyLink?: string;
   releaseDate: string;
