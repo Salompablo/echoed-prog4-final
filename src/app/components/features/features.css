@@ -1,5 +1,4 @@
 article {
-    /* background-color: aqua; */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -10,10 +9,6 @@ article {
     gap: 0;
 
     align-items: flex-start;
-    /* ¡CLAVE! Permite que los features salten de línea */
-    /* Centra las filas de features */
-    /* Aseguramos que el gap sea 0 y las líneas se controlen con border */
-    /* Añade un poco de espacio vertical */
 }
 
 .feature-container {
@@ -22,7 +17,6 @@ article {
     min-width: 18rem;
     padding: 2rem 1rem;
     margin: 0;
-    /* background-color: yellow; */
 
     border-left: 0.2rem solid var(--card-border-color);
 
@@ -31,7 +25,6 @@ article {
     justify-content: flex-start;
     align-items: center;
 
-    /* Animation */
     opacity: 0;
     transform: translateY(30px);
     animation: fadeSlideUp 0.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
@@ -86,7 +79,6 @@ p {
 
 * {
     margin-bottom: 1rem;
-    /* background-color: violet; */
     text-align: center;
 }
 
@@ -101,11 +93,8 @@ p {
         height: auto;
 
         border-right: 2px solid var(--card-border-color);
-        /* Separador entre features 1/2 y 3/4 */
         border-bottom: 1px solid var(--card-border-color);
-        /* Separador entre fila 1 y fila 2 */
         border-left: none;
-        /* Quitamos el borde izquierdo que se vuelve horizontal */
         margin-bottom: 0;
     }
 
@@ -126,7 +115,6 @@ p {
 
     .feature-container {
         width: 100%;
-        /* Una feature por fila en móviles */
         border-left: none !important;
         border-right: none !important;
         padding: 1.5rem 1rem;

@@ -52,7 +52,6 @@ export class AlbumDetails implements OnInit {
       .subscribe({
         next: (data) => {
           this.album = data;
-          console.log(this.album);
           this.isLoading = false;
           if (data) {
             this.loadReviews(data.spotifyId);

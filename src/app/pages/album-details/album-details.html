@@ -39,23 +39,27 @@
     </div>
   </div>
 
-  <div class="track-section card"> <!-- Cambiado de song-section -->
+  <div class="track-section card">
     <h2>Tracks</h2>
-    <ol class="track-list"> <!-- Cambiado de song-list a ol.track-list -->
-      <!-- Encabezado de la tabla (Opcional, pero recomendado para claridad) -->
+    <ol class="track-list">
       <li class="track-header">
         <span class="track-number">#</span>
         <span class="track-title-header">Title</span>
         <span class="track-duration">Duration</span>
       </li>
-      <!-- Iteración sobre las canciones -->
-      @for (track of album.songs; track track.spotifyId; let i = $index) { <!-- Cambiado a album.tracks -->
-      <li class="track-row" [routerLink]="['/songs', track.spotifyId]"> <!-- Cambiado a li.track-row -->
+      @for (track of album.songs; track track.spotifyId; let i = $index) {
+      <li class="track-row" [routerLink]="['/songs', track.spotifyId]">
         <span class="track-number">{{ i + 1 }}</span>
         <div class="track-info">
-          <span class="track-title">{{ track.name }}</span>
-          <span class="track-artist">{{ track.artistName }}</span> <!-- Mostrar artista debajo del título -->
+          <span class="track-title">{{ track.name }} 
+            @if(track.explicit){
+              <span class="material-symbols-rounded">explicit</span>
+            }
+          </span>
+          <span class="track-artist">{{ track.artistName }}</span>
+          
         </div>
+        
         <span class="track-duration">{{ formatDuration(track.durationMs) }}</span>
       </li>
       } @empty {
@@ -63,33 +67,6 @@
       }
     </ol>
   </div>
-  <!-- Fin Sección de la lista de canciones -->
-
-
-  <!-- <div class="song-section card">
-    <h2>{{album.title}}'s tracks:</h2>
-    <div class="song-list">
-
-      @for (item of album.songs; track item.spotifyId; let i = $index) {
-
-      <div class="song-row" [routerLink]="['/songs', item.spotifyId]">
-
-        <span class="album-index">{{ i + 1 }}</span>
-
-        <img [src]="item.imageUrl" [alt]="item.name" class="song-row-img" />
-
-        <div class="song-row-info">
-          <h3>{{ item.name }}</h3>
-          <p>{{ formatDuration(item.durationMs) }}</p>
-          <p>{{item.artistName}}</p>
-        </div>
-
-      </div>
-      } @empty {
-      <p class="empty-list-message">No albums found for this artist.</p>
-      }
-    </div>
-  </div> -->
 
   <div class="community-reviews">
     <h2>Our Community's Echoes:</h2>

@@ -335,9 +335,12 @@
     }
 }
 
+.material-symbols-rounded {
+    font-size: 1rem;
+}
 
 .track-section {
-    padding: 1.5rem 2rem; /* Más padding para la sección de tracks */
+    padding: 1.5rem 2rem;
     border: 0;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -345,22 +348,21 @@
 }
 
 .track-section h2 {
-    font-size: 1.5rem; /* Tamaño del título "Tracks" */
+    font-size: 1.5rem;
     color: var(--text-color);
     padding-bottom: 0.75rem;
 }
 
 .track-list {
-    list-style: none; /* Quitar numeración por defecto */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
 
-/* Estilo para la cabecera opcional de la tabla */
 .track-header {
     display: flex;
     align-items: center;
-    padding: 0.5rem 1rem; /* Padding horizontal */
+    padding: 0.5rem 1rem;
     margin-bottom: 0.5rem;
     color: var(--secondary-color);
     font-size: 0.8rem;
@@ -370,61 +372,61 @@
 }
 
 .track-header .track-number {
-    width: 30px; /* Ancho fijo para el número */
+    width: 30px;
     text-align: right;
-    margin-right: 1.5rem; /* Espacio después del número */
+    margin-right: 1.5rem;
 }
+
 .track-header .track-title-header {
-     flex-grow: 1; /* Ocupa el espacio restante */
+    flex-grow: 1;
 }
+
 .track-header .track-duration {
-    width: 60px; /* Ancho fijo para la duración */
+    width: 60px;
     text-align: right;
 }
 
-
-/* Estilo para cada fila de canción */
 .track-row {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1rem; /* Más padding vertical */
+    padding: 0.75rem 1rem;
     border-radius: 6px;
     transition: background-color 0.2s ease;
     cursor: pointer;
-    text-decoration: none; /* Quitar subrayado del enlace */
-    color: inherit; /* Heredar color de texto */
+    text-decoration: none;
+    color: inherit;
 }
 
 .track-row:hover {
-    background-color: color-mix(in oklab, var(--bg-color) 85%, white 15%); /* Efecto hover sutil */
+    background-color: color-mix(in oklab, var(--bg-color) 85%, white 15%);
 }
 
 .track-number {
-    width: 30px; /* Mismo ancho que la cabecera */
+    width: 30px;
     text-align: right;
-    margin-right: 1.5rem; /* Mismo margen */
+    margin-right: 1.5rem;
     color: var(--secondary-color);
     font-weight: 500;
 }
 
 .track-info {
-    flex-grow: 1; /* Empuja la duración a la derecha */
-    min-width: 0; /* Previene desbordamiento */
-    margin-right: 1rem; /* Espacio antes de la duración */
+    flex-grow: 1;
+    min-width: 0;
+    margin-right: 1rem;
 }
 
 .track-title {
-    display: block; /* Para que ocupe toda la línea */
+    display: block;
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-color);
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Añadir puntos suspensivos si el título es largo */
+    text-overflow: ellipsis;
 }
 
 .track-artist {
-    display: block; /* Para que ocupe toda la línea */
+    display: block;
     font-size: 0.85rem;
     color: var(--secondary-color);
     white-space: nowrap;
@@ -433,7 +435,7 @@
 }
 
 .track-duration {
-    width: 60px; /* Mismo ancho que la cabecera */
+    width: 60px;
     text-align: right;
     font-size: 0.9rem;
     color: var(--secondary-color);
@@ -447,46 +449,45 @@
     font-style: italic;
 }
 
-/* --- ESTILOS RESPONSIVE --- */
 @media (max-width: 650px) {
-    /* Ajustes generales */
+
     .album-header-block {
-      flex-direction: column;
-      text-align: center;
-      align-items: center;
-      gap: 20px;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        gap: 20px;
     }
 
     .cover-container {
-      width: 180px; /* Reducir tamaño en móvil */
-      height: 180px;
+        width: 180px;
+        height: 180px;
     }
 
     .metadata-info h1 {
-        font-size: 2rem; /* Reducir título */
+        font-size: 2rem;
     }
 
     .write-review-btn {
-        width: 100%; /* Botón ocupa todo el ancho */
+        width: 100%;
     }
 
-    /* Ajustes específicos para la lista de tracks */
     .track-section {
-        padding: 1rem 1.5rem; /* Menos padding */
+        padding: 1rem 1.5rem;
     }
 
-    .track-header, .track-row {
-        padding: 0.6rem 0.75rem; /* Menos padding */
+    .track-header,
+    .track-row {
+        padding: 0.6rem 0.75rem;
     }
 
     .track-number {
-        width: 25px; /* Reducir ancho */
-        margin-right: 1rem; /* Menos margen */
+        width: 25px;
+        margin-right: 1rem;
         font-size: 0.9rem;
     }
 
     .track-info {
-        margin-right: 0.75rem; /* Menos margen */
+        margin-right: 0.75rem;
     }
 
     .track-title {
@@ -498,24 +499,20 @@
     }
 
     .track-duration {
-        width: 50px; /* Reducir ancho */
+        width: 50px;
         font-size: 0.85rem;
     }
 
-    /* Ajustes para las reviews (si es necesario) */
     .review-card {
         padding: 1rem;
     }
+
     .review-header {
-        flex-direction: column; /* Apilar user y rating */
+        flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
     }
 }
-
-
-/* Estilos anteriores de reviews (.community-reviews, .review-card, etc.) permanecen igual */
-/* ... */
 
 
 @media (max-width: 650px) {

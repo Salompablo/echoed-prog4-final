@@ -50,7 +50,7 @@ export class SongDetails implements OnInit {
       })
     ).subscribe({
       next: (data) => {
-        this.song = data;
+        this.song = data;        
         this.isLoading = false;
         if (data) {
           this.loadReviews(data.spotifyId);
