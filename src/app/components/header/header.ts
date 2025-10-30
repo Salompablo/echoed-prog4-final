@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Theme } from '../../services/theme';
+import { ThemeService } from '../../services/theme';
 import { SearchBar } from '../search-bar/search-bar';
 import { ProfileDropdown } from '../profile-dropdown/profile-dropdown';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Logo } from '../logo/logo';
   styleUrl: './header.css',
 })
 export class Header {
-  public themeService = inject(Theme);
+  public themeService = inject(ThemeService);
   private router = inject(Router);
 
   isAuthRoute(): any {

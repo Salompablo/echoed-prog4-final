@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Api } from './api';
+import { ApiService } from './api';
 import { UnifiedSearchResponse } from '../models/search';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { AlbumSearchResponse, ArtistSearchResponse, SongSearchResponse } from '../models/music';
@@ -9,7 +9,7 @@ import { AlbumSearchResponse, ArtistSearchResponse, SongSearchResponse } from '.
   providedIn: 'root',
 })
 export class SearchService {
-  private api = inject(Api);
+  private api = inject(ApiService);
 
   /**
    * Performs a unified search in the backend
@@ -44,7 +44,7 @@ export class SearchService {
     return this.api.get<AlbumSearchResponse>(endpoint);
   }
 
-  getArtistDetail(id: string): Observable<ArtistSearchResponse>{
+  getArtistDetail(id: string): Observable<ArtistSearchResponse> {
     const endpoint = `${API_ENDPOINTS.SPOTIFY.ARTIST(id)}`;
     return this.api.get<ArtistSearchResponse>(endpoint);
   }

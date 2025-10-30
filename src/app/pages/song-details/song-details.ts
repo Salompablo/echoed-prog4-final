@@ -5,7 +5,7 @@ import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 import { ReviewModal } from '../../components/review-modal/review-modal';
 import { SongReviewRequest, SongReviewResponse } from '../../models/interaction';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { DatePipe } from '@angular/common';
@@ -14,10 +14,9 @@ import { DatePipe } from '@angular/common';
   selector: 'app-song-details',
   imports: [RouterLink, ReviewModal, DatePipe],
   templateUrl: './song-details.html',
-  styleUrl: './song-details.css'
+  styleUrl: './song-details.css',
 })
 export class SongDetails implements OnInit {
-
   song: SongSearchResponse | null = null;
   reviews = signal<SongReviewResponse[]>([]);
   isLoading: boolean = true;
@@ -29,7 +28,7 @@ export class SongDetails implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private searchService = inject(SearchService);
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
   private reviewService = inject(ReviewService);
   private errorService = inject(ErrorService);
 
@@ -90,7 +89,7 @@ export class SongDetails implements OnInit {
         // TODO: We will add a Toast Service later, change this
         console.error('Error loading reviews:', err);
         this.isLoadingReviews.set(false);
-      }
+      },
     });
   }
 
@@ -136,18 +135,18 @@ export class SongDetails implements OnInit {
   }
 
   formatDuration(ms: number | undefined): string {
-        if (ms === undefined || ms === null) {
-            return '--:--';
-        }
-        
-        const totalSeconds = Math.floor(ms / 1000);
-        
-        const minutes = Math.floor(totalSeconds / 60);
-        
-        const seconds = totalSeconds % 60;
-        
-        const formattedSeconds = String(seconds).padStart(2, '0');
-
-        return `${minutes}:${formattedSeconds}`;
+    if (ms === undefined || ms === null) {
+      return '--:--';
     }
+
+    const totalSeconds = Math.floor(ms / 1000);
+
+    const minutes = Math.floor(totalSeconds / 60);
+
+    const seconds = totalSeconds % 60;
+
+    const formattedSeconds = String(seconds).padStart(2, '0');
+
+    return `${minutes}:${formattedSeconds}`;
+  }
 }

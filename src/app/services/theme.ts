@@ -1,9 +1,9 @@
-import { DOCUMENT, inject, Injectable, Renderer2 } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Theme {
+export class ThemeService {
   isLightMode: boolean = true;
 
   private document: Document = inject(DOCUMENT);

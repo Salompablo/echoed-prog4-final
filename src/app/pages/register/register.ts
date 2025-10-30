@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
 import { passwordMatcher } from '../../validators/password-matcher';
 import { SignupRequest } from '../../models/auth';
@@ -14,7 +14,7 @@ import { ErrorService } from '../../services/error';
 })
 export class Register {
   private fb = inject(FormBuilder);
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private errorService = inject(ErrorService);
   public passwordsHidden = true;

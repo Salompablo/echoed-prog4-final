@@ -5,7 +5,7 @@ import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 import { ReviewModal } from '../../components/review-modal/review-modal';
 import { AlbumReviewRequest, AlbumReviewResponse } from '../../models/interaction';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { DatePipe } from '@angular/common';
@@ -28,7 +28,7 @@ export class AlbumDetails implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private searchService = inject(SearchService);
-  private authService = inject(Auth);
+  private authService = inject(AuthService);
   private reviewService = inject(ReviewService);
   private errorService = inject(ErrorService);
 

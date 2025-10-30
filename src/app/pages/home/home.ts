@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { Auth } from '../../services/auth';
+import { AuthService } from '../../services/auth';
 import { Features } from '../../components/features/features';
-import { Hero } from "../../components/hero/hero";
+import { Hero } from '../../components/hero/hero';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,4 @@ import { Hero } from "../../components/hero/hero";
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
-
-
-}
+export class Home {}
