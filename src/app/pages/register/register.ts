@@ -25,7 +25,15 @@ export class Register {
     {
       email: ['', [Validators.required, Validators.email]],
 
-      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(/^[a-zA-Z0-9_.-]*$/),
+        ],
+      ],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(120)]],
       confirmPassword: ['', [Validators.required]],
     },

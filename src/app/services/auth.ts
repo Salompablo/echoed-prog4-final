@@ -3,7 +3,7 @@ import { ApiService } from './api';
 import { Router } from '@angular/router';
 import { FullUserProfile, UserProfile } from '../models/user';
 import { AuthProvider, AuthRequest, AuthResponse, SignupRequest } from '../models/auth';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { ToastService } from './toast';
@@ -22,11 +22,9 @@ export class AuthService {
 
   private currentUserSignal = signal<UserProfile | null>(null);
 
-  // Expose a readonly version of the signal to prevent outside modification
   public currentUser = this.currentUserSignal.asReadonly();
 
   constructor() {
-    // Initialize the signal's state from storage
     const user = this.loadUserFromStorage();
     this.currentUserSignal.set(user);
   }
@@ -40,6 +38,13 @@ export class AuthService {
   }
 
   /**
+   * Gets the refresh token from storage.
+   */
+  public getRefreshToken(): string | null {
+    return localStorage.getItem(REFRESH_TOKEN_KEY) || sessionStorage.getItem(REFRESH_TOKEN_KEY);
+  }
+
+  /**
    * Authenticates a user with credentials (email/password).
    * @param request The authentication request payload.
    * @param rememberMe Determines whether to use localStorage (true) or sessionStorage (false).
@@ -47,8 +52,7 @@ export class AuthService {
   public login(request: AuthRequest, rememberMe: boolean = false): Observable<AuthResponse> {
     return this.apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, request).pipe(
       tap((response) => {
-        const profile = this.buildUserProfileFromLocal(response);
-        this.saveSession(profile, response.token, response.refreshToken, rememberMe);
+        this.processAndSaveAuthResponse(response, rememberMe);
       })
     );
   }
@@ -61,8 +65,7 @@ export class AuthService {
   public register(request: SignupRequest, rememberMe: boolean = false): Observable<AuthResponse> {
     return this.apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.REGISTER, request).pipe(
       tap((response) => {
-        const profile = this.buildUserProfileFromLocal(response);
-        this.saveSession(profile, response.token, response.refreshToken, rememberMe);
+        this.processAndSaveAuthResponse(response, rememberMe);
       })
     );
   }
@@ -84,9 +87,41 @@ export class AuthService {
   }
 
   /**
-   * Clears the user session from both storage types and updates the app state.
+   * Calls the refresh token endpoint to get a new set of tokens.
    */
-  public logout(): void {
+  public refreshToken(): Observable<AuthResponse> {
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      return throwError(() => new Error('No refresh token available'));
+    }
+
+    const request = { refreshToken };
+
+    return this.apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.REFRESH, request).pipe(
+      tap((response: AuthResponse) => {
+        const rememberMe = !!localStorage.getItem(TOKEN_KEY);
+        this.processAndSaveAuthResponse(response, rememberMe);
+      })
+    );
+  }
+
+  /**
+   * Processes a standard AuthResponse from the backend (like from login, register, or complete-profile),
+   * builds the local user profile, and saves the session.
+   * @param authResponse The AuthResponse object from the backend.
+   * @param rememberMe Whether the session should be persistent (localStorage).
+   */
+  public processAndSaveAuthResponse(authResponse: AuthResponse, rememberMe: boolean): void {
+    const profile = this.buildUserProfileFromLocal(authResponse);
+    this.saveSession(profile, authResponse.token, authResponse.refreshToken, rememberMe);
+  }
+
+  /**
+   * Clears the user session data (tokens, user info) from storage
+   * and updates the app state.
+   * @param navigateToLogin If true (default), navigates to the /login page.
+   */
+  public logout(navigateToLogin: boolean = true): void {
     localStorage.removeItem(USER_KEY);
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
@@ -94,6 +129,17 @@ export class AuthService {
     sessionStorage.clear();
 
     this.currentUserSignal.set(null);
+
+    if (navigateToLogin) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  /**
+   * Utility method to manually trigger navigation to login.
+   * Used by ModalService.
+   */
+  public navigateToLogin(): void {
     this.router.navigate(['/login']);
   }
 
@@ -171,7 +217,6 @@ export class AuthService {
     if (storageToUpdate) {
       storageToUpdate.setItem(USER_KEY, JSON.stringify(updatedUser));
       this.currentUserSignal.set(updatedUser);
-    
     } else {
       this.toastService.warning(
         'Could not determine storage type (localStorage/sessionStorage) to update user profile.'

@@ -35,6 +35,9 @@
                 @if (username?.errors?.['maxlength']) {
                 <small>Must not exceed 50 characters.</small>
                 }
+                @if (username?.errors?.['pattern']){
+                <small>Must not contain symbols</small>
+                }
             </div>
             }
         </div>

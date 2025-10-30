@@ -22,8 +22,16 @@ export class Oauth2Callback implements OnInit {
       const effectiveRefreshToken = refreshToken ?? '';
 
       try {
+
         this.authService.setSessionFromOAuth(token, effectiveRefreshToken);
-        this.router.navigate(['']);
+        
+        const currentUser = this.authService.currentUser();
+
+        if (currentUser && currentUser.roles.includes('ROLE_INCOMPLETE_PROFILE')) {
+          this.router.navigate(['/finish-profile']);
+        } else {
+          this.router.navigate(['']);
+        }
       } catch (error) {
         console.error('Error during setSessionFromOAuth or navigation:', error);
         this.router.navigate(['/login']);
