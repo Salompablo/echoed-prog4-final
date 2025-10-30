@@ -43,6 +43,10 @@
   --toast-warning-bg: #fff3cd;
   --toast-warning-border: #ffeeba;
   --toast-warning-text: #856404;
+
+  /* Modals */
+  --backdrop-bg-color: rgba(var(--overlay-color-rgb), 0.7);
+  --z-index-modal: 1000;
 }
 
 /* Variables for Dark Mode */
@@ -121,13 +125,11 @@ body {
   height: 100%;
 }
 
-
 app-root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-
 
 main {
   flex-grow: 1;

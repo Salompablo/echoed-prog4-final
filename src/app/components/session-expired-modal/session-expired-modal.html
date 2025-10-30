@@ -1,0 +1,9 @@
+@if (isVisible()) {
+<div class="modal-backdrop">
+    <div class="modal-content card">
+        <h3 class="modal-title">Session Expired</h3>
+        <p>Your session has expired. Please log in again to continue.</p>
+        <button class="modal-btn primary" (click)="onConfirm()">Ok</button>
+    </div>
+</div>
+}

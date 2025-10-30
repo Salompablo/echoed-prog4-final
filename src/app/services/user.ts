@@ -5,6 +5,7 @@ import { FullUserProfile, UpdateUserProfileRequest } from '../models/user';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { PagedResponse } from '../models/api';
 import { AlbumReviewResponse, SongReviewResponse } from '../models/interaction';
+import { AuthResponse } from '../models/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,16 @@ export class UserService {
    */
   updateUserProfile(userId: number, data: UpdateUserProfileRequest): Observable<FullUserProfile> {
     return this.apiService.put<FullUserProfile>(API_ENDPOINTS.USERS.UPDATE(userId), data);
+  }
+
+  /**
+   * Sends username chosen for OAuth profile.
+   * @param username The username chosen by the user
+   * @returns an Observable with the new AuthResponse (including the refreshed token).
+   */
+  completeProfile(username: string): Observable<AuthResponse> {
+    const request = { username };
+    return this.apiService.post<AuthResponse>(API_ENDPOINTS.USERS.COMPLETE_PROFILE, request);
   }
 
   /**

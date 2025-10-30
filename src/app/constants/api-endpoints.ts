@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
       `/songreviews/user/${userId}?pageNumber=${pageNumber}&size=${size}&sort=${sort}`,
     USER_ALBUM_REVIEWS: (userId: number, pageNumber: number, size: number, sort: string = 'date') =>
       `/albumreviews/user/${userId}?pageNumber=${pageNumber}&size=${size}&sort=${sort}`,
+    COMPLETE_PROFILE: '/users/complete-profile',
   },
   SPOTIFY: {
     UNIFIED_SEARCH: '/spotify/unified-search',

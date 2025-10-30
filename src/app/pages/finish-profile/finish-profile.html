@@ -1,0 +1,42 @@
+<div class="finish-profile-container">
+    <h2>Almost there!</h2>
+    <p class="subtitle">Choose your public username to complete your profile.</p>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" formControlName="username" placeholder="Your public username" />
+
+            @if (username?.invalid && (username?.dirty || username?.touched)) {
+            <div class="error-validation">
+                @if (username?.errors?.['required']) {
+                <small>Username is required.</small>
+                }
+                @if (username?.errors?.['minlength']) {
+                <small>Must be at least 3 characters.</small>
+                }
+                @if (username?.errors?.['maxlength']) {
+                <small>Must not exceed 50 characters.</small>
+                }
+                @if (username?.errors?.['pattern']) {
+                <small>Only letters, numbers, and symbols (-, _, .) are allowed.</small>
+                }
+            </div>
+            }
+        </div>
+
+        @if (errorMessage()) {
+        <div class="error-api">
+            {{ errorMessage() }}
+        </div>
+        }
+
+        <button type="submit" [disabled]="profileForm.invalid || isLoading()">
+            @if (isLoading()) {
+            <span>Saving...</span>
+            } @else {
+            <span>Confirm & Enter</span>
+            }
+        </button>
+    </form>
+</div>
