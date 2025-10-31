@@ -24,7 +24,7 @@ export class GenericCarouselComponent {
     return totalItems > this.itemsVisible ? totalItems - this.itemsVisible : 0;
   });
 
-  nextSong(): void {
+  nextItem(): void {
     const currentIdx = this.currentIndex();
     const maxIdx = this.maxIndex(); 
     const totalItems = this.items.length;
@@ -43,7 +43,7 @@ export class GenericCarouselComponent {
     }
   }
 
-  previousSong(): void {
+  previousItem(): void {
     const currentIdx = this.currentIndex();
     const maxIdx = this.maxIndex();
     const totalItems = this.items.length;

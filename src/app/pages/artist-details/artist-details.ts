@@ -3,10 +3,11 @@ import { ArtistSearchResponse } from '../../models/music';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
+import { ArtistAlbumsCarousel } from '../../components/artist-albums-carousel/artist-albums-carousel';
 
 @Component({
   selector: 'app-artist-details',
-  imports: [RouterLink],
+  imports: [RouterLink, ArtistAlbumsCarousel],
   templateUrl: './artist-details.html',
   styleUrl: './artist-details.css',
 })
