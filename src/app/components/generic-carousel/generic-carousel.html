@@ -1,6 +1,8 @@
 <div class="carousel-container">
   <h2>{{ title }}</h2> @if (items.length > 0) {
-    <div class="carousel-wrapper">
+    <div class="carousel-wrapper"
+         (mouseenter)="pauseAutoPlay()"
+         (mouseleave)="resumeAutoPlay()">
       <button
         class="carousel-control prev"
         (click)="previousSong()"
@@ -11,7 +13,7 @@
              [style.transform]="trackTransform"
              [class.transitioning]="transitionEnabled()">
 
-          @for (item of items; track i; let i = $index) {
+          @for (item of displayItems(); track i; let i = $index) {
             <div class="carousel-slide-item">
               <ng-container
                 [ngTemplateOutlet]="itemTemplate"

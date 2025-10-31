@@ -89,4 +89,26 @@ export class ReviewService {
   deleteAlbumReview(reviewId: number): Observable<void> {
     return this.api.delete<void>(`${API_ENDPOINTS.REVIEWS.ALBUM_REVIEWS}/${reviewId}`);
   }
+
+  /**
+   * Fetches all song reviews from all users.
+   * @param size Number of reviews to fetch
+   * @returns Observable containing a paged response of all song reviews sorted by date
+   */
+  getAllSongReviews(size: number = 50): Observable<PagedResponse<SongReviewResponse>> {
+    return this.api.get<PagedResponse<SongReviewResponse>>(
+      `${API_ENDPOINTS.REVIEWS.SONG_REVIEWS}?size=${size}&pageNumber=0&sort=date`
+    );
+  }
+
+  /**
+   * Fetches all album reviews from all users.
+   * @param size Number of reviews to fetch
+   * @returns Observable containing a paged response of all album reviews sorted by date
+   */
+  getAllAlbumReviews(size: number = 50): Observable<PagedResponse<AlbumReviewResponse>> {
+    return this.api.get<PagedResponse<AlbumReviewResponse>>(
+      `${API_ENDPOINTS.REVIEWS.ALBUM_REVIEWS}?size=${size}&pageNumber=0&sort=date`
+    );
+  }
 }
