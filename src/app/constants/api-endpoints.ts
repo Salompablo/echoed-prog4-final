@@ -28,6 +28,12 @@ export const API_ENDPOINTS = {
     GET_SONG_REVIEWS: '/songreviews/songs',
     GET_ALBUM_REVIEWS: '/albumreviews/albums',
   },
+  SONGS: {
+    MOST_REVIEWED_SONGS: "/stats/songs/mostReviewed"
+  },
+  ALBUMS: {
+    MOST_REVIEWED_ALBUMS: "/stats/albums/mostReviewed"
+  }
 } as const;
 
 export const OAUTH2_LINKS = {

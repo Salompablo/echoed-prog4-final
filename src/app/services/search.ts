@@ -4,6 +4,7 @@ import { ApiService } from './api';
 import { UnifiedSearchResponse } from '../models/search';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { AlbumSearchResponse, ArtistSearchResponse, SongSearchResponse } from '../models/music';
+import { PagedResponse } from '../models/api';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,15 @@ export class SearchService {
   getArtistDetail(id: string): Observable<ArtistSearchResponse> {
     const endpoint = `${API_ENDPOINTS.SPOTIFY.ARTIST(id)}`;
     return this.api.get<ArtistSearchResponse>(endpoint);
+  }
+  
+  getMostReviewedSongs(size: number = 10, pageNumber: number = 0){
+    const endpoint = `${API_ENDPOINTS.SONGS.MOST_REVIEWED_SONGS}?size=${size}&pageNumber=${pageNumber}`
+    return this.api.get<PagedResponse<SongSearchResponse>>(endpoint);
+  }
+
+  getMostReviewedAlbums(size: number = 10, pageNumber = 0){
+    const endpoint = `${API_ENDPOINTS.ALBUMS.MOST_REVIEWED_ALBUMS}?size=${size}&pageNumber=${pageNumber}`
+    return this.api.get<PagedResponse<AlbumSearchResponse>>(endpoint);
   }
 }

@@ -1,0 +1,115 @@
+
+.carousel-container {
+  width: 90%;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background-color: var(--card-bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.carousel-container h2 {
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.carousel-wrapper {
+  position: relative;
+}
+
+.carousel-viewport {
+  width: calc(100% - 6rem);
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.carousel-track {
+  display: flex;
+}
+
+.carousel-track.transitioning {
+  transition: transform 0.4s ease-in-out;
+}
+
+.carousel-slide-item {
+  flex: 0 0 10%; 
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carousel-control {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: none;
+  width: 2.5rem;
+  height: 100%;
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-control:hover:not(:disabled) {
+  color: var(--accent-color);
+  background-color: transparent;
+}
+
+.carousel-control:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  color: var(--secondary-color);
+}
+
+.carousel-control.prev {
+  left: 0;
+}
+
+.carousel-control.next {
+  right: 0;
+}
+@media (max-width: 1600px) {
+  .carousel-slide-item {
+    flex: 0 0 12.5%; /* 8 items */
+  }
+}
+@media (max-width: 1200px) {
+  .carousel-slide-item {
+    flex: 0 0 16.66%; /* 6 items */
+  }
+}
+@media (max-width: 900px) {
+  .carousel-slide-item {
+    flex: 0 0 25%; /* 4 items */
+  }
+}
+@media (max-width: 768px) {
+  .carousel-slide-item {
+    flex: 0 0 33.33%; /* 3 items */
+  }
+  .carousel-viewport {
+     width: calc(100% - 5rem);
+  }
+   .carousel-control.prev {
+     left: 0.1rem;
+  }
+   .carousel-control.next {
+     right: 0.1rem;
+  }
+}
+@media (max-width: 500px) {
+  .carousel-slide-item {
+    flex: 0 0 50%; /* 2 items */
+  }
+}

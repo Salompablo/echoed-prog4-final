@@ -1,0 +1,29 @@
+@if (isLoading()) {
+<p>Loading albums...</p>
+} @else if (error()) {
+<p class="error-message">{{ error() }}</p>
+} @else if (mostReviewedAlbums().length > 0) {
+<app-generic-carousel
+  title="Most Reviewed Albums"
+  [items]="mostReviewedAlbums()"
+  [itemsVisible]="10"
+  [itemTemplate]="albumItemTemplate"
+>
+</app-generic-carousel>
+} @else {
+<p>No reviewed albums found.</p>
+}
+
+<ng-template #albumItemTemplate let-album>
+  <a [routerLink]="['/albums', album.spotifyId]" class="slide-link">
+    <img
+      [src]="album.imageUrl || 'assets/default-avatar.svg'"
+      [alt]="album.name + ' cover'"
+      class="album-image"
+    />
+    <div class="album-info">
+      <h3 class="album-title">{{ album.title }}</h3>
+      <p class="album-artist">{{ album.artistName }}</p>
+    </div>
+  </a>
+</ng-template>
