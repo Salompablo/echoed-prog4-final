@@ -27,6 +27,9 @@ export const API_ENDPOINTS = {
     GET_SONG_REVIEWS: '/songreviews/songs',
     GET_ALBUM_REVIEWS: '/albumreviews/albums',
   },
+  SONGS: {
+    MOST_REVIEWED_SONGS: "/stats/songs/mostReviewed"
+  }
 } as const;
 
 export const OAUTH2_LINKS = {
