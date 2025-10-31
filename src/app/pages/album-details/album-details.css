@@ -95,6 +95,10 @@
     font-size: 0.875rem;
 }
 
+.album-btn button {
+    margin-right: 1rem;
+}
+
 .community-reviews h2 {
     font-size: 1.8rem;
     color: var(--primary-color);
@@ -345,6 +349,25 @@
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     margin-bottom: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    transition:
+        opacity 0.4s ease-out,
+        visibility 0.4s step-end,
+        max-height 0.4s ease-out;
+}
+
+.track-section.is-open {
+    opacity: 1;
+    visibility: visible;
+    max-height: 20rem;
+    overflow-y: auto;
+    padding-right: 1rem;
+    transition:
+        opacity 0.4s ease-in,
+        visibility 0.4s step-start,
+        max-height 0.4s ease-in;
 }
 
 .track-section h2 {
@@ -450,6 +473,9 @@
 }
 
 @media (max-width: 650px) {
+    .album-btn button {
+        gap: 1rem;
+    }
 
     .album-header-block {
         flex-direction: column;

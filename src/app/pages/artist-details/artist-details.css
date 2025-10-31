@@ -89,135 +89,52 @@
     font-weight: 700;
 }
 
-
-
-
-
-
-
-
-
 .discography-section {
-    width: 100%;
-    margin: 1rem auto 0;
-    color: var(--text-color);
-    padding: 1rem;
+    padding: 18px 20px 8px;
 }
 
-
-.discography-section h2 {
-    padding: 0 0.5rem;
-    font-size: 1.5rem;
-    color: var(--primary-color);
-}
-
-.album-carousel {
-    width: 100%;
-    display: flex;
-    gap: 1.25rem;
-    overflow-x: auto;
-    padding: 0.5rem 0.25rem 0.75rem;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
-}
-
-
-.album-carousel::-webkit-scrollbar {
-    height: 8px;
-}
-
-
-.album-carousel::-webkit-scrollbar-thumb {
-    background-color: var(--secondary-color);
-    border-radius: 999px;
-}
-
-
-.album-card {
-    flex: 0 0 190px;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: color-mix(in oklab, var(--bg-color) 85%, white 15%);
-    border-radius: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
-    padding: 0.75rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-    text-decoration: none;
-    color: inherit;
-}
-
-
-.album-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-}
-
-
-.album-img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: 10px;
-    object-fit: cover;
-    margin-bottom: 0.6rem;
-}
-
-
-.album-info h3 {
-    font-size: 0.98rem;
-    font-weight: 800;
-    margin: 0 0 0.25rem;
-    color: var(--text-color);
-    line-height: 1.2;
-}
-
-
-.album-info p {
-    font-size: 0.85rem;
-    color: var(--secondary-color);
-    margin: 0;
-}
-
-
-@media (max-width: 900px) {
-    .cover-container {
-        width: 200px;
-        height: 200px;
+@media (max-width: 650px){
+    .artist-header-block {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        gap: 20px;
     }
-}
 
+    .cover-container {
+        width: 180px;
+        height: 180px;
+    }
+
+    .metadata-info h1 {
+        font-size: 2rem;
+    }
+
+}
 
 @media (max-width: 650px) {
     .artist-header-block {
         flex-direction: column;
         text-align: center;
-        align-items: center;
     }
-
 
     .cover-container {
         width: 100%;
         height: auto;
     }
 
-
     .album-cover {
-        max-width: 280px;
+        max-width: 250px;
         margin: 0 auto;
     }
-
 
     .write-review-btn {
         width: 100%;
     }
 
-
-    .album-card {
-        flex-basis: 160px;
+    .artist-meta{
+        display: flex;
+        flex-direction: column;
     }
 }
+

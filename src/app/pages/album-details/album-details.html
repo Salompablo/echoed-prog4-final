@@ -27,9 +27,17 @@
         <span> <a href={{album.spotifyLink}} target="_blank">Listen in Spotify</a></span>
 
       </div>
-      <button class="primary write-review-btn" (click)="openReviewModal()">
-        Make an Echo
-      </button>
+      <div class="album-btn">
+        <button class="primary write-review-btn" (click)="openReviewModal()">
+          Make an Echo
+        </button>
+        <button class="primary write-review-btn" (click)="openTracklist()">
+          {{ showTracks ? 'Hide Tracklist' : 'Show Tracklistt' }}
+        </button>
+      </div>
+
+
+
 
       @if (errorMessage()) {
       <div class="error-alert">
@@ -39,7 +47,7 @@
     </div>
   </div>
 
-  <div class="track-section card">
+  <div class="track-section card" [class.is-open]="showTracks">
     <h2>Tracks</h2>
     <ol class="track-list">
       <li class="track-header">
@@ -51,15 +59,15 @@
       <li class="track-row" [routerLink]="['/songs', track.spotifyId]">
         <span class="track-number">{{ i + 1 }}</span>
         <div class="track-info">
-          <span class="track-title">{{ track.name }} 
+          <span class="track-title">{{ track.name }}
             @if(track.explicit){
-              <span class="material-symbols-rounded">explicit</span>
+            <span class="material-symbols-rounded">explicit</span>
             }
           </span>
           <span class="track-artist">{{ track.artistName }}</span>
-          
+
         </div>
-        
+
         <span class="track-duration">{{ formatDuration(track.durationMs) }}</span>
       </li>
       } @empty {
@@ -67,6 +75,9 @@
       }
     </ol>
   </div>
+
+
+
 
   <div class="community-reviews">
     <h2>Our Community's Echoes:</h2>
