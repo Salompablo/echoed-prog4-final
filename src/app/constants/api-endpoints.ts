@@ -29,6 +29,9 @@ export const API_ENDPOINTS = {
   },
   SONGS: {
     MOST_REVIEWED_SONGS: "/stats/songs/mostReviewed"
+  },
+  ALBUMS: {
+    MOST_REVIEWED_ALBUMS: "/stats/albums/mostReviewed"
   }
 } as const;
 

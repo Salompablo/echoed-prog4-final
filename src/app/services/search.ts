@@ -54,4 +54,9 @@ export class SearchService {
     const endpoint = `${API_ENDPOINTS.SONGS.MOST_REVIEWED_SONGS}?size=${size}&pageNumber=${pageNumber}`
     return this.api.get<PagedResponse<SongSearchResponse>>(endpoint);
   }
+
+  getMostReviewedAlbums(size: number = 10, pageNumber = 0){
+    const endpoint = `${API_ENDPOINTS.ALBUMS.MOST_REVIEWED_ALBUMS}?size=${size}&pageNumber=${pageNumber}`
+    return this.api.get<PagedResponse<AlbumSearchResponse>>(endpoint);
+  }
 }
