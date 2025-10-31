@@ -152,6 +152,61 @@ button[type='submit']:disabled {
   font-weight: 500;
 }
 
+.separator {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+  margin: 1rem 0;
+  position: relative;
+}
+.separator::before,
+.separator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 35%;
+  height: 1px;
+  background-color: var(--card-border-color);
+}
+.separator::before {
+  left: 0;
+}
+.separator::after {
+  right: 0;
+}
+
+.oauth-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.oauth-btn {
+  flex-grow: 1;
+  max-width: 11.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.oauth-btn:hover {
+  background-color: var(--card-border-color);
+  text-decoration: none;
+}
+.oauth-btn .oauth-icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  vertical-align: middle;
+}
+
 .redirect-link {
   text-align: center;
   margin-top: 2rem;
