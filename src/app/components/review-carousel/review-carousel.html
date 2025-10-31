@@ -10,7 +10,7 @@
     [itemsVisible]="10"
     [itemTemplate]="reviewItemTemplate"
     [autoPlay]="true"
-    [autoPlayInterval]="5000"
+    [autoPlayInterval]="3000"
     [pauseOnHover]="true">
   </app-generic-carousel>
 } @else {
@@ -20,9 +20,16 @@
 <ng-template #reviewItemTemplate let-review>
   @if (isSongReview(review)) {
     <a [routerLink]="['/songs', review.song.spotifyId]" class="review-link">
-      <img [src]="review.song.imageUrl || 'assets/default-avatar.svg'"
-           [alt]="review.song.name + ' cover'"
-           class="review-image"/>
+      <div class="review-image-wrapper">
+        <img [src]="review.song.imageUrl || 'assets/default-avatar.svg'"
+             [alt]="review.song.name + ' cover'"
+             class="review-image"/>
+        @if (review.description) {
+          <div class="review-overlay">
+            <p class="review-description">{{ review.description }}</p>
+          </div>
+        }
+      </div>
       <div class="review-info">
         <div class="review-rating">★ {{ review.rating }}/10</div>
         <h3 class="review-title">{{ review.song.name }}</h3>
@@ -32,9 +39,16 @@
     </a>
   } @else {
     <a [routerLink]="['/albums', review.album.spotifyId]" class="review-link">
-      <img [src]="review.album.imageUrl || 'assets/default-avatar.svg'"
-           [alt]="review.album.name + ' cover'"
-           class="review-image"/>
+      <div class="review-image-wrapper">
+        <img [src]="review.album.imageUrl || 'assets/default-avatar.svg'"
+             [alt]="review.album.name + ' cover'"
+             class="review-image"/>
+        @if (review.description) {
+          <div class="review-overlay">
+            <p class="review-description">{{ review.description }}</p>
+          </div>
+        }
+      </div>
       <div class="review-info">
         <div class="review-rating">★ {{ review.rating }}/10</div>
         <h3 class="review-title">{{ review.album.name }}</h3>
