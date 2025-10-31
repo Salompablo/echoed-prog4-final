@@ -46,7 +46,6 @@ export class UserProfile implements OnInit {
 
   profileForm = signal<UpdateUserProfileRequest>({
     username: '',
-    profilePictureUrl: '',
     biography: '',
   });
 
@@ -55,12 +54,6 @@ export class UserProfile implements OnInit {
   userStats = computed(() => this.userProfile()?.userStats ?? null);
 
   isGoogleAccount = computed(() => this.sessionUser()?.provider === AuthProvider.GOOGLE);
-
-  hasProfileImage = computed(() => !!this.userProfile()?.profilePictureUrl);
-
-  profileImageUrl = computed(
-    () => this.userProfile()?.profilePictureUrl || '/assets/icons/default-avatar.svg'
-  );
 
   userInitials = computed(() => {
     const username = this.userProfile()?.username;
@@ -96,12 +89,10 @@ export class UserProfile implements OnInit {
 
     const currentUsername = profile.username ?? '';
     const formUsername = form.username ?? '';
-    const currentPic = profile.profilePictureUrl ?? '';
-    const formPic = form.profilePictureUrl ?? '';
     const currentBio = profile.biography ?? '';
     const formBio = form.biography ?? '';
 
-    return currentUsername !== formUsername || currentPic !== formPic || currentBio !== formBio;
+    return currentUsername !== formUsername || currentBio !== formBio;
   });
 
   ngOnInit(): void {
@@ -200,17 +191,12 @@ export class UserProfile implements OnInit {
   private initializeForm(profile: FullUserProfile): void {
     this.profileForm.set({
       username: profile.username,
-      profilePictureUrl: profile.profilePictureUrl ?? '',
       biography: profile.biography ?? '',
     });
   }
 
   updateUsername(value: string): void {
     this.profileForm.update((form) => ({ ...form, username: value }));
-  }
-
-  updateProfilePictureUrl(value: string): void {
-    this.profileForm.update((form) => ({ ...form, profilePictureUrl: value }));
   }
 
   updateBiography(value: string): void {
@@ -238,7 +224,6 @@ export class UserProfile implements OnInit {
     this.saving.set(true);
     const updateData: UpdateUserProfileRequest = {
       username: formData.username.trim(),
-      profilePictureUrl: formData.profilePictureUrl?.trim() || undefined,
       biography: formData.biography?.trim() || undefined,
     };
 
@@ -253,7 +238,6 @@ export class UserProfile implements OnInit {
 
       this.authService.updateLocalUser({
         username: updatedProfile.username,
-        profilePictureUrl: updatedProfile.profilePictureUrl,
         biography: updatedProfile.biography,
       });
     } catch (error) {

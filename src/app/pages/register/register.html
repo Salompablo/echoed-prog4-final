@@ -102,6 +102,14 @@
         <button type="submit" [disabled]="registerForm.invalid">
             Sign Up
         </button>
+
+        <div class="separator">Or continue with</div>
+        <div class="oauth-buttons">
+            <a [href]="googleOAuthUrl" class="oauth-btn google">
+
+
+                <img src="/assets/google-logo.svg" alt="Google logo" class="oauth-icon" /> Google </a>
+        </div>
     </form>
 
     <div class="redirect-link">

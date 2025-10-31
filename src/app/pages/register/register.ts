@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { passwordMatcher } from '../../validators/password-matcher';
 import { SignupRequest } from '../../models/auth';
 import { ErrorService } from '../../services/error';
+import { OAUTH2_LINKS } from '../../constants/api-endpoints';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,8 @@ export class Register {
   private router = inject(Router);
   private errorService = inject(ErrorService);
   public passwordsHidden = true;
+
+  public googleOAuthUrl = OAUTH2_LINKS.GOOGLE;
 
   public errorMessage: string | null = null;
 
