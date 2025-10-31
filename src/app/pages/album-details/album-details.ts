@@ -18,6 +18,7 @@ import { DatePipe } from '@angular/common';
 })
 export class AlbumDetails implements OnInit {
   album: AlbumSearchResponse | null = null;
+  showTracks: boolean = false;
   reviews = signal<AlbumReviewResponse[]>([]);
   isLoading: boolean = true;
   isLoadingReviews = signal(false);
@@ -90,6 +91,14 @@ export class AlbumDetails implements OnInit {
         this.isLoadingReviews.set(false);
       },
     });
+  }
+
+  openTracklist(){
+    if(this.showTracks){
+      this.showTracks=false
+    }else{
+      this.showTracks=true
+    }
   }
 
   openReviewModal(): void {
