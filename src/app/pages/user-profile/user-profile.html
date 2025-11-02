@@ -70,8 +70,8 @@
                         <div class="form-group">
                             <label for="username">Username</label>
                             <input type="text" id="username" name="username" class="form-input" required minlength="3"
-                                maxlength="50" placeholder="Your username" [ngModel]="profileForm().username"
-                                (ngModelChange)="updateUsername($event)" #usernameInput="ngModel" />
+                                maxlength="50" placeholder="Your username" [(ngModel)]="profileForm().username"
+                                #usernameInput="ngModel" />
                             @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
                             <div class="error-validation">
                                 @if (usernameInput.errors?.['required']) { <small>Username is required.</small> }
@@ -84,10 +84,17 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="profilePicture">Profile Picture URL</label>
+                            <input type="url" id="profilePicture" name="profilePictureUrl" class="form-input"
+                                placeholder="https://example.com/image.jpg"
+                                [(ngModel)]="profileForm().profilePictureUrl" />
+                        </div>
+
+                        <div class="form-group">
                             <label for="biography">Biography</label>
                             <textarea id="biography" name="biography" class="form-textarea" rows="3" maxlength="500"
-                                placeholder="Tell us about yourself..." [ngModel]="profileForm().biography"
-                                (ngModelChange)="updateBiography($event)"></textarea>
+                                placeholder="Tell us about yourself..."
+                                [(ngModel)]="profileForm().biography"></textarea>
                         </div>
 
                         <div class="form-actions">
@@ -224,7 +231,7 @@
                     <h3>Song Reviews ({{ songReviews().length }})</h3>
                     @for (review of songReviews(); track review.songReviewId) {
                     <div class="review-card-placeholder">
-                        <img [src]="review.song.imageUrl || '/assets/default-avatar.svg'" alt="cover" width="50">
+                        <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
                         <div>
                             <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br>
                             Rating: {{ review.rating }} stars <br>
@@ -244,7 +251,7 @@
                     <h3>Album Reviews ({{ albumReviews().length }})</h3>
                     @for (review of albumReviews(); track review.albumReviewId) {
                     <div class="review-card-placeholder">
-                        <img [src]="review.album.imageUrl || '/assets/default-avatar.svg'" alt="cover" width="50">
+                        <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
                         <div>
                             <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br>
                             Rating: {{ review.rating }} stars <br>
@@ -266,7 +273,7 @@
                 <div class="reviews-list">
                     @for (review of songReviews(); track review.songReviewId) {
                     <div class="review-card-placeholder">
-                        <img [src]="review.song.imageUrl || '/assets/default-avatar.svg'" alt="cover" width="50">
+                        <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
                         <div>
                             <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br>
                             Rating: {{ review.rating }} stars <br>
@@ -286,7 +293,7 @@
                 <div class="reviews-list">
                     @for (review of albumReviews(); track review.albumReviewId) {
                     <div class="review-card-placeholder">
-                        <img [src]="review.album.imageUrl || '/assets/default-avatar.svg'" alt="cover" width="50">
+                        <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
                         <div>
                             <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br>
                             Rating: {{ review.rating }} stars <br>
@@ -313,9 +320,22 @@
                 }
             </div>
         </div>
+        <div class="danger-zone card">
+            <h4>Danger Zone</h4>
+            <p>Deactivating your account will hide your profile and all of your content. You can reactivate your account
+                by logging in again.</p>
+            <button (click)="openDeactivateModal()" class="button danger-btn">
+                Deactivate My Account
+            </button>
+        </div>
     </div> }
 
     @else {
     <p>User profile could not be loaded.</p>
     }
 </div>
+
+@if (isDeactivateModalVisible()) {
+<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()" (close)="closeDeactivateModal()">
+</app-deactivate-account-modal>
+}

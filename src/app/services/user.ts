@@ -38,6 +38,27 @@ export class UserService {
   }
 
   /**
+   * Calls the backend to deactivate the current user's account.
+   * Requires the user's current password for verification.
+   * @param password The user's current password.
+   * @returns Observable<void> (El backend devuelve 204 No Content)
+   */
+  deactivateAccount(password: string): Observable<void> {
+    const request = { password };
+    return this.apiService.post<void>(API_ENDPOINTS.USERS.DEACTIVATE, request);
+  }
+
+  /**
+   * Calls the backend to reactivate a user's account.
+   * This is a public endpoint and does not require an auth token.
+   * @param userId The ID of the user to reactivate.
+   * @returns Observable<void> (El backend devuelve 204 No Content)
+   */
+  reactivateAccount(userId: number | string): Observable<void> {
+    return this.apiService.put<void>(API_ENDPOINTS.USERS.REACTIVATE(userId), {});
+  }
+
+  /**
    * Sends username chosen for OAuth profile.
    * @param username The username chosen by the user
    * @returns an Observable with the new AuthResponse (including the refreshed token).

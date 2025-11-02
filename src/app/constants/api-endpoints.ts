@@ -15,6 +15,8 @@ export const API_ENDPOINTS = {
     USER_ALBUM_REVIEWS: (userId: number, pageNumber: number, size: number, sort: string = 'date') =>
       `/albumreviews/user/${userId}?pageNumber=${pageNumber}&size=${size}&sort=${sort}`,
     COMPLETE_PROFILE: '/users/complete-profile',
+    DEACTIVATE: '/users/deactivate',
+    REACTIVATE: (userId: number | string) => `/users/${userId}/reactivate`,
   },
   SPOTIFY: {
     UNIFIED_SEARCH: '/spotify/unified-search',

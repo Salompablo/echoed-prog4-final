@@ -24,14 +24,15 @@ export interface UserProfile {
 }
 
 export interface FullUserProfile {
-  id: number; 
+  id: number;
   username: string;
-  biography?: string | null; 
-  profilePictureUrl?: string | null; 
-  joinDate: string; 
-  roles: string[]; 
+  biography?: string | null;
+  profilePictureUrl?: string | null;
+  joinDate: string;
+  roles: string[];
   permissions: string[];
-  userStats: UserStats | null; 
+  active?: boolean;
+  userStats: UserStats | null;
 }
 
 export interface UserSummary {
