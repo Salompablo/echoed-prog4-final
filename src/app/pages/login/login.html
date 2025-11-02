@@ -46,9 +46,9 @@
             <label for="rememberMe">Remember me</label>
         </div>
 
-        @if (errorMessage) {
+        @if (errorMessage()) {
         <div class="error-api">
-            {{ errorMessage }}
+            {{ errorMessage() }}
         </div>
         }
 
@@ -59,8 +59,6 @@
 
     <div class="oauth-buttons">
         <a [href]="googleOAuthUrl" class="oauth-btn google">
-
-
             <img src="/assets/google-logo.svg" alt="Google logo" class="oauth-icon" /> Google </a>
     </div>
 
@@ -68,3 +66,8 @@
         Don't have an account? <a href="/register">Sign Up</a>
     </div>
 </div>
+
+@if (isReactivateModalVisible() && userIdToReactivate()) {
+<app-reactivate-account-modal [userId]="userIdToReactivate()!" (close)="closeReactivateModal()">
+</app-reactivate-account-modal>
+}

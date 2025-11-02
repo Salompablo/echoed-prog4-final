@@ -1,0 +1,169 @@
+:host {
+  font-family: 'Lato', sans-serif;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--backdrop-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-index-modal);
+  padding: 1rem;
+  box-sizing: border-box;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-content {
+  background: var(--card-bg-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
+  max-width: 480px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  animation: slideUp 0.3s ease-out;
+}
+
+html.dark .modal-content {
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-title {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.modal-content p {
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--primary-color) 20%, transparent);
+}
+
+.form-input.input-error {
+  border-color: #d9534f;
+}
+
+.error-validation {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+.error-validation small {
+  color: #d9534f;
+}
+
+.error-api {
+  color: #d9534f;
+  background-color: color-mix(in srgb, #d9534f 15%, transparent);
+  border: 1px solid #d9534f;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+/* Acciones del Modal (reutilizado de review-modal) */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.button {
+  padding: 0.875rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.button.secondary {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--card-border-color);
+}
+.button.secondary:hover {
+  background-color: var(--card-border-color);
+}
+
+/* Botón de Peligro */
+.button.danger {
+  background-color: #d9534f; /* Rojo peligro */
+  color: #ffffff;
+}
+.button.danger:hover:not(:disabled) {
+  filter: brightness(110%);
+}
+.button.danger:disabled {
+  background-color: #aaa;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

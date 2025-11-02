@@ -10,11 +10,12 @@ import { ErrorService } from '../../services/error';
 import { FullUserProfile, UpdateUserProfileRequest } from '../../models/user';
 import { AlbumReviewResponse, SongReviewResponse } from '../../models/interaction';
 import { AuthProvider } from '../../models/auth';
+import { DeactivateAccountModal } from '../../components/deactivate-account-modal/deactivate-account-modal';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DeactivateAccountModal],
   providers: [DatePipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
@@ -28,6 +29,7 @@ export class UserProfile implements OnInit {
 
   userProfile: WritableSignal<FullUserProfile | null> = signal(null);
   isEditMode = signal(false);
+  isDeactivateModalVisible = signal(false);
 
   songReviews = signal<SongReviewResponse[]>([]);
   albumReviews = signal<AlbumReviewResponse[]>([]);
@@ -263,5 +265,13 @@ export class UserProfile implements OnInit {
   async refreshProfile(): Promise<void> {
     await this.loadProfileAndReviews();
     this.toastService.info('Profile refreshed');
+  }
+
+  openDeactivateModal(): void {
+    this.isDeactivateModalVisible.set(true);
+  }
+
+  closeDeactivateModal(): void {
+    this.isDeactivateModalVisible.set(false);
   }
 }

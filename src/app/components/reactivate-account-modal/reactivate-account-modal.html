@@ -1,0 +1,27 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content card">
+        <h3 class="modal-title">Account Deactivated</h3>
+        <p>
+            Your account is currently deactivated. Would you like to reactivate it to continue?
+        </p>
+
+        @if (errorMessage()) {
+        <div class="error-api" style="margin-bottom: 1.5rem;">
+            {{ errorMessage() }}
+        </div>
+        }
+
+        <div class="modal-actions">
+            <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading()">
+                Cancel
+            </button>
+            <button type="button" class="button primary" (click)="onConfirmReactivate()" [disabled]="isLoading()">
+                @if (isLoading()) {
+                <span>Reactivating...</span>
+                } @else {
+                <span>Yes, Reactivate</span>
+                }
+            </button>
+        </div>
+    </div>
+</div>

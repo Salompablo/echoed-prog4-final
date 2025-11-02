@@ -439,6 +439,74 @@ hr.review-separator {
   cursor: not-allowed;
 }
 
+.error-validation {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+.error-validation small {
+  color: #d9534f;
+}
+.error-api {
+  color: #d9534f;
+  background-color: color-mix(in srgb, #d9534f 15%, transparent);
+  border: 1px solid #d9534f;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.error-api .material-symbols-rounded {
+  font-size: 1.3em;
+}
+
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle; 
+  line-height: 1; 
+}
+
+.danger-zone {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: var(--card-bg-color);
+  border: 1px solid #d9534f; 
+  border-radius: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(217, 83, 79, 0.1);
+}
+
+.danger-zone h4 {
+  color: #d9534f; 
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.danger-zone p {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.danger-btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  background-color: #d9534f;
+  color: #ffffff;
+  transition: filter 0.2s ease;
+}
+
+.danger-btn:hover {
+  filter: brightness(110%);
+}
+
 @media (max-width: 768px) {
   .profile-container {
     margin: 1.5rem auto;
@@ -480,34 +548,4 @@ hr.review-separator {
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
   }
-}
-
-.error-validation {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-}
-.error-validation small {
-  color: #d9534f;
-}
-.error-api {
-  color: #d9534f;
-  background-color: color-mix(in srgb, #d9534f 15%, transparent);
-  border: 1px solid #d9534f;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  font-weight: 500;
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.error-api .material-symbols-rounded {
-  font-size: 1.3em;
-}
-
-.material-symbols-rounded {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  vertical-align: middle; 
-  line-height: 1; 
 }

@@ -1,0 +1,52 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content card">
+        <h3 class="modal-title">Are you sure?</h3>
+
+        @if (isGoogleAccount) {
+        <p>
+            This will deactivate your account. All your activity (reviews, comments) will be hidden.
+            You can reactivate your account by logging in again.
+        </p>
+        } @else {
+        <p>
+            This will deactivate your account. All your activity will be hidden.
+            Please enter your password to confirm.
+        </p>
+        }
+
+        <form [formGroup]="deactivateForm" (ngSubmit)="onConfirmDeactivate()">
+
+            @if (!isGoogleAccount) {
+            <div class="form-group">
+                <label for="password">Enter your password to confirm:</label>
+                <input type="password" id="password" formControlName="password" class="form-input"
+                    [class.input-error]="password?.invalid && password?.touched" />
+                @if (password?.invalid && password?.touched) {
+                <div class="error-validation">
+                    <small>Password is required.</small>
+                </div>
+                }
+            </div>
+            }
+
+            @if (errorMessage()) {
+            <div class="error-api">
+                {{ errorMessage() }}
+            </div>
+            }
+
+            <div class="modal-actions">
+                <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading()">
+                    Cancel
+                </button>
+                <button type="submit" class="button danger" [disabled]="deactivateForm.invalid || isLoading()">
+                    @if (isLoading()) {
+                    <span>Deactivating...</span>
+                    } @else {
+                    <span>Deactivate Account</span>
+                    }
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
