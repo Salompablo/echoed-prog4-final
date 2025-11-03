@@ -89,6 +89,7 @@ html.dark .profile-header {
   object-fit: cover;
   border: 4px solid var(--primary-color);
   background-color: var(--bg-color); 
+  object-fit: cover;
 }
 .avatar-initials {
   display: flex;

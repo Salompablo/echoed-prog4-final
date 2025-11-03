@@ -21,9 +21,9 @@
         <div class="profile-header">
 
             <div class="profile-avatar">
-                <div class="avatar-initials profile-picture" [style.background-color]="'var(--secondary-color)'">
-                    {{ userInitials() }}
-                </div>
+               <img [src]="avatarUrl()" 
+                     [alt]="userProfile()?.username + ' profile avatar'" 
+                     class="profile-picture avatar-image">
             </div>
 
             <div class="profile-details">

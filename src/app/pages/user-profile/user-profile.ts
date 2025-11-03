@@ -53,6 +53,19 @@ export class UserProfile implements OnInit {
 
   private sessionUser = computed(() => this.authService.currentUser());
 
+avatarUrl = computed(() => {
+    const picUrl = this.userProfile()?.profilePictureUrl;
+
+    if (picUrl) {
+      if (picUrl.startsWith('http://') || picUrl.startsWith('https://')) {
+        return picUrl;
+      }
+      return `assets/images/default-avatars/${picUrl}`;
+    }
+    return 'assets/images/default-avatars/classic-dog.png';
+  });
+
+
   userStats = computed(() => this.userProfile()?.userStats ?? null);
 
   isGoogleAccount = computed(() => this.sessionUser()?.provider === AuthProvider.GOOGLE);
