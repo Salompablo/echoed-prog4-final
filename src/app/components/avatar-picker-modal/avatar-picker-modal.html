@@ -1,0 +1,22 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-content card" (click)="$event.stopPropagation()">
+    
+    <div class="modal-header">
+      <h3 class="modal-title">Choose your Avatar</h3>
+      <button class="close-button" (click)="onCancel()" aria-label="Close">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="avatar-grid">
+        @for (avatar of defaultAvatars(); track avatar) {
+          <div class="avatar-option" (click)="selectAvatar(avatar)" tabindex="0" (keydown.enter)="selectAvatar(avatar)">
+            <img 
+              [src]="'assets/images/default-avatars/' + avatar" 
+              [alt]="avatar"
+              class="avatar-image">
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

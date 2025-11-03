@@ -1,341 +1,396 @@
 <div class="profile-container">
+  @if (loading()) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading profile...</p>
+  </div>
+  } @else if (error() && !loading()) {
+  <div class="error-state error-api">
+    <span class="material-symbols-rounded error-icon">error</span>
+    <p>{{ error() }}</p>
+    <button (click)="refreshProfile()" class="retry-btn">Try Again</button>
+  </div>
+  } @else if (userProfile(); as profile) {
+  <div class="profile-content">
+    <div class="profile-header">
+      <div class="profile-avatar" [class.is-editing]="isEditMode()">
+        <img
+          [src]="avatarUrl()"
+          [alt]="userProfile()?.username + ' profile avatar'"
+          class="profile-picture avatar-image"
+          [class.is-editing]="isEditMode()"
+        />
 
-    @if (loading()) {
-    <div class="loading-state">
-        <div class="spinner"></div>
-        <p>Loading profile...</p>
-    </div>
-    }
+        @if (isEditMode()) {
+        <button class="avatar-edit-overlay" (click)="openAvatarModal()" aria-label="Change avatar">
+          <span class="material-symbols-rounded avatar-edit-icon">edit</span>
+        </button>
+        }
+      </div>
+      <div class="profile-details">
+        @if (!isEditMode()) {
+        <div class="profile-view">
+          <h1 class="username">@ {{ profile.username }}</h1>
+          <p class="email">{{ authService.currentUser()?.email }}</p>
 
-    @else if (error() && !loading()) {
-    <div class="error-state error-api">
-        <span class="material-symbols-rounded error-icon">error</span>
-        <p>{{ error() }}</p>
-        <button (click)="refreshProfile()" class="retry-btn">Try Again</button>
-    </div>
-    }
+          @if (profile.roles.length) {
+          <div class="roles">
+            <span class="material-symbols-rounded role-icon">workspace_premium</span>
+            <span class="roles-text">{{ rolesText() }}</span>
+          </div>
+          }
 
-    @else if (userProfile(); as profile) {
-    <div class="profile-content">
+          <div class="account-type">
+            <span class="material-symbols-rounded provider-icon">link</span>
+            <span>{{ accountTypeText() }}</span>
+          </div>
 
-        <div class="profile-header">
+          @if (profile.joinDate) {
+          <div class="join-date">
+            <span class="material-symbols-rounded date-icon">calendar_today</span>
+            <span>Joined {{ formattedJoinDate() }}</span>
+          </div>
+          } @if (profile.biography) {
+          <div class="biography">
+            <span class="material-symbols-rounded bio-icon">description</span>
+            <p class="bio-text">{{ profile.biography }}</p>
+          </div>
+          }
 
-            <div class="profile-avatar">
-               <img [src]="avatarUrl()" 
-                     [alt]="userProfile()?.username + ' profile avatar'" 
-                     class="profile-picture avatar-image">
-            </div>
-
-            <div class="profile-details">
-
-                @if (!isEditMode()) {
-                <div class="profile-view">
-                    <h1 class="username">@ {{ profile.username }}</h1>
-                    <p class="email">{{ authService.currentUser()?.email }}</p>
-
-                    @if (profile.roles.length) {
-                    <div class="roles">
-                        <span class="material-symbols-rounded role-icon">workspace_premium</span>
-                        <span class="roles-text">{{ rolesText() }}</span>
-                    </div>
-                    }
-
-                    <div class="account-type">
-                        <span class="material-symbols-rounded provider-icon">link</span>
-                        <span>{{ accountTypeText() }}</span>
-                    </div>
-
-                    @if (profile.joinDate) {
-                    <div class="join-date">
-                        <span class="material-symbols-rounded date-icon">calendar_today</span>
-                        <span>Joined {{ formattedJoinDate() }}</span>
-                    </div>
-                    }
-
-                    @if (profile.biography) {
-                    <div class="biography">
-                        <span class="material-symbols-rounded bio-icon">description</span>
-                        <p class="bio-text">{{ profile.biography }}</p>
-                    </div>
-                    }
-
-                    <button (click)="toggleEditMode()" class="edit-btn">
-                        <span class="material-symbols-rounded">edit</span> Edit Profile
-                    </button>
-                </div>
-                } @else {
-                <div class="profile-edit">
-                    <form #profileEditForm="ngForm">
-
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" name="username" class="form-input" required minlength="3"
-                                maxlength="50" placeholder="Your username" [(ngModel)]="profileForm().username"
-                                #usernameInput="ngModel" />
-                            @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
-                            <div class="error-validation">
-                                @if (usernameInput.errors?.['required']) { <small>Username is required.</small> }
-                                @if (usernameInput.errors?.['minlength']) { <small>Must be at least 3
-                                    characters.</small> }
-                                @if (usernameInput.errors?.['maxlength']) { <small>Must not exceed 50
-                                    characters.</small> }
-                            </div>
-                            }
-                        </div>
-
-                        <div class="form-group">
-                            <label for="profilePicture">Profile Picture URL</label>
-                            <input type="url" id="profilePicture" name="profilePictureUrl" class="form-input"
-                                placeholder="https://example.com/image.jpg"
-                                [(ngModel)]="profileForm().profilePictureUrl" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="biography">Biography</label>
-                            <textarea id="biography" name="biography" class="form-textarea" rows="3" maxlength="500"
-                                placeholder="Tell us about yourself..."
-                                [(ngModel)]="profileForm().biography"></textarea>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="button" (click)="saveProfile()"
-                                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()"
-                                class="save-btn">
-                                @if (!saving()) {
-                                <span class="material-symbols-rounded">save</span> Save Changes
-                                }
-                                @if (saving()) { <span>Saving...</span> }
-                            </button>
-                            <button type="button" (click)="toggleEditMode()" [disabled]="saving()" class="cancel-btn">
-                                <span class="material-symbols-rounded">cancel</span> Cancel
-                            </button>
-                        </div>
-
-                        @if (hasUnsavedChanges()) {
-                        <div class="unsaved-warning">
-                            <span class="material-symbols-rounded">warning</span> You have unsaved changes
-                        </div>
-                        }
-                    </form>
-                </div>
-                }
-            </div>
+          <button (click)="toggleEditMode()" class="edit-btn">
+            <span class="material-symbols-rounded">edit</span> Edit Profile
+          </button>
         </div>
-        <div class="profile-stats">
-            <h2 class="stats-title">Statistics</h2>
-            @if (profile.userStats; as stats) {
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">bar_chart</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.totalReviews ?? 0 }}</span>
-                        <span class="stat-label">Total Reviews</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">music_note</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.totalSongReviews ?? 0 }}</span>
-                        <span class="stat-label">Song Reviews</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">album</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.totalAlbumReviews ?? 0 }}</span>
-                        <span class="stat-label">Album Reviews</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">star_rate</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.averageRating | number: '1.1-1' }}</span>
-                        <span class="stat-label">Avg Rating</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">chat_bubble</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.totalComments ?? 0 }}</span>
-                        <span class="stat-label">Comments</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">favorite</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.totalReactions ?? 0 }}</span>
-                        <span class="stat-label">Reacts Given</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">thumb_up</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.likesGiven ?? 0 }}</span>
-                        <span class="stat-label">Likes Given</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">recommend</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ (stats.likesReceived ?? 0) + (stats.lovesReceived ?? 0) +
-                            (stats.wowsReceived ?? 0) }}</span>
-                        <span class="stat-label">Positive Recvd</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">calendar_month</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.reviewsThisMonth ?? 0 }}</span>
-                        <span class="stat-label">Reviews (Month)</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="material-symbols-rounded stat-icon">graphic_eq</span>
-                    <div class="stat-info">
-                        <span class="stat-number">{{ stats.commentsThisMonth ?? 0 }}</span>
-                        <span class="stat-label">Comments (Month)</span>
-                    </div>
-                </div>
+        } @else {
+        <div class="profile-edit">
+          <form #profileEditForm="ngForm">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-input"
+                required
+                minlength="3"
+                maxlength="50"
+                placeholder="Your username"
+                [ngModel]="profileForm().username"
+                (ngModelChange)="updateUsername($event)"
+                #usernameInput="ngModel"
+              />
+              @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
+              <div class="error-validation">
+                @if (usernameInput.errors?.['required']) { <small>Username is required.</small> }
+                @if (usernameInput.errors?.['minlength']) {
+                <small>Must be at least 3 characters.</small> } @if
+                (usernameInput.errors?.['maxlength']) {
+                <small>Must not exceed 50 characters.</small> }
+              </div>
+              }
             </div>
-            } @else {
-            <div class="stats-loading">Statistics not available.</div>
+            <div class="form-group">
+              <label for="biography">Biography</label>
+              <textarea
+                id="biography"
+                name="biography"
+                class="form-textarea"
+                rows="3"
+                maxlength="500"
+                placeholder="Tell us about yourself..."
+                [ngModel]="profileForm().biography"
+                (ngModelChange)="updateBiography($event)"
+              ></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button
+                type="button"
+                (click)="saveProfile()"
+                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()"
+                class="save-btn"
+              >
+                @if (!saving()) {
+                <span class="material-symbols-rounded">save</span> Save Changes } @if (saving()) {
+                <span>Saving...</span> }
+              </button>
+              <button
+                type="button"
+                (click)="toggleEditMode()"
+                [disabled]="saving()"
+                class="cancel-btn"
+              >
+                <span class="material-symbols-rounded">cancel</span> Cancel
+              </button>
+            </div>
+
+            @if (hasUnsavedChanges()) {
+            <div class="unsaved-warning">
+              <span class="material-symbols-rounded">warning</span> You have unsaved changes
+            </div>
             }
+          </form>
         </div>
-        <div class="profile-reviews">
-            <div class="reviews-header">
-                <h2 class="reviews-title">My Reviews</h2>
-                <div class="reviews-tabs">
-                    <button (click)="changeTab('reviews')" [class.active]="activeTab() === 'reviews'" class="tab-btn">
-                        All Reviews
-                    </button>
-                    <button (click)="changeTab('song-reviews')" [class.active]="activeTab() === 'song-reviews'"
-                        class="tab-btn">
-                        Songs ({{ profile.userStats?.totalSongReviews ?? 0 }})
-                    </button>
-                    <button (click)="changeTab('album-reviews')" [class.active]="activeTab() === 'album-reviews'"
-                        class="tab-btn">
-                        Albums ({{ profile.userStats?.totalAlbumReviews ?? 0 }})
-                    </button>
-                </div>
-            </div>
-
-            <div class="reviews-content">
-                @if(reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0) {
-                <div class="reviews-loading">
-                    <div class="spinner-small"></div> <span>Loading initial reviews...</span>
-                </div>
-                } @else {
-                @switch (activeTab()) {
-                @case ('reviews') {
-                <div class="reviews-list all-reviews">
-                    <h3>Song Reviews ({{ songReviews().length }})</h3>
-                    @for (review of songReviews(); track review.songReviewId) {
-                    <div class="review-card-placeholder">
-                        <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
-                        <div>
-                            <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br>
-                            Rating: {{ review.rating }} stars <br>
-                            <p>{{ review.description }}</p>
-                            <small>Posted on: {{ review.date | date: 'short' }}</small>
-                        </div>
-                    </div>
-                    }
-                    @if (hasMoreSongReviews()) {
-                    <div class="load-more-section">
-                        <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-                            @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
-                        </button>
-                    </div>
-                    }
-                    <hr class="review-separator">
-                    <h3>Album Reviews ({{ albumReviews().length }})</h3>
-                    @for (review of albumReviews(); track review.albumReviewId) {
-                    <div class="review-card-placeholder">
-                        <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
-                        <div>
-                            <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br>
-                            Rating: {{ review.rating }} stars <br>
-                            <p>{{ review.description }}</p>
-                            <small>Posted on: {{ review.date | date: 'short' }}</small>
-                        </div>
-                    </div>
-                    }
-                    @if (hasMoreAlbumReviews()) {
-                    <div class="load-more-section">
-                        <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-                            @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Albums</span> }
-                        </button>
-                    </div>
-                    }
-                </div>
-                }
-                @case ('song-reviews') {
-                <div class="reviews-list">
-                    @for (review of songReviews(); track review.songReviewId) {
-                    <div class="review-card-placeholder">
-                        <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
-                        <div>
-                            <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br>
-                            Rating: {{ review.rating }} stars <br>
-                            <p>{{ review.description }}</p>
-                            <small>Posted on: {{ review.date | date: 'short' }}</small>
-                        </div>
-                    </div>
-                    }
-                    @if (hasMoreSongReviews()) {
-                    <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-                        @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
-                    </button>
-                    }
-                </div>
-                }
-                @case ('album-reviews') {
-                <div class="reviews-list">
-                    @for (review of albumReviews(); track review.albumReviewId) {
-                    <div class="review-card-placeholder">
-                        <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50">
-                        <div>
-                            <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br>
-                            Rating: {{ review.rating }} stars <br>
-                            <p>{{ review.description }}</p>
-                            <small>Posted on: {{ review.date | date: 'short' }}</small>
-                        </div>
-                    </div>
-                    }
-                    @if (hasMoreAlbumReviews()) {
-                    <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-                        @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Albums</span> }
-                    </button>
-                    }
-                </div>
-                }
-                }
-
-                @if (!reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0) {
-                <div class="empty-state">
-                    <h3>No Reviews Yet</h3>
-                    <p>Start reviewing your favorite music!</p>
-                </div>
-                }
-                }
-            </div>
+        }
+      </div>
+    </div>
+    <div class="profile-stats">
+      <h2 class="stats-title">Statistics</h2>
+      @if (profile.userStats; as stats) {
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">bar_chart</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.totalReviews ?? 0 }}</span>
+            <span class="stat-label">Total Reviews</span>
+          </div>
         </div>
-        <div class="danger-zone card">
-            <h4>Danger Zone</h4>
-            <p>Deactivating your account will hide your profile and all of your content. You can reactivate your account
-                by logging in again.</p>
-            <button (click)="openDeactivateModal()" class="button danger-btn">
-                Deactivate My Account
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">music_note</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.totalSongReviews ?? 0 }}</span>
+            <span class="stat-label">Song Reviews</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">album</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.totalAlbumReviews ?? 0 }}</span>
+            <span class="stat-label">Album Reviews</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">star_rate</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.averageRating | number : '1.1-1' }}</span>
+            <span class="stat-label">Avg Rating</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">chat_bubble</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.totalComments ?? 0 }}</span>
+            <span class="stat-label">Comments</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">favorite</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.totalReactions ?? 0 }}</span>
+            <span class="stat-label">Reacts Given</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">thumb_up</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.likesGiven ?? 0 }}</span>
+            <span class="stat-label">Likes Given</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">recommend</span>
+          <div class="stat-info">
+            <span class="stat-number">{{
+              (stats.likesReceived ?? 0) + (stats.lovesReceived ?? 0) + (stats.wowsReceived ?? 0)
+            }}</span>
+            <span class="stat-label">Positive Recvd</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">calendar_month</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.reviewsThisMonth ?? 0 }}</span>
+            <span class="stat-label">Reviews (Month)</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">graphic_eq</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.commentsThisMonth ?? 0 }}</span>
+            <span class="stat-label">Comments (Month)</span>
+          </div>
+        </div>
+      </div>
+      } @else {
+      <div class="stats-loading">Statistics not available.</div>
+      }
+    </div>
+    <div class="profile-reviews">
+      <div class="reviews-header">
+        <h2 class="reviews-title">My Reviews</h2>
+        <div class="reviews-tabs">
+          <button
+            (click)="changeTab('reviews')"
+            [class.active]="activeTab() === 'reviews'"
+            class="tab-btn"
+          >
+            All Reviews
+          </button>
+          <button
+            (click)="changeTab('song-reviews')"
+            [class.active]="activeTab() === 'song-reviews'"
+            class="tab-btn"
+          >
+            Songs ({{ profile.userStats?.totalSongReviews ?? 0 }})
+          </button>
+          <button
+            (click)="changeTab('album-reviews')"
+            [class.active]="activeTab() === 'album-reviews'"
+            class="tab-btn"
+          >
+            Albums ({{ profile.userStats?.totalAlbumReviews ?? 0 }})
+          </button>
+        </div>
+      </div>
+
+      <div class="reviews-content">
+        @if(reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0) {
+        <div class="reviews-loading">
+          <div class="spinner-small"></div>
+          <span>Loading initial reviews...</span>
+        </div>
+        } @else { @switch (activeTab()) { @case ('reviews') {
+        <div class="reviews-list all-reviews">
+          <h3>Song Reviews ({{ songReviews().length }})</h3>
+          @for (review of songReviews(); track review.songReviewId) {
+          <div class="review-card-placeholder">
+            <img
+              [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'"
+              alt="cover"
+              width="50"
+            />
+            <div>
+              <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br />
+              Rating: {{ review.rating }} stars <br />
+              <p>{{ review.description }}</p>
+              <small>Posted on: {{ review.date | date : 'short' }}</small>
+            </div>
+          </div>
+          } @if (hasMoreSongReviews()) {
+          <div class="load-more-section">
+            <button
+              (click)="loadMoreSongReviews()"
+              class="load-more-btn"
+              [disabled]="reviewsLoading()"
+            >
+              @if(reviewsLoading()) { <span>Loading...</span> } @else {
+              <span>Load More Songs</span> }
             </button>
+          </div>
+          }
+          <hr class="review-separator" />
+          <h3>Album Reviews ({{ albumReviews().length }})</h3>
+          @for (review of albumReviews(); track review.albumReviewId) {
+          <div class="review-card-placeholder">
+            <img
+              [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'"
+              alt="cover"
+              width="50"
+            />
+            <div>
+              <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br />
+              Rating: {{ review.rating }} stars <br />
+              <p>{{ review.description }}</p>
+              <small>Posted on: {{ review.date | date : 'short' }}</small>
+            </div>
+          </div>
+          } @if (hasMoreAlbumReviews()) {
+          <div class="load-more-section">
+            <button
+              (click)="loadMoreAlbumReviews()"
+              class="load-more-btn"
+              [disabled]="reviewsLoading()"
+            >
+              @if(reviewsLoading()) { <span>Loading...</span> } @else {
+              <span>Load More Albums</span> }
+            </button>
+          </div>
+          }
         </div>
-    </div> }
-
-    @else {
-    <p>User profile could not be loaded.</p>
-    }
+        } @case ('song-reviews') {
+        <div class="reviews-list">
+          @for (review of songReviews(); track review.songReviewId) {
+          <div class="review-card-placeholder">
+            <img
+              [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'"
+              alt="cover"
+              width="50"
+            />
+            <div>
+              <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br />
+              Rating: {{ review.rating }} stars <br />
+              <p>{{ review.description }}</p>
+              <small>Posted on: {{ review.date | date : 'short' }}</small>
+            </div>
+          </div>
+          } @if (hasMoreSongReviews()) {
+          <button
+            (click)="loadMoreSongReviews()"
+            class="load-more-btn"
+            [disabled]="reviewsLoading()"
+          >
+            @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
+          </button>
+          }
+        </div>
+        } @case ('album-reviews') {
+        <div class="reviews-list">
+          @for (review of albumReviews(); track review.albumReviewId) {
+          <div class="review-card-placeholder">
+            <img
+              [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'"
+              alt="cover"
+              width="50"
+            />
+            <div>
+              <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br />
+              Rating: {{ review.rating }} stars <br />
+              <p>{{ review.description }}</p>
+              <small>Posted on: {{ review.date | date : 'short' }}</small>
+            </div>
+          </div>
+          } @if (hasMoreAlbumReviews()) {
+          <button
+            (click)="loadMoreAlbumReviews()"
+            class="load-more-btn"
+            [disabled]="reviewsLoading()"
+          >
+            @if(reviewsLoading()) { <span>Loading...</span> } @else {
+            <span>Load More Albums</span> }
+          </button>
+          }
+        </div>
+        } } @if (!reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0) {
+        <div class="empty-state">
+          <h3>No Reviews Yet</h3>
+          <p>Start reviewing your favorite music!</p>
+        </div>
+        } }
+      </div>
+    </div>
+    <div class="danger-zone card">
+      <h4>Danger Zone</h4>
+      <p>
+        Deactivating your account will hide your profile and all of your content. You can reactivate
+        your account by logging in again.
+      </p>
+      <button (click)="openDeactivateModal()" class="button danger-btn">
+        Deactivate My Account
+      </button>
+    </div>
+  </div>
+  } @else {
+  <p>User profile could not be loaded.</p>
+  }
 </div>
 
 @if (isDeactivateModalVisible()) {
-<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()" (close)="closeDeactivateModal()">
+<app-deactivate-account-modal
+  [isGoogleAccount]="isGoogleAccount()"
+  (close)="closeDeactivateModal()"
+>
 </app-deactivate-account-modal>
+} @if (isAvatarModalVisible()) {
+<app-avatar-picker-modal (close)="closeAvatarModal()" (avatarSelected)="onAvatarSelected($event)">
+</app-avatar-picker-modal>
 }

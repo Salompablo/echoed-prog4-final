@@ -81,6 +81,9 @@ html.dark .profile-header {
 
 .profile-avatar {
   flex-shrink: 0;
+  position: relative; 
+  width: 9rem;  
+  height: 9rem; 
 }
 .profile-picture {
   width: 9rem; 
@@ -90,6 +93,47 @@ html.dark .profile-header {
   border: 4px solid var(--primary-color);
   background-color: var(--bg-color); 
   object-fit: cover;
+}
+
+.profile-picture.is-editing {
+  filter: blur(4px) brightness(0.7);
+  opacity: 0.8;
+}
+.profile-picture.avatar-image {
+  transition: filter 0.3s ease, opacity 0.3s ease; 
+}
+
+
+.avatar-edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;  
+  height: 100%; 
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.avatar-edit-icon {
+  font-size: 3rem;
+  color: white;
+  font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .avatar-initials {
   display: flex;

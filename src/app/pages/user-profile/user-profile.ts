@@ -11,11 +11,12 @@ import { FullUserProfile, UpdateUserProfileRequest } from '../../models/user';
 import { AlbumReviewResponse, SongReviewResponse } from '../../models/interaction';
 import { AuthProvider } from '../../models/auth';
 import { DeactivateAccountModal } from '../../components/deactivate-account-modal/deactivate-account-modal';
+import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-picker-modal';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, DeactivateAccountModal],
+  imports: [CommonModule, FormsModule, DeactivateAccountModal, AvatarPickerModal],
   providers: [DatePipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
@@ -30,6 +31,7 @@ export class UserProfile implements OnInit {
   userProfile: WritableSignal<FullUserProfile | null> = signal(null);
   isEditMode = signal(false);
   isDeactivateModalVisible = signal(false);
+  isAvatarModalVisible = signal(false);
 
   songReviews = signal<SongReviewResponse[]>([]);
   albumReviews = signal<AlbumReviewResponse[]>([]);
@@ -53,7 +55,7 @@ export class UserProfile implements OnInit {
 
   private sessionUser = computed(() => this.authService.currentUser());
 
-avatarUrl = computed(() => {
+  avatarUrl = computed(() => {
     const picUrl = this.userProfile()?.profilePictureUrl;
 
     if (picUrl) {
@@ -64,7 +66,6 @@ avatarUrl = computed(() => {
     }
     return 'assets/images/default-avatars/classic-dog.png';
   });
-
 
   userStats = computed(() => this.userProfile()?.userStats ?? null);
 
@@ -106,8 +107,12 @@ avatarUrl = computed(() => {
     const formUsername = form.username ?? '';
     const currentBio = profile.biography ?? '';
     const formBio = form.biography ?? '';
+    const currentAvatar = profile.profilePictureUrl ?? '';
+    const formAvatar = form.profilePictureUrl ?? '';
 
-    return currentUsername !== formUsername || currentBio !== formBio;
+    return (
+      currentUsername !== formUsername || currentBio !== formBio || currentAvatar !== formAvatar
+    );
   });
 
   ngOnInit(): void {
@@ -202,11 +207,19 @@ avatarUrl = computed(() => {
       this.reviewsLoading.set(false);
     }
   }
+  onAvatarSelected(avatarFileName: string): void {
+    this.profileForm.update((form) => ({
+      ...form,
+      profilePictureUrl: avatarFileName,
+    }));
+    this.isAvatarModalVisible.set(false);
+  }
 
   private initializeForm(profile: FullUserProfile): void {
     this.profileForm.set({
       username: profile.username,
       biography: profile.biography ?? '',
+      profilePictureUrl: profile.profilePictureUrl ?? '',
     });
   }
 
@@ -240,6 +253,7 @@ avatarUrl = computed(() => {
     const updateData: UpdateUserProfileRequest = {
       username: formData.username.trim(),
       biography: formData.biography?.trim() || undefined,
+      profilePictureUrl: formData.profilePictureUrl,
     };
 
     try {
@@ -254,6 +268,7 @@ avatarUrl = computed(() => {
       this.authService.updateLocalUser({
         username: updatedProfile.username,
         biography: updatedProfile.biography,
+        profilePictureUrl: updatedProfile.profilePictureUrl,
       });
     } catch (error) {
       this.errorService.logError(error, 'UserProfile.saveProfile');
@@ -269,6 +284,14 @@ avatarUrl = computed(() => {
     } finally {
       this.saving.set(false);
     }
+  }
+
+  openAvatarModal(): void {
+    this.isAvatarModalVisible.set(true);
+  }
+
+  closeAvatarModal(): void {
+    this.isAvatarModalVisible.set(false);
   }
 
   changeTab(tab: 'reviews' | 'song-reviews' | 'album-reviews'): void {
