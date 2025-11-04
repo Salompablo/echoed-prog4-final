@@ -6,7 +6,6 @@
 :host ::ng-deep .carousel-slide-item img,
 .album-image {
     width: 9rem !important;
-    /* ~144px */
     height: 9rem !important;
     border-radius: 0.6rem;
     box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.12);
@@ -17,7 +16,6 @@
     padding: 1rem 0 0 1rem;
     margin-left: 1rem;
     color: var(--text-color);
-    /* mantiene coherencia con tu tema */
 }
 
 .discography-carousel :where(h2, .carousel-title) {
@@ -81,25 +79,25 @@ html.dark .slide-link:hover {
     margin: 0.6rem 0 0.4rem;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 100rem) {
     :host ::ng-deep .carousel-slide-item {
         flex: 0 0 9% !important;
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 75rem) {
     :host ::ng-deep .carousel-slide-item {
         flex: 0 0 12% !important;
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 56.25rem) {
     :host ::ng-deep .carousel-slide-item {
         flex: 0 0 22% !important;
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 37.5rem) {
     :host ::ng-deep .carousel-slide-item {
         flex: 0 0 40% !important;
     }

@@ -64,18 +64,18 @@
   padding: 0 1.5rem;
   position: relative;
   z-index: 3;
-  max-width: 700px;
+  max-width: 43.75rem;
 }
 .redirect-button {
   width: auto;
-  min-width: 150px;
+  min-width: 9.375rem;
   padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 700;
   color: var(--btn-text-color);
   background-color: var(--primary-color);
   border: none;
-  border-radius: 9999px;
+  border-radius: 624.9375rem;
   cursor: pointer;
   transition: background-color 0.3s ease, filter 0.3s ease;
   margin-top: 1rem;
@@ -105,8 +105,8 @@
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  border: 2px solid var(--primary-color);
-  border-radius: 9999px;
+  border: 0.125rem solid var(--primary-color);
+  border-radius: 624.9375rem;
   opacity: 0;
   pointer-events: none;
 }
@@ -168,7 +168,7 @@
 @keyframes fadeSlideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(1.875rem);
   }
   to {
     opacity: 1;
