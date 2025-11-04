@@ -24,9 +24,9 @@
 
 .modal-content {
   background: var(--card-bg-color);
-  border: 1px solid var(--card-border-color);
+  border: 0.0625rem solid var(--card-border-color);
   border-radius: 1.5rem;
-  max-width: 900px;
+  max-width: 56.25rem;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -41,7 +41,7 @@ html.dark .modal-content {
 
 @keyframes slideUp {
   from {
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
     opacity: 0;
   }
   to {
@@ -86,7 +86,7 @@ html.dark .modal-content {
 
 .left-section {
   flex-shrink: 0;
-  width: 240px;
+  width: 15rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -102,7 +102,7 @@ html.dark .modal-content {
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
 }
 
 .item-metadata {
@@ -154,7 +154,7 @@ html.dark .modal-content {
 .form-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  border: 1px solid var(--card-border-color);
+  border: 0.0625rem solid var(--card-border-color);
   border-radius: 0.75rem;
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -207,7 +207,7 @@ html.dark .modal-content {
 
 .button {
   padding: 0.875rem 1.5rem;
-  border-radius: 9999px;
+  border-radius: 9999rem;
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
@@ -233,14 +233,14 @@ html.dark .modal-content {
 .button.secondary {
   background-color: var(--bg-color);
   color: var(--text-color);
-  border: 1px solid var(--card-border-color);
+  border: 0.0625rem solid var(--card-border-color);
 }
 
 .button.secondary:hover {
   background-color: var(--card-border-color);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
   .modal-content {
     max-height: 100vh;
     border-radius: 1rem;
@@ -263,8 +263,8 @@ html.dark .modal-content {
   }
 
   .item-image {
-    width: 120px;
-    height: 120px;
+    width: 7.5rem;
+    height: 7.5rem;
     flex-shrink: 0;
   }
 

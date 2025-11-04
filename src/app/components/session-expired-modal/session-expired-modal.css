@@ -16,11 +16,11 @@
 
 .modal-content {
   background: var(--card-bg-color);
-  border: 1px solid var(--card-border-color);
+  border: 0.0625rem solid var(--card-border-color);
   border-radius: 1.5rem;
   padding: 2.5rem;
   box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
-  max-width: 420px;
+  max-width: 26.25rem;
   width: 100%;
   box-sizing: border-box;
   text-align: center;
@@ -55,7 +55,7 @@ html.dark .modal-content {
   color: var(--btn-text-color);
   background-color: var(--primary-color);
   border: none;
-  border-radius: 9999px;
+  border-radius: 9999rem;
   cursor: pointer;
   transition: filter 0.3s ease;
 }
@@ -81,7 +81,7 @@ html.dark .modal-content {
 
 @keyframes slideUp {
   from {
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
     opacity: 0;
   }
   to {
@@ -90,7 +90,7 @@ html.dark .modal-content {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .modal-content {
     padding: 2rem 1.5rem;
   }

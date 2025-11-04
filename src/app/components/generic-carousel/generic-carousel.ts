@@ -117,7 +117,7 @@ export class GenericCarouselComponent implements OnInit, OnDestroy {
     if (this.items.length <= this.itemsVisible) return;
 
     this.intervalId = setInterval(() => {
-      this.nextSong();
+      this.nextItem();
     }, this.autoPlayInterval);
   }
 

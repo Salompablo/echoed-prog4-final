@@ -15,7 +15,7 @@
   flex-direction: column;
   padding: 2.5rem 2rem;
   background-color: var(--card-bg-color);
-  border: 1px solid var(--card-border-color);
+  border: 0.0625rem solid var(--card-border-color);
   border-radius: 1.5rem;
   box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
 }
@@ -71,7 +71,7 @@ input[type='password'] {
   font-size: 1rem;
   color: var(--text-color);
   background-color: var(--bg-color);
-  border: 1px solid var(--card-border-color);
+  border: 0.0625rem solid var(--card-border-color);
   border-radius: 0.75rem;
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -92,9 +92,9 @@ input[type='password']:focus {
 
 .toggle-password {
   position: absolute;
-  right: 1px;
-  top: 1px;
-  bottom: 1px;
+  right: 0.0625rem;
+  top: 0.0625rem;
+  bottom: 0.0625rem;
   width: 4rem;
   border: none;
   background-color: transparent;
@@ -120,7 +120,7 @@ button[type='submit'] {
   color: var(--btn-text-color);
   background-color: var(--primary-color);
   border: none;
-  border-radius: 9999px;
+  border-radius: 9999rem;
   cursor: pointer;
   transition: background-color 0.3s ease, filter 0.3s ease;
   margin-top: 1rem;
@@ -145,7 +145,7 @@ button[type='submit']:disabled {
 .error-api {
   color: #d9534f;
   background-color: color-mix(in srgb, #d9534f 15%, transparent);
-  border: 1px solid #d9534f;
+  border: 0.0625rem solid #d9534f;
   padding: 0.75rem;
   border-radius: 0.5rem;
   text-align: center;
@@ -165,7 +165,7 @@ button[type='submit']:disabled {
   position: absolute;
   top: 50%;
   width: 35%;
-  height: 1px;
+  height: 0.0625rem;
   background-color: var(--card-border-color);
 }
 .separator::before {
@@ -192,8 +192,8 @@ button[type='submit']:disabled {
   font-weight: 600;
   color: var(--text-color);
   background-color: var(--bg-color);
-  border: 1px solid var(--card-border-color);
-  border-radius: 9999px;
+  border: 0.0625rem solid var(--card-border-color);
+  border-radius: 9999rem;
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
