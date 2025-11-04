@@ -3,8 +3,6 @@ import { ApiService } from './api';
 import { Observable } from 'rxjs';
 import { FullUserProfile, UpdateUserProfileRequest } from '../models/user';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
-import { PagedResponse } from '../models/api';
-import { AlbumReviewResponse, SongReviewResponse } from '../models/interaction';
 import { AuthResponse } from '../models/auth';
 
 @Injectable({
@@ -45,39 +43,5 @@ export class UserService {
   completeProfile(username: string): Observable<AuthResponse> {
     const request = { username };
     return this.apiService.post<AuthResponse>(API_ENDPOINTS.USERS.COMPLETE_PROFILE, request);
-  }
-
-  /**
-   * Fetches a paginated list of song reviews for a specific user ID.
-   * @param userId - The ID of the user.
-   * @param pageNumber - The page number (0-indexed).
-   * @param size - The number of reviews per page.
-   * @param sort - Optional sort parameter (defaults to 'date').
-   */
-  getUserSongReviewsById(
-    userId: number,
-    pageNumber: number,
-    size: number,
-    sort: string = 'date'
-  ): Observable<PagedResponse<SongReviewResponse>> {
-    const endpoint = API_ENDPOINTS.USERS.USER_SONG_REVIEWS(userId, pageNumber, size, sort);
-    return this.apiService.get<PagedResponse<SongReviewResponse>>(endpoint);
-  }
-
-  /**
-   * Fetches a paginated list of album reviews for a specific user ID.
-   * @param userId - The ID of the user.
-   * @param pageNumber - The page number (0-indexed).
-   * @param size - The number of reviews per page.
-   * @param sort - Optional sort parameter (defaults to 'date').
-   */
-  getUserAlbumReviewsById(
-    userId: number,
-    pageNumber: number,
-    size: number,
-    sort: string = 'date'
-  ): Observable<PagedResponse<AlbumReviewResponse>> {
-    const endpoint = API_ENDPOINTS.USERS.USER_ALBUM_REVIEWS(userId, pageNumber, size, sort);
-    return this.apiService.get<PagedResponse<AlbumReviewResponse>>(endpoint);
   }
 }

@@ -100,3 +100,13 @@ export interface SongReviewRequest {
   rating: number;
   description: string;
 }
+
+export interface UpdateSongReviewRequest {
+  rating?: number;
+  description?: string;
+}
+
+export interface UpdateAlbumReviewRequest {
+  rating?: number;
+  description?: string;
+}
