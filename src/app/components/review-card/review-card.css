@@ -80,6 +80,31 @@
 
 .user-info {
   display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.avatar-link {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.user-avatar:hover {
+  opacity: 0.8;
+}
+
+.user-details {
+  display: flex;
   flex-direction: column;
   gap: 0.25rem;
   min-width: 0;

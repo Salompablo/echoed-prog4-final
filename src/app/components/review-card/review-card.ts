@@ -82,4 +82,16 @@ export class ReviewCard{
   onCardClick(): void {
     this.cardClick.emit(this.review);
   }
+
+  getUserAvatarUrl(): string {
+    const picUrl = this.review?.user?.profilePictureUrl;
+
+    if (picUrl) {
+      if (picUrl.startsWith('http://') || picUrl.startsWith('https://')) {
+        return picUrl;
+      }
+      return `assets/images/default-avatars/${picUrl}`;
+    }
+    return 'assets/images/default-avatars/classic-dog.png';
+  }
 }
