@@ -27,7 +27,9 @@
         @if (!isEditMode()) {
         <div class="profile-view">
           <h1 class="username">@ {{ profile.username }}</h1>
+          @if (isOwnProfile) {
           <p class="email">{{ authService.currentUser()?.email }}</p>
+          }
 
           @if (profile.roles.length) {
           <div class="roles">
@@ -53,9 +55,12 @@
           </div>
           }
 
+          @if (isOwnProfile) {
           <button (click)="toggleEditMode()" class="edit-btn">
             <span class="material-symbols-rounded">edit</span> Edit Profile
           </button>
+          }
+
         </div>
         } @else {
         <div class="profile-edit">
@@ -212,72 +217,73 @@
 
       <div class="reviews-content">
         @switch (activeTab()) {
-          @case ('reviews') {
+        @case ('reviews') {
             <app-review-list
               [reviews]="allReviews()"
-              [loading]="reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0"
+          [loading]="reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0"
               [showUsername]="false"
               [showMusicInfo]="true"
-              emptyMessage="No reviews yet. Start reviewing your favorite music!" />
-            @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
-              <div class="load-more-section">
-                @if (hasMoreSongReviews()) {
+          emptyMessage="No reviews yet. Start reviewing your favorite music!" />
+        @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
+        <div class="load-more-section">
+          @if (hasMoreSongReviews()) {
                   <button
                     (click)="loadMoreSongReviews()"
                     class="load-more-btn"
                     [disabled]="reviewsLoading()">
-                    @if(reviewsLoading()) { <span>Loading...</span> } @else {
-                    <span>Load More Songs</span> }
-                  </button>
-                }
-                @if (hasMoreAlbumReviews()) {
+            @if(reviewsLoading()) { <span>Loading...</span> } @else {
+            <span>Load More Songs</span> }
+          </button>
+          }
+          @if (hasMoreAlbumReviews()) {
                   <button
                     (click)="loadMoreAlbumReviews()"
                     class="load-more-btn"
                     [disabled]="reviewsLoading()">
-                    @if(reviewsLoading()) { <span>Loading...</span> } @else {
-                    <span>Load More Albums</span> }
-                  </button>
-                }
-              </div>
-            }
+            @if(reviewsLoading()) { <span>Loading...</span> } @else {
+            <span>Load More Albums</span> }
+          </button>
           }
-          @case ('song-reviews') {
+        </div>
+        }
+        }
+        @case ('song-reviews') {
             <app-review-list
               [reviews]="songReviews()"
               [loading]="reviewsLoading() && songReviews().length === 0"
               [showUsername]="false"
               [showMusicInfo]="true"
               emptyMessage="No song reviews yet" />
-            @if (hasMoreSongReviews()) {
+        @if (hasMoreSongReviews()) {
               <button
                 (click)="loadMoreSongReviews()"
                 class="load-more-btn"
                 [disabled]="reviewsLoading()">
-                @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
-              </button>
-            }
-          }
-          @case ('album-reviews') {
+          @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
+        </button>
+        }
+        }
+        @case ('album-reviews') {
             <app-review-list
               [reviews]="albumReviews()"
               [loading]="reviewsLoading() && albumReviews().length === 0"
               [showUsername]="false"
               [showMusicInfo]="true"
               emptyMessage="No album reviews yet" />
-            @if (hasMoreAlbumReviews()) {
+        @if (hasMoreAlbumReviews()) {
               <button
                 (click)="loadMoreAlbumReviews()"
                 class="load-more-btn"
                 [disabled]="reviewsLoading()">
-                @if(reviewsLoading()) { <span>Loading...</span> } @else {
-                <span>Load More Albums</span> }
-              </button>
-            }
-          }
+          @if(reviewsLoading()) { <span>Loading...</span> } @else {
+          <span>Load More Albums</span> }
+        </button>
+        }
+        }
         }
       </div>
     </div>
+    @if (isOwnProfile) {
     <div class="danger-zone card">
       <h4>Danger Zone</h4>
       <p>
@@ -288,6 +294,8 @@
         Deactivate My Account
       </button>
     </div>
+    }
+
   </div>
   } @else {
   <p>User profile could not be loaded.</p>

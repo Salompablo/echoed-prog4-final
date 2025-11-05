@@ -1,8 +1,8 @@
-import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { UserService } from '../../services/user';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
@@ -15,6 +15,7 @@ import { DeactivateAccountModal } from '../../components/deactivate-account-moda
 import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-picker-modal';
 import { ChangePasswordModal } from '../../components/change-password-modal/change-password-modal';
 import { ReviewList } from '../../components/review-list/review-list';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -31,15 +32,19 @@ import { ReviewList } from '../../components/review-list/review-list';
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
-export class UserProfile implements OnInit {
+export class UserProfile implements OnInit, OnDestroy {
   private userService = inject(UserService);
   public authService = inject(AuthService);
   private reviewService = inject(ReviewService);
   private toastService = inject(ToastService);
   private errorService = inject(ErrorService);
   private datePipe = inject(DatePipe);
+  private route = inject(ActivatedRoute);
+  private routeSubscription!: Subscription;
 
   userProfile: WritableSignal<FullUserProfile | null> = signal(null);
+  username: string | undefined;
+  isOwnProfile: Boolean = true;
   isEditMode = signal(false);
   isDeactivateModalVisible = signal(false);
   isAvatarModalVisible = signal(false);
@@ -138,17 +143,34 @@ export class UserProfile implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadProfileAndReviews();
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
+      this.username = params.get('username') || undefined;
+      this.loadProfileAndReviews();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 
   async loadProfileAndReviews(): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
     try {
+      if (this.username != undefined) {
+      const otherProfile = await firstValueFrom(
+        this.userService.getUserProfileByUsername(this.username)
+      );
+      this.userProfile.set(otherProfile);
+      this.isOwnProfile = false;
+    } else {
       const profile = await firstValueFrom(this.userService.getCurrentUserProfile());
       this.userProfile.set(profile);
       this.initializeForm(profile);
-
+      this.isOwnProfile = true;
+    }
       await this.resetAndLoadReviews();
     } catch (error) {
       this.errorService.logError(error, 'UserProfile.loadProfileAndReviews');

@@ -18,6 +18,7 @@ export const routes: Routes = [
   { path: 'oauth2/redirect', component: Oauth2Callback },
   { path: 'finish-profile', component: FinishProfile, canActivate: [authGuard] },
   { path: 'profile', component: UserProfile, canActivate: [authGuard] },
+  { path: 'profile/:username', component: UserProfile, canActivate: [authGuard] },
   { path: 'about-us', component: AboutUs },
   { path: `songs/:spotifyId`, component: SongDetails },
   { path: `albums/:spotifyId`, component: AlbumDetails },
