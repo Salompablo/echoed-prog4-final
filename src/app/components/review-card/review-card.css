@@ -1,0 +1,220 @@
+.review-card {
+  padding: 1.5rem;
+  border: 0;
+  margin-bottom: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Music Info Section (for profile view) */
+.music-info {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 0.0625rem solid var(--card-border-color);
+}
+
+.music-link {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.music-thumbnail {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
+.music-thumbnail:hover {
+  opacity: 0.8;
+}
+
+.music-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.music-title {
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-title:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.music-artist {
+  color: var(--secondary-color);
+  font-size: 0.8125rem;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Review Header */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.username {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.username:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.user-info strong {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: var(--secondary-color);
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.stars {
+  display: flex;
+  gap: 0.125rem;
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.star {
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #d1d5db;
+}
+
+.star::before {
+  content: '☆';
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.star.filled::before {
+  content: '★';
+}
+
+.star.half {
+  position: relative;
+}
+
+.star.half::before {
+  content: '☆';
+  color: #d1d5db;
+}
+
+.star.half::after {
+  content: '★';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #fbbf24;
+}
+
+.star.empty {
+  color: #d1d5db;
+}
+
+.star.empty::before {
+  content: '☆';
+}
+
+.rating-text {
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Review Content */
+.review-content {
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.review-content p {
+  margin: 0;
+  word-wrap: break-word;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .review-card {
+    padding: 1rem;
+  }
+
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .rating {
+    align-self: flex-start;
+  }
+
+  .music-info {
+    gap: 0.5rem;
+  }
+
+  .music-thumbnail {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .stars {
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode support (if implemented) */
+html.dark .review-card:hover {
+  box-shadow: 0 0.25rem 0.5rem rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,44 @@
+<div class="review-card card" (click)="onCardClick()">
+  @if (showMusicInfo) {
+    <div class="music-info">
+      <a [routerLink]="getMusicLink()" class="music-link">
+        <img
+          [src]="getMusicImage()"
+          [alt]="getMusicTitle() + ' cover'"
+          class="music-thumbnail">
+      </a>
+      <div class="music-details">
+        <a [routerLink]="getMusicLink()" class="music-title">{{ getMusicTitle() }}</a>
+        <p class="music-artist">{{ getMusicArtist() }}</p>
+      </div>
+    </div>
+  }
+
+  <div class="review-header">
+    <div class="user-info">
+      @if (showUsername) {
+        <a [routerLink]="getUserProfileLink()" class="username">
+          <strong>{{ review.user.username }}</strong>
+        </a>
+      }
+      @if (showDate) {
+        <span class="review-date">{{ review.date | date:'short' }}</span>
+      }
+    </div>
+    @if (showRating) {
+      <div class="rating">
+        <span class="stars">
+          @for (star of getStarArray(); track star) {
+            <span class="star" [class.filled]="isStarFilled(star)" [class.half]="isStarHalf(star)" [class.empty]="!isStarFilled(star) && !isStarHalf(star)"></span>
+          }
+        </span>
+      </div>
+    }
+  </div>
+
+  @if (showDescription && review.description) {
+    <div class="review-content">
+      <p>{{ review.description }}</p>
+    </div>
+  }
+</div>

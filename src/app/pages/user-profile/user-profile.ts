@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { UserService } from '../../services/user';
 import { AuthService } from '../../services/auth';
+import { ReviewService } from '../../services/review';
 import { ToastService } from '../../services/toast';
 import { ErrorService } from '../../services/error';
 import { FullUserProfile, UpdateUserProfileRequest } from '../../models/user';
@@ -13,6 +14,7 @@ import { AuthProvider } from '../../models/auth';
 import { DeactivateAccountModal } from '../../components/deactivate-account-modal/deactivate-account-modal';
 import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-picker-modal';
 import { ChangePasswordModal } from '../../components/change-password-modal/change-password-modal';
+import { ReviewList } from '../../components/review-list/review-list';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,6 +25,7 @@ import { ChangePasswordModal } from '../../components/change-password-modal/chan
     DeactivateAccountModal,
     AvatarPickerModal,
     ChangePasswordModal,
+    ReviewList,
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.html',
@@ -31,6 +34,7 @@ import { ChangePasswordModal } from '../../components/change-password-modal/chan
 export class UserProfile implements OnInit {
   private userService = inject(UserService);
   public authService = inject(AuthService);
+  private reviewService = inject(ReviewService);
   private toastService = inject(ToastService);
   private errorService = inject(ErrorService);
   private datePipe = inject(DatePipe);
@@ -45,6 +49,16 @@ export class UserProfile implements OnInit {
   albumReviews = signal<AlbumReviewResponse[]>([]);
   reviewsLoading = signal(false);
   activeTab = signal<'reviews' | 'song-reviews' | 'album-reviews'>('reviews');
+
+  allReviews = computed(() => {
+    const songs = this.songReviews();
+    const albums = this.albumReviews();
+    return [...songs, ...albums].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    });
+  });
 
   songReviewsPage = signal(0);
   albumReviewsPage = signal(0);
@@ -159,8 +173,8 @@ export class UserProfile implements OnInit {
 
     try {
       const [songRes, albumRes] = await Promise.all([
-        firstValueFrom(this.userService.getUserSongReviewsById(userId, 0, this.reviewsPageSize)),
-        firstValueFrom(this.userService.getUserAlbumReviewsById(userId, 0, this.reviewsPageSize)),
+        firstValueFrom(this.reviewService.getUserSongReviews(userId, 0, this.reviewsPageSize)),
+        firstValueFrom(this.reviewService.getUserAlbumReviews(userId, 0, this.reviewsPageSize)),
       ]);
       this.songReviews.set(songRes.content);
       this.hasMoreSongReviews.set(!songRes.last);
@@ -182,7 +196,7 @@ export class UserProfile implements OnInit {
     const nextPage = this.songReviewsPage() + 1;
     try {
       const res = await firstValueFrom(
-        this.userService.getUserSongReviewsById(userId, nextPage, this.reviewsPageSize)
+        this.reviewService.getUserSongReviews(userId, nextPage, this.reviewsPageSize)
       );
       this.songReviews.update((current) => [...current, ...res.content]);
       this.songReviewsPage.set(nextPage);
@@ -203,7 +217,7 @@ export class UserProfile implements OnInit {
     const nextPage = this.albumReviewsPage() + 1;
     try {
       const res = await firstValueFrom(
-        this.userService.getUserAlbumReviewsById(userId, nextPage, this.reviewsPageSize)
+        this.reviewService.getUserAlbumReviews(userId, nextPage, this.reviewsPageSize)
       );
       this.albumReviews.update((current) => [...current, ...res.content]);
       this.albumReviewsPage.set(nextPage);

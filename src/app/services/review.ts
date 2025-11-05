@@ -111,4 +111,30 @@ export class ReviewService {
       `${API_ENDPOINTS.REVIEWS.ALBUM_REVIEWS}?size=${size}&pageNumber=0&sort=date`
     );
   }
+
+  updateSongReview(songReviewId: number, request: SongReviewRequest): Observable<SongReviewResponse> {
+    return this.api.put<SongReviewResponse>(
+      `${API_ENDPOINTS.REVIEWS.UPDATE_SONG_REVIEW(songReviewId)}`,
+      request
+    );
+  }
+
+  updateAlbumReview(albumReviewId: number, request: AlbumReviewRequest): Observable<AlbumReviewResponse> {
+    return this.api.put<AlbumReviewResponse>(
+      `${API_ENDPOINTS.REVIEWS.UPDATE_ALBUM_REVIEW(albumReviewId)}`,
+      request
+    );
+  }
+
+  getUserSongReviews(userId: number, pageNumber: number, size: number, sort: string = 'date'): Observable<PagedResponse<SongReviewResponse>> {
+    return this.api.get<PagedResponse<SongReviewResponse>>(
+      API_ENDPOINTS.USERS.USER_SONG_REVIEWS(userId, pageNumber, size, sort)
+    );
+  }
+
+  getUserAlbumReviews(userId: number, pageNumber: number, size: number, sort: string = 'date'): Observable<PagedResponse<AlbumReviewResponse>> {
+    return this.api.get<PagedResponse<AlbumReviewResponse>>(
+      API_ENDPOINTS.USERS.USER_ALBUM_REVIEWS(userId, pageNumber, size, sort)
+    );
+  }
 }
