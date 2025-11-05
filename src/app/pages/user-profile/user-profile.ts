@@ -12,11 +12,18 @@ import { AlbumReviewResponse, SongReviewResponse } from '../../models/interactio
 import { AuthProvider } from '../../models/auth';
 import { DeactivateAccountModal } from '../../components/deactivate-account-modal/deactivate-account-modal';
 import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-picker-modal';
+import { ChangePasswordModal } from '../../components/change-password-modal/change-password-modal';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, DeactivateAccountModal, AvatarPickerModal],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DeactivateAccountModal,
+    AvatarPickerModal,
+    ChangePasswordModal,
+  ],
   providers: [DatePipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
@@ -32,6 +39,7 @@ export class UserProfile implements OnInit {
   isEditMode = signal(false);
   isDeactivateModalVisible = signal(false);
   isAvatarModalVisible = signal(false);
+  isChangePasswordModalVisible = signal(false);
 
   songReviews = signal<SongReviewResponse[]>([]);
   albumReviews = signal<AlbumReviewResponse[]>([]);
@@ -309,5 +317,13 @@ export class UserProfile implements OnInit {
 
   closeDeactivateModal(): void {
     this.isDeactivateModalVisible.set(false);
+  }
+
+  openChangePasswordModal(): void {
+    this.isChangePasswordModalVisible.set(true);
+  }
+
+  closeChangePasswordModal(): void {
+    this.isChangePasswordModalVisible.set(false);
   }
 }

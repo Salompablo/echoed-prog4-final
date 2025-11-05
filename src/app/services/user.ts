@@ -5,7 +5,7 @@ import { FullUserProfile, UpdateUserProfileRequest } from '../models/user';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import { PagedResponse } from '../models/api';
 import { AlbumReviewResponse, SongReviewResponse } from '../models/interaction';
-import { AuthResponse } from '../models/auth';
+import { AuthResponse, PasswordUpdateRequest } from '../models/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +56,16 @@ export class UserService {
    */
   reactivateAccount(userId: number | string): Observable<void> {
     return this.apiService.put<void>(API_ENDPOINTS.USERS.REACTIVATE(userId), {});
+  }
+
+  /**
+   * Calls the backend to change the user's password.
+   * This requires the current password for verification.
+   * @param request The password update payload
+   * @returns Observable<void> 
+   */
+  changePassword(request: PasswordUpdateRequest): Observable<void> {
+    return this.apiService.put<void>(API_ENDPOINTS.USERS.CHANGE_PASSWORD, request);
   }
 
   /**

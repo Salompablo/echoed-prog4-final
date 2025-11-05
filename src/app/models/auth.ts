@@ -19,6 +19,12 @@ export interface AuthResponse {
   permissions: string[];
 }
 
+export interface PasswordUpdateRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 export interface RefreshTokenRequest {
   refreshToken: string;
 }

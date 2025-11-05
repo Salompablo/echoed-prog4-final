@@ -14,12 +14,8 @@
   <div class="profile-content">
     <div class="profile-header">
       <div class="profile-avatar" [class.is-editing]="isEditMode()">
-        <img
-          [src]="avatarUrl()"
-          [alt]="userProfile()?.username + ' profile avatar'"
-          class="profile-picture avatar-image"
-          [class.is-editing]="isEditMode()"
-        />
+        <img [src]="avatarUrl()" [alt]="userProfile()?.username + ' profile avatar'"
+          class="profile-picture avatar-image" [class.is-editing]="isEditMode()" />
 
         @if (isEditMode()) {
         <button class="avatar-edit-overlay" (click)="openAvatarModal()" aria-label="Change avatar">
@@ -66,19 +62,9 @@
           <form #profileEditForm="ngForm">
             <div class="form-group">
               <label for="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                class="form-input"
-                required
-                minlength="3"
-                maxlength="50"
-                placeholder="Your username"
-                [ngModel]="profileForm().username"
-                (ngModelChange)="updateUsername($event)"
-                #usernameInput="ngModel"
-              />
+              <input type="text" id="username" name="username" class="form-input" required minlength="3" maxlength="50"
+                placeholder="Your username" [ngModel]="profileForm().username" (ngModelChange)="updateUsername($event)"
+                #usernameInput="ngModel" />
               @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
               <div class="error-validation">
                 @if (usernameInput.errors?.['required']) { <small>Username is required.</small> }
@@ -91,35 +77,28 @@
             </div>
             <div class="form-group">
               <label for="biography">Biography</label>
-              <textarea
-                id="biography"
-                name="biography"
-                class="form-textarea"
-                rows="3"
-                maxlength="500"
-                placeholder="Tell us about yourself..."
-                [ngModel]="profileForm().biography"
-                (ngModelChange)="updateBiography($event)"
-              ></textarea>
+              <textarea id="biography" name="biography" class="form-textarea" rows="3" maxlength="500"
+                placeholder="Tell us about yourself..." [ngModel]="profileForm().biography"
+                (ngModelChange)="updateBiography($event)"></textarea>
             </div>
 
+            @if (!isGoogleAccount()){
+            <div class="change-password-link">
+              <button type="button" class="button-as-link" (click)="openChangePasswordModal()">
+                <span class="material-symbols-rounded">lock</span>
+                Change Password
+              </button>
+            </div>
+            }
+
             <div class="form-actions">
-              <button
-                type="button"
-                (click)="saveProfile()"
-                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()"
-                class="save-btn"
-              >
+              <button type="button" (click)="saveProfile()"
+                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()" class="save-btn">
                 @if (!saving()) {
                 <span class="material-symbols-rounded">save</span> Save Changes } @if (saving()) {
                 <span>Saving...</span> }
               </button>
-              <button
-                type="button"
-                (click)="toggleEditMode()"
-                [disabled]="saving()"
-                class="cancel-btn"
-              >
+              <button type="button" (click)="toggleEditMode()" [disabled]="saving()" class="cancel-btn">
                 <span class="material-symbols-rounded">cancel</span> Cancel
               </button>
             </div>
@@ -192,7 +171,7 @@
           <div class="stat-info">
             <span class="stat-number">{{
               (stats.likesReceived ?? 0) + (stats.lovesReceived ?? 0) + (stats.wowsReceived ?? 0)
-            }}</span>
+              }}</span>
             <span class="stat-label">Positive Recvd</span>
           </div>
         </div>
@@ -219,25 +198,13 @@
       <div class="reviews-header">
         <h2 class="reviews-title">My Reviews</h2>
         <div class="reviews-tabs">
-          <button
-            (click)="changeTab('reviews')"
-            [class.active]="activeTab() === 'reviews'"
-            class="tab-btn"
-          >
+          <button (click)="changeTab('reviews')" [class.active]="activeTab() === 'reviews'" class="tab-btn">
             All Reviews
           </button>
-          <button
-            (click)="changeTab('song-reviews')"
-            [class.active]="activeTab() === 'song-reviews'"
-            class="tab-btn"
-          >
+          <button (click)="changeTab('song-reviews')" [class.active]="activeTab() === 'song-reviews'" class="tab-btn">
             Songs ({{ profile.userStats?.totalSongReviews ?? 0 }})
           </button>
-          <button
-            (click)="changeTab('album-reviews')"
-            [class.active]="activeTab() === 'album-reviews'"
-            class="tab-btn"
-          >
+          <button (click)="changeTab('album-reviews')" [class.active]="activeTab() === 'album-reviews'" class="tab-btn">
             Albums ({{ profile.userStats?.totalAlbumReviews ?? 0 }})
           </button>
         </div>
@@ -254,11 +221,7 @@
           <h3>Song Reviews ({{ songReviews().length }})</h3>
           @for (review of songReviews(); track review.songReviewId) {
           <div class="review-card-placeholder">
-            <img
-              [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'"
-              alt="cover"
-              width="50"
-            />
+            <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
             <div>
               <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br />
               Rating: {{ review.rating }} stars <br />
@@ -268,11 +231,7 @@
           </div>
           } @if (hasMoreSongReviews()) {
           <div class="load-more-section">
-            <button
-              (click)="loadMoreSongReviews()"
-              class="load-more-btn"
-              [disabled]="reviewsLoading()"
-            >
+            <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
               @if(reviewsLoading()) { <span>Loading...</span> } @else {
               <span>Load More Songs</span> }
             </button>
@@ -282,11 +241,7 @@
           <h3>Album Reviews ({{ albumReviews().length }})</h3>
           @for (review of albumReviews(); track review.albumReviewId) {
           <div class="review-card-placeholder">
-            <img
-              [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'"
-              alt="cover"
-              width="50"
-            />
+            <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
             <div>
               <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br />
               Rating: {{ review.rating }} stars <br />
@@ -296,11 +251,7 @@
           </div>
           } @if (hasMoreAlbumReviews()) {
           <div class="load-more-section">
-            <button
-              (click)="loadMoreAlbumReviews()"
-              class="load-more-btn"
-              [disabled]="reviewsLoading()"
-            >
+            <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
               @if(reviewsLoading()) { <span>Loading...</span> } @else {
               <span>Load More Albums</span> }
             </button>
@@ -311,11 +262,7 @@
         <div class="reviews-list">
           @for (review of songReviews(); track review.songReviewId) {
           <div class="review-card-placeholder">
-            <img
-              [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'"
-              alt="cover"
-              width="50"
-            />
+            <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
             <div>
               <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br />
               Rating: {{ review.rating }} stars <br />
@@ -324,11 +271,7 @@
             </div>
           </div>
           } @if (hasMoreSongReviews()) {
-          <button
-            (click)="loadMoreSongReviews()"
-            class="load-more-btn"
-            [disabled]="reviewsLoading()"
-          >
+          <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
             @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
           </button>
           }
@@ -337,11 +280,7 @@
         <div class="reviews-list">
           @for (review of albumReviews(); track review.albumReviewId) {
           <div class="review-card-placeholder">
-            <img
-              [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'"
-              alt="cover"
-              width="50"
-            />
+            <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
             <div>
               <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br />
               Rating: {{ review.rating }} stars <br />
@@ -350,11 +289,7 @@
             </div>
           </div>
           } @if (hasMoreAlbumReviews()) {
-          <button
-            (click)="loadMoreAlbumReviews()"
-            class="load-more-btn"
-            [disabled]="reviewsLoading()"
-          >
+          <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
             @if(reviewsLoading()) { <span>Loading...</span> } @else {
             <span>Load More Albums</span> }
           </button>
@@ -384,13 +319,15 @@
   }
 </div>
 
+@if(isChangePasswordModalVisible()){
+<app-change-password-modal (close)="closeChangePasswordModal()">
+</app-change-password-modal>
+}
 @if (isDeactivateModalVisible()) {
-<app-deactivate-account-modal
-  [isGoogleAccount]="isGoogleAccount()"
-  (close)="closeDeactivateModal()"
->
+<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()" (close)="closeDeactivateModal()">
 </app-deactivate-account-modal>
-} @if (isAvatarModalVisible()) {
+}
+@if (isAvatarModalVisible()) {
 <app-avatar-picker-modal (close)="closeAvatarModal()" (avatarSelected)="onAvatarSelected($event)">
 </app-avatar-picker-modal>
 }
