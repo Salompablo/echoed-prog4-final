@@ -1,0 +1,48 @@
+<div class="review-card card" [class.profile-mode]="mode === 'profile-list'">
+
+
+    @if (mode === 'profile-list') {
+    <a [routerLink]="reviewLink()" class="item-cover-link">
+        <img [src]="itemImageUrl()" alt="Cover" class="item-cover" />
+    </a>
+    }
+
+
+    <div class="review-details">
+        <div class="review-header">
+            @if (mode === 'item-details') {
+            <div class="user-info-item-details">
+                <img [src]="userAvatarUrl()" [alt]="review.user.username + ' avatar'" class="reviewer-avatar" />
+                <div class="meta-text">
+                    <strong class="username-text">@{{ review.user.username }}</strong>
+                    <span class="review-date-text">{{ review.date | date:'short' }}</span>
+                </div>
+            </div>
+            <div class="rating">
+                <span class="stars">★ {{ review.rating }}/5</span>
+            </div>
+            } @else {
+            <div class="item-info-profile">
+                <a [routerLink]="reviewLink()">
+                    <strong class="item-name-profile">{{ displayName() }}</strong>
+                </a>
+                <span class="item-artist-profile">by {{ musicItem().artistName }}</span>
+            </div>
+            <div class="rating-profile">
+                <span class="stars">★ {{ review.rating }}/5</span>
+            </div>
+            }
+        </div>
+
+
+        <p class="review-description">{{ review.description }}</p>
+
+
+        @if (mode === 'profile-list') {
+        <div class="review-footer-profile">
+            <span class="reviewer-profile">by @{{ review.user.username }}</span>
+            <span class="review-date-profile">{{ review.date | date:'short' }}</span>
+        </div>
+        }
+    </div>
+</div>

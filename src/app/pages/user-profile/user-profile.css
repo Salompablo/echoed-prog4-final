@@ -552,6 +552,11 @@ hr.review-separator {
   filter: brightness(110%);
 }
 
+h3{
+  margin-bottom: 2rem;
+}
+
+
 @media (max-width: 48rem) {
   .profile-container {
     margin: 1.5rem auto;

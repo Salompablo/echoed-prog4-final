@@ -9,10 +9,11 @@ import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { DatePipe } from '@angular/common';
+import { ReviewCard } from '../../components/review-card/review-card';
 
 @Component({
   selector: 'app-song-details',
-  imports: [RouterLink, ReviewModal, DatePipe],
+  imports: [RouterLink, ReviewModal, DatePipe, ReviewCard],
   templateUrl: './song-details.html',
   styleUrl: './song-details.css',
 })
@@ -35,47 +36,48 @@ export class SongDetails implements OnInit {
   currentUser = this.authService.currentUser;
 
   ngOnInit(): void {
-    this.route.params.pipe(
-      switchMap(params => {
-        const songId = params['spotifyId'];
-        this.isLoading = true;
-        this.reviews.set([]); // Reset reviews when navigating to a new song
-        this.loadError.set(null); // Reset error state
+    this.route.params
+      .pipe(
+        switchMap((params) => {
+          const songId = params['spotifyId'];
+          this.isLoading = true;
+          this.reviews.set([]); // Reset reviews when navigating to a new song
+          this.loadError.set(null); // Reset error state
 
-        if (songId) {
-          return this.searchService.getSongDetail(songId);
-        }
-        return of(null);
-      })
-    ).subscribe({
-      next: (data) => {
-        this.song = data;        
-        this.isLoading = false;
-        if (data) {
-          this.loadReviews(data.spotifyId);
-        }
-      },
-      error: (e) => {
-        console.error('Error loading song: ', e);
-        this.isLoading = false;
+          if (songId) {
+            return this.searchService.getSongDetail(songId);
+          }
+          return of(null);
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          this.song = data;
+          this.isLoading = false;
+          if (data) {
+            this.loadReviews(data.spotifyId);
+          }
+        },
+        error: (e) => {
+          console.error('Error loading song: ', e);
+          this.isLoading = false;
 
-        // TODO: We will add a Toast Service later, change this
-        // Check if it's an authentication error
-        if (e.status === 401 || e.status === 403) {
-          this.loadError.set('You need to be logged in to view song details.');
-          // Optionally redirect to login after a delay
-          setTimeout(() => {
-            this.router.navigate(['/login'], {
-              queryParams: { returnUrl: this.router.url }
-            });
-          }, 2000);
-        } else {
-          const message = this.errorService.getErrorMessage(e);
-          this.loadError.set(message);
-        }
-      }
-    })
-
+          // TODO: We will add a Toast Service later, change this
+          // Check if it's an authentication error
+          if (e.status === 401 || e.status === 403) {
+            this.loadError.set('You need to be logged in to view song details.');
+            // Optionally redirect to login after a delay
+            setTimeout(() => {
+              this.router.navigate(['/login'], {
+                queryParams: { returnUrl: this.router.url },
+              });
+            }, 2000);
+          } else {
+            const message = this.errorService.getErrorMessage(e);
+            this.loadError.set(message);
+          }
+        },
+      });
   }
 
   loadReviews(spotifyId: string): void {

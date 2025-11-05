@@ -9,10 +9,12 @@ import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { DatePipe } from '@angular/common';
+import { ReviewCard } from '../../components/review-card/review-card';
+
 
 @Component({
   selector: 'app-album-details',
-  imports: [RouterLink, ReviewModal, DatePipe],
+  imports: [RouterLink, ReviewModal, DatePipe, ReviewCard],
   templateUrl: './album-details.html',
   styleUrl: './album-details.css',
 })
@@ -33,7 +35,9 @@ export class AlbumDetails implements OnInit {
   private reviewService = inject(ReviewService);
   private errorService = inject(ErrorService);
 
+
   currentUser = this.authService.currentUser;
+
 
   ngOnInit(): void {
     this.route.params
@@ -43,6 +47,7 @@ export class AlbumDetails implements OnInit {
           this.isLoading = true;
           this.reviews.set([]); // Reset reviews when navigating to a new album
           this.loadError.set(null); // Reset error state
+
 
           if (albumId) {
             return this.searchService.getAlbumDetail(albumId);
@@ -62,6 +67,7 @@ export class AlbumDetails implements OnInit {
           console.error('Error loading album: ', e);
           this.isLoading = false;
 
+
           // Check if it's an authentication error
           if (e.status === 401 || e.status === 403) {
             this.loadError.set('You need to be logged in to view album details.');
@@ -79,6 +85,7 @@ export class AlbumDetails implements OnInit {
       });
   }
 
+
   loadReviews(spotifyId: string): void {
     this.isLoadingReviews.set(true);
     this.reviewService.getAlbumReviews(spotifyId).subscribe({
@@ -93,6 +100,7 @@ export class AlbumDetails implements OnInit {
     });
   }
 
+
   openTracklist(){
     if(this.showTracks){
       this.showTracks=false
@@ -100,6 +108,7 @@ export class AlbumDetails implements OnInit {
       this.showTracks=true
     }
   }
+
 
   openReviewModal(): void {
     if (!this.currentUser()) {
@@ -110,14 +119,17 @@ export class AlbumDetails implements OnInit {
     this.errorMessage.set(null);
   }
 
+
   closeReviewModal(): void {
     this.isModalOpen.set(false);
   }
+
 
   handleReviewSubmit(reviewData: Partial<AlbumReviewRequest>): void {
     if (!this.album || !this.currentUser()) {
       return;
     }
+
 
     const userId = this.currentUser()!.userId;
     const request: AlbumReviewRequest = {
@@ -125,6 +137,7 @@ export class AlbumDetails implements OnInit {
       rating: reviewData.rating!,
       description: reviewData.description!,
     };
+
 
     this.reviewService.createAlbumReview(this.album.spotifyId, request).subscribe({
       next: (response) => {
@@ -140,18 +153,24 @@ export class AlbumDetails implements OnInit {
     });
   }
 
+
   formatDuration(ms: number | undefined): string {
     if (ms === undefined || ms === null) {
       return '--:--';
     }
 
+
     const totalSeconds = Math.floor(ms / 1000);
+
 
     const minutes = Math.floor(totalSeconds / 60);
 
+
     const seconds = totalSeconds % 60;
 
+
     const formattedSeconds = String(seconds).padStart(2, '0');
+
 
     return `${minutes}:${formattedSeconds}`;
   }

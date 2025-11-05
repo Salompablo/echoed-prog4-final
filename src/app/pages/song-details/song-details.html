@@ -12,8 +12,10 @@
       <img [src]="song.imageUrl" [alt]="'Cover of ' + song.albumName" class="album-cover">
     </div>
 
+
     <div class="metadata-info">
       <span class="music-type">SONG</span>
+
 
       <h1>{{ song.name }}
         @if(song.explicit){
@@ -22,12 +24,14 @@
         </span> }
       </h1>
 
+
       <p class="artist-name">
         <a [routerLink]="['/artists', song.artistSpotifyId]">{{ song.artistName }}</a>
       </p>
       <p class="album-name">
         <a [routerLink]="['/albums', song.albumSpotifyId]">{{ song.albumName }}</a>
       </p>
+
 
       <div class="song-meta">
         <span>Release date: <span class="meta-value">{{ song.releaseDate}} </span></span>
@@ -36,10 +40,12 @@
         <span> | </span>
         <span> <a href={{song.spotifyLink}} target="_blank">Listen in Spotify</a></span>
 
+
       </div>
       <button class="primary write-review-btn" (click)="openReviewModal()">
         Make an Echo
       </button>
+
 
       @if (errorMessage()) {
       <div class="error-alert">
@@ -49,8 +55,10 @@
     </div>
   </div>
 
-  <div class="community-reviews">
+
+  <!-- <div class="community-reviews">
     <h2>Our Community's Echoes:</h2>
+
 
     @if (isLoadingReviews()) {
     <p>Loading reviews...</p>
@@ -76,8 +84,25 @@
       }
     </div>
     }
+  </div> -->
+  <div class="community-reviews">
+    <h2>Our Community's Echoes:</h2>
+
+
+    @if (isLoadingReviews()) {
+    <p>Loading reviews...</p>
+    } @else if (reviews().length === 0) {
+    <p class="no-reviews">No reviews yet. Be the first to make an echo!</p>
+    } @else {
+    <div class="reviews-list">
+      @for (review of reviews(); track review.songReviewId) {
+      <app-review-card [review]="review" [mode]="'item-details'"></app-review-card>
+      }
+    </div>
+    }
   </div>
 </section>
+
 
 @if (isModalOpen() && song) {
 <app-review-modal [type]="'song'" [item]="song" (closed)="closeReviewModal()" (submitted)="handleReviewSubmit($event)">

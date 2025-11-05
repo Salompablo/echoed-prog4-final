@@ -12,11 +12,13 @@ import { AlbumReviewResponse, SongReviewResponse } from '../../models/interactio
 import { AuthProvider } from '../../models/auth';
 import { DeactivateAccountModal } from '../../components/deactivate-account-modal/deactivate-account-modal';
 import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-picker-modal';
+import { ReviewCard } from '../../components/review-card/review-card';
+
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, DeactivateAccountModal, AvatarPickerModal],
+  imports: [CommonModule, FormsModule, DeactivateAccountModal, AvatarPickerModal, ReviewCard],
   providers: [DatePipe],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
@@ -127,6 +129,7 @@ export class UserProfile implements OnInit {
       this.userProfile.set(profile);
       this.initializeForm(profile);
 
+
       await this.resetAndLoadReviews();
     } catch (error) {
       this.errorService.logError(error, 'UserProfile.loadProfileAndReviews');
@@ -137,9 +140,11 @@ export class UserProfile implements OnInit {
     }
   }
 
+
   async resetAndLoadReviews(): Promise<void> {
     const userId = this.userProfile()?.id;
     if (!userId) return;
+
 
     this.reviewsLoading.set(true);
     this.songReviews.set([]);
@@ -148,6 +153,7 @@ export class UserProfile implements OnInit {
     this.albumReviewsPage.set(0);
     this.hasMoreSongReviews.set(true);
     this.hasMoreAlbumReviews.set(true);
+
 
     try {
       const [songRes, albumRes] = await Promise.all([
@@ -166,9 +172,11 @@ export class UserProfile implements OnInit {
     }
   }
 
+
   async loadMoreSongReviews(): Promise<void> {
     const userId = this.userProfile()?.id;
     if (!userId || !this.hasMoreSongReviews() || this.reviewsLoading()) return;
+
 
     this.reviewsLoading.set(true);
     const nextPage = this.songReviewsPage() + 1;
@@ -187,9 +195,11 @@ export class UserProfile implements OnInit {
     }
   }
 
+
   async loadMoreAlbumReviews(): Promise<void> {
     const userId = this.userProfile()?.id;
     if (!userId || !this.hasMoreAlbumReviews() || this.reviewsLoading()) return;
+
 
     this.reviewsLoading.set(true);
     const nextPage = this.albumReviewsPage() + 1;
@@ -215,6 +225,7 @@ export class UserProfile implements OnInit {
     this.isAvatarModalVisible.set(false);
   }
 
+
   private initializeForm(profile: FullUserProfile): void {
     this.profileForm.set({
       username: profile.username,
@@ -223,13 +234,16 @@ export class UserProfile implements OnInit {
     });
   }
 
+
   updateUsername(value: string): void {
     this.profileForm.update((form) => ({ ...form, username: value }));
   }
 
+
   updateBiography(value: string): void {
     this.profileForm.update((form) => ({ ...form, biography: value }));
   }
+
 
   toggleEditMode(): void {
     if (this.isEditMode()) {
@@ -239,15 +253,18 @@ export class UserProfile implements OnInit {
     this.isEditMode.update((current) => !current);
   }
 
+
   async saveProfile(): Promise<void> {
     const profile = this.userProfile();
     const formData = this.profileForm();
     if (!profile) return;
 
+
     if (!formData.username || formData.username.trim().length < 3) {
       this.toastService.error('Username is required and must be at least 3 characters.');
       return;
     }
+
 
     this.saving.set(true);
     const updateData: UpdateUserProfileRequest = {
@@ -255,6 +272,7 @@ export class UserProfile implements OnInit {
       biography: formData.biography?.trim() || undefined,
       profilePictureUrl: formData.profilePictureUrl,
     };
+
 
     try {
       const updatedProfile = await firstValueFrom(
@@ -264,6 +282,7 @@ export class UserProfile implements OnInit {
       this.initializeForm(updatedProfile);
       this.isEditMode.set(false);
       this.toastService.success('Profile updated successfully');
+
 
       this.authService.updateLocalUser({
         username: updatedProfile.username,
@@ -286,28 +305,36 @@ export class UserProfile implements OnInit {
     }
   }
 
+
   openAvatarModal(): void {
     this.isAvatarModalVisible.set(true);
   }
+
 
   closeAvatarModal(): void {
     this.isAvatarModalVisible.set(false);
   }
 
+
   changeTab(tab: 'reviews' | 'song-reviews' | 'album-reviews'): void {
     this.activeTab.set(tab);
   }
+
 
   async refreshProfile(): Promise<void> {
     await this.loadProfileAndReviews();
     this.toastService.info('Profile refreshed');
   }
 
+
   openDeactivateModal(): void {
     this.isDeactivateModalVisible.set(true);
   }
+
 
   closeDeactivateModal(): void {
     this.isDeactivateModalVisible.set(false);
   }
 }
+
+

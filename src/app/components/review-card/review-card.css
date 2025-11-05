@@ -1,0 +1,217 @@
+.review-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border: 0.0625rem solid var(--card-border-color);
+    border-radius: 1rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(78, 52, 46, 0.05);
+    background-color: var(--card-bg-color);
+    transition: box-shadow 0.2s ease;
+}
+
+
+.review-card:hover {
+    box-shadow: 0 0.375rem 0.75rem rgba(78, 52, 46, 0.08);
+}
+
+
+.review-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+
+.review-description {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
+}
+
+
+/* --- Song/Album view --- */
+
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.user-info-item-details {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+
+.reviewer-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 0.0625rem solid var(--card-border-color);
+}
+
+
+.meta-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    min-width: 0;
+    overflow: hidden;
+}
+
+
+.username-text {
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.review-date-text {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    white-space: nowrap;
+}
+
+
+.rating .stars,
+.rating-profile .stars {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+
+/* Oculta elementos del modo perfil en la vista de detalles de ítem */
+.review-card:not(.profile-mode) .item-cover-link,
+.review-card:not(.profile-mode) .item-info-profile,
+.review-card:not(.profile-mode) .rating-profile,
+.review-card:not(.profile-mode) .review-footer-profile {
+    display: none;
+}
+
+/* --- Profile view --- */
+
+.review-card.profile-mode {
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+
+.item-cover-link {
+    flex-shrink: 0;
+    display: block;
+}
+
+
+.item-cover {
+    width: 3.75rem;
+    height: 3.75rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+    box-shadow: 0 0.125rem 0.375rem rgba(0, 0, 0, 0.1);
+}
+
+
+.review-card.profile-mode .user-info-item-details,
+.review-card.profile-mode .rating {
+    display: none;
+}
+
+
+.item-info-profile {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.4rem;
+    min-width: 0;
+}
+
+
+.item-name-profile {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.item-artist-profile {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.review-footer-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    margin-top: 0.4rem;
+}
+
+
+.reviewer-profile {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+
+@media (max-width: 40.625rem) {
+    .review-card {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+
+    .review-card.profile-mode .item-cover {
+        width: 3rem;
+        height: 3rem;
+    }
+
+
+    .reviewer-avatar {
+        width: 2rem;
+        height: 2rem;
+    }
+
+
+    .username-text {
+        font-size: 0.9rem;
+    }
+
+
+    .review-date-text {
+        font-size: 0.75rem;
+    }
+
+
+    .review-description {
+        font-size: 0.9rem;
+        margin: 0.25rem 0;
+    }
+}
