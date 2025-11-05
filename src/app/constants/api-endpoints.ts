@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
     COMPLETE_PROFILE: '/users/complete-profile',
     DEACTIVATE: '/users/deactivate',
     REACTIVATE: (userId: number | string) => `/users/${userId}/reactivate`,
+    CHANGE_PASSWORD: '/users/me/change-password',
   },
   SPOTIFY: {
     UNIFIED_SEARCH: '/spotify/unified-search',
@@ -31,11 +32,11 @@ export const API_ENDPOINTS = {
     GET_ALBUM_REVIEWS: '/albumreviews/albums',
   },
   SONGS: {
-    MOST_REVIEWED_SONGS: "/stats/songs/mostReviewed"
+    MOST_REVIEWED_SONGS: '/stats/songs/mostReviewed',
   },
   ALBUMS: {
-    MOST_REVIEWED_ALBUMS: "/stats/albums/mostReviewed"
-  }
+    MOST_REVIEWED_ALBUMS: '/stats/albums/mostReviewed',
+  },
 } as const;
 
 export const OAUTH2_LINKS = {

@@ -24,7 +24,7 @@
   margin-top: 2rem;
   background-color: var(--card-bg-color);
   border: 0.0625rem solid var(--card-border-color);
-  border-radius: 1.5rem; 
+  border-radius: 1.5rem;
   text-align: center;
   gap: 1rem;
 }
@@ -46,7 +46,7 @@
 
 .error-state .error-icon {
   font-size: 2.5rem;
-  color: #d9534f; 
+  color: #d9534f;
 }
 .error-state p {
   font-size: 1.1rem;
@@ -71,7 +71,7 @@
   padding: 2.5rem 2rem;
   background-color: var(--card-bg-color);
   border: 0.0625rem solid var(--card-border-color);
-  border-radius: 1.5rem; 
+  border-radius: 1.5rem;
   box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
   margin-bottom: 2rem;
 }
@@ -81,17 +81,17 @@ html.dark .profile-header {
 
 .profile-avatar {
   flex-shrink: 0;
-  position: relative; 
-  width: 9rem;  
-  height: 9rem; 
+  position: relative;
+  width: 9rem;
+  height: 9rem;
 }
 .profile-picture {
-  width: 9rem; 
+  width: 9rem;
   height: 9rem;
   border-radius: 50%;
   object-fit: cover;
   border: 0.25rem solid var(--primary-color);
-  background-color: var(--bg-color); 
+  background-color: var(--bg-color);
   object-fit: cover;
 }
 
@@ -100,17 +100,16 @@ html.dark .profile-header {
   opacity: 0.8;
 }
 .profile-picture.avatar-image {
-  transition: filter 0.3s ease, opacity 0.3s ease; 
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
-
 
 .avatar-edit-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;  
-  height: 100%; 
-  border-radius: 50%; 
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,7 +147,7 @@ html.dark .profile-header {
 
 .profile-details {
   flex-grow: 1;
-  width: 100%; 
+  width: 100%;
 }
 .profile-view h1.username {
   font-size: 2.25rem;
@@ -181,23 +180,23 @@ html.dark .profile-header {
 .join-date .date-icon,
 .biography .bio-icon {
   color: var(--primary-color);
-  font-size: 1.3rem; 
-  flex-shrink: 0; 
+  font-size: 1.3rem;
+  flex-shrink: 0;
 }
 
 .roles .material-symbols-rounded,
 .account-type .material-symbols-rounded,
 .join-date .material-symbols-rounded,
 .biography .material-symbols-rounded {
-  vertical-align: middle; 
-  margin-bottom: 0.1em; 
+  vertical-align: middle;
+  margin-bottom: 0.1em;
 }
 
 .biography .bio-text {
   font-style: italic;
   margin: 0;
   line-height: 1.5;
-  white-space: pre-wrap; 
+  white-space: pre-wrap;
 }
 .edit-btn {
   padding: 0.75rem 1.5rem;
@@ -210,23 +209,22 @@ html.dark .profile-header {
   cursor: pointer;
   margin-top: 1.5rem;
   transition: filter 0.2s ease;
-  display: inline-flex; 
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 .edit-btn .material-symbols-rounded {
-  font-size: 1.2em; 
+  font-size: 1.2em;
 }
 .edit-btn:hover {
   filter: brightness(110%);
 }
 
-
 .profile-edit .form-group {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.25rem; 
+  margin-bottom: 1.25rem;
 }
 .profile-edit label {
   font-size: 0.875rem;
@@ -244,7 +242,7 @@ html.dark .profile-header {
   color: var(--text-color);
   background-color: var(--bg-color);
   border: 0.0625rem solid var(--card-border-color);
-  border-radius: 0.75rem; 
+  border-radius: 0.75rem;
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -341,8 +339,8 @@ html.dark .profile-stats {
 }
 
 .stat-icon.material-symbols-rounded {
-  font-size: 2rem; 
-  color: var(--primary-color); 
+  font-size: 2rem;
+  color: var(--primary-color);
 }
 .stat-info .stat-number {
   display: block;
@@ -439,7 +437,7 @@ html.dark .profile-stats {
   box-shadow: 0 0.375rem 0.75rem rgba(78, 52, 46, 0.08);
 }
 .review-card-placeholder img {
-  width: 3.75rem; 
+  width: 3.75rem;
   height: 3.75rem;
   object-fit: cover;
   border-radius: 0.5rem;
@@ -499,7 +497,7 @@ hr.review-separator {
   border-radius: 0.5rem;
   text-align: center;
   font-weight: 500;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
@@ -510,21 +508,21 @@ hr.review-separator {
 
 .material-symbols-rounded {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  vertical-align: middle; 
-  line-height: 1; 
+  vertical-align: middle;
+  line-height: 1;
 }
 
 .danger-zone {
   margin-top: 2rem;
   padding: 2rem;
   background-color: var(--card-bg-color);
-  border: 0.0625rem solid #d9534f; 
+  border: 0.0625rem solid #d9534f;
   border-radius: 1.5rem;
   box-shadow: 0 0.5rem 1.5rem rgba(217, 83, 79, 0.1);
 }
 
 .danger-zone h4 {
-  color: #d9534f; 
+  color: #d9534f;
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-size: 1.25rem;
@@ -549,6 +547,36 @@ hr.review-separator {
 }
 
 .danger-btn:hover {
+  filter: brightness(110%);
+}
+
+.change-password-link {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.button-as-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  color: var(--primary-color);
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.button-as-link .material-symbols-rounded {
+  font-size: 1.1rem;
+  margin-bottom: 0.1em;
+}
+
+.button-as-link:hover {
+  text-decoration: underline;
   filter: brightness(110%);
 }
 
