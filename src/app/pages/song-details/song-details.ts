@@ -8,11 +8,12 @@ import { SongReviewRequest, SongReviewResponse } from '../../models/interaction'
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
+import { ReviewList } from '../../components/review-list/review-list';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-song-details',
-  imports: [RouterLink, ReviewModal, DatePipe],
+  imports: [RouterLink, ReviewModal, ReviewList, DatePipe],
   templateUrl: './song-details.html',
   styleUrl: './song-details.css',
 })

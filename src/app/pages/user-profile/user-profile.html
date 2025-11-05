@@ -211,96 +211,71 @@
       </div>
 
       <div class="reviews-content">
-        @if(reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0) {
-        <div class="reviews-loading">
-          <div class="spinner-small"></div>
-          <span>Loading initial reviews...</span>
-        </div>
-        } @else { @switch (activeTab()) { @case ('reviews') {
-        <div class="reviews-list all-reviews">
-          <h3>Song Reviews ({{ songReviews().length }})</h3>
-          @for (review of songReviews(); track review.songReviewId) {
-          <div class="review-card-placeholder">
-            <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
-            <div>
-              <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br />
-              Rating: {{ review.rating }} stars <br />
-              <p>{{ review.description }}</p>
-              <small>Posted on: {{ review.date | date : 'short' }}</small>
-            </div>
-          </div>
-          } @if (hasMoreSongReviews()) {
-          <div class="load-more-section">
-            <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-              @if(reviewsLoading()) { <span>Loading...</span> } @else {
-              <span>Load More Songs</span> }
-            </button>
-          </div>
+        @switch (activeTab()) {
+          @case ('reviews') {
+            <app-review-list
+              [reviews]="allReviews()"
+              [loading]="reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0"
+              [showUsername]="false"
+              [showMusicInfo]="true"
+              emptyMessage="No reviews yet. Start reviewing your favorite music!" />
+            @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
+              <div class="load-more-section">
+                @if (hasMoreSongReviews()) {
+                  <button
+                    (click)="loadMoreSongReviews()"
+                    class="load-more-btn"
+                    [disabled]="reviewsLoading()">
+                    @if(reviewsLoading()) { <span>Loading...</span> } @else {
+                    <span>Load More Songs</span> }
+                  </button>
+                }
+                @if (hasMoreAlbumReviews()) {
+                  <button
+                    (click)="loadMoreAlbumReviews()"
+                    class="load-more-btn"
+                    [disabled]="reviewsLoading()">
+                    @if(reviewsLoading()) { <span>Loading...</span> } @else {
+                    <span>Load More Albums</span> }
+                  </button>
+                }
+              </div>
+            }
           }
-          <hr class="review-separator" />
-          <h3>Album Reviews ({{ albumReviews().length }})</h3>
-          @for (review of albumReviews(); track review.albumReviewId) {
-          <div class="review-card-placeholder">
-            <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
-            <div>
-              <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br />
-              Rating: {{ review.rating }} stars <br />
-              <p>{{ review.description }}</p>
-              <small>Posted on: {{ review.date | date : 'short' }}</small>
-            </div>
-          </div>
-          } @if (hasMoreAlbumReviews()) {
-          <div class="load-more-section">
-            <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-              @if(reviewsLoading()) { <span>Loading...</span> } @else {
-              <span>Load More Albums</span> }
-            </button>
-          </div>
+          @case ('song-reviews') {
+            <app-review-list
+              [reviews]="songReviews()"
+              [loading]="reviewsLoading() && songReviews().length === 0"
+              [showUsername]="false"
+              [showMusicInfo]="true"
+              emptyMessage="No song reviews yet" />
+            @if (hasMoreSongReviews()) {
+              <button
+                (click)="loadMoreSongReviews()"
+                class="load-more-btn"
+                [disabled]="reviewsLoading()">
+                @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
+              </button>
+            }
           }
-        </div>
-        } @case ('song-reviews') {
-        <div class="reviews-list">
-          @for (review of songReviews(); track review.songReviewId) {
-          <div class="review-card-placeholder">
-            <img [src]="review.song.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
-            <div>
-              <strong>{{ review.song.name }}</strong> by {{ review.song.artistName }} <br />
-              Rating: {{ review.rating }} stars <br />
-              <p>{{ review.description }}</p>
-              <small>Posted on: {{ review.date | date : 'short' }}</small>
-            </div>
-          </div>
-          } @if (hasMoreSongReviews()) {
-          <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-            @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
-          </button>
+          @case ('album-reviews') {
+            <app-review-list
+              [reviews]="albumReviews()"
+              [loading]="reviewsLoading() && albumReviews().length === 0"
+              [showUsername]="false"
+              [showMusicInfo]="true"
+              emptyMessage="No album reviews yet" />
+            @if (hasMoreAlbumReviews()) {
+              <button
+                (click)="loadMoreAlbumReviews()"
+                class="load-more-btn"
+                [disabled]="reviewsLoading()">
+                @if(reviewsLoading()) { <span>Loading...</span> } @else {
+                <span>Load More Albums</span> }
+              </button>
+            }
           }
-        </div>
-        } @case ('album-reviews') {
-        <div class="reviews-list">
-          @for (review of albumReviews(); track review.albumReviewId) {
-          <div class="review-card-placeholder">
-            <img [src]="review.album.imageUrl || '/assets/icons/default-avatar.svg'" alt="cover" width="50" />
-            <div>
-              <strong>{{ review.album.title }}</strong> by {{ review.album.artistName }} <br />
-              Rating: {{ review.rating }} stars <br />
-              <p>{{ review.description }}</p>
-              <small>Posted on: {{ review.date | date : 'short' }}</small>
-            </div>
-          </div>
-          } @if (hasMoreAlbumReviews()) {
-          <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
-            @if(reviewsLoading()) { <span>Loading...</span> } @else {
-            <span>Load More Albums</span> }
-          </button>
-          }
-        </div>
-        } } @if (!reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0) {
-        <div class="empty-state">
-          <h3>No Reviews Yet</h3>
-          <p>Start reviewing your favorite music!</p>
-        </div>
-        } }
+        }
       </div>
     </div>
     <div class="danger-zone card">
