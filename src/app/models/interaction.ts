@@ -1,16 +1,17 @@
+import { UserProfile } from '../pages/user-profile/user-profile';
 import { Album, Song } from './music';
-import { FullUserProfile, UserSummary } from './user';
+import { FullUserProfile} from './user';
 
-export interface Reaction {
+
+export interface ReactionResponse {
   reactionId: number;
   userId: number;
+  reactedId: number;     
   username: string;
-  reactionType: ReactionType;
-  reactedType: ReactedType;
-  reactedId: number;
+  reactedType: ReactedType;  
+  reactionType: ReactionType; 
 }
-
-export interface Comment {
+export interface CommentResponse {
   commentId: number;
   reviewId: number;
   userId: number;
@@ -18,8 +19,12 @@ export interface Comment {
   text: string;
   createdAt: string;
   commentType: CommentType;
+  totalLikes: number;
+  totalDislikes: number;
+  totalWows: number;
+  totalLoves: number;
+  userReaction: ReactionResponse | null;
 }
-
 export interface ReviewSong {
   songId: number | null;
   spotifyId: string;
@@ -52,23 +57,26 @@ export interface AlbumReviewRequest {
   description: string;
 }
 
-export interface SongReviewResponse {
-  songReviewId: number;
+export interface Review{
   rating: number;
   description: string;
   date: string;
+  user: UserProfile;
   active: boolean;
-  user: UserSummary;
+  totalLikes: number;
+  totalDislikes: number;
+  totalWows: number;
+  totalLoves: number;
+  userReaction: ReactionResponse | null;
+}
+
+export interface SongReviewResponse extends Review {
+  songReviewId: number;
   song: Song;
 }
 
-export interface AlbumReviewResponse {
+export interface AlbumReviewResponse extends Review {
   albumReviewId: number;
-  rating: number;
-  description: string;
-  date: string;
-  active: boolean;
-  user: UserSummary;
   album: Album;
 }
 
@@ -87,11 +95,12 @@ export enum ReactedType {
 }
 
 export enum CommentType {
-  SONG = 'SONG',
-  ALBUM = 'ALBUM',
+  SONG = 'SONG_REVIEW',
+  ALBUM = 'ALBUM_REVIEW',
 }
 
 export interface CommentRequest {
+  userId: number;
   text: string;
 }
 
