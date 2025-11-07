@@ -1,10 +1,11 @@
-import { Component, inject, Input, output, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CommentService } from '../../services/comment';
 import { ToastService } from '../../services/toast';
 import { ErrorService } from '../../services/error';
 import { CommentResponse } from '../../models/interaction';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-comment-modal',
@@ -13,12 +14,13 @@ import { CommentResponse } from '../../models/interaction';
   templateUrl: './comment-modal.html',
   styleUrl: './comment-modal.css',
 })
-export class CommentModal {
+export class CommentModal implements OnInit {
   @Input({ required: true }) reviewId!: number;
   @Input({ required: true }) reviewType!: 'song' | 'album';
+  @Input() commentToEdit?: CommentResponse;
 
   close = output<void>();
-  submitted = output<CommentResponse>(); 
+  submitted = output<CommentResponse>();
 
   private fb = inject(FormBuilder);
   private commentService = inject(CommentService);
@@ -30,13 +32,27 @@ export class CommentModal {
   errorMessage = signal<string | null>(null);
 
   commentForm: FormGroup = this.fb.group({
-    text: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(this.MAX_CHARS)]],
+    text: [
+      '',
+      [Validators.required, Validators.minLength(3), Validators.maxLength(this.MAX_CHARS)],
+    ],
   });
 
   characterCount = signal(0);
-  
+
+  modalTitle = signal('Add your Comment');
+
+  ngOnInit(): void {
+    if (this.commentToEdit) {
+      this.modalTitle.set('Edit your Comment');
+      this.commentForm.get('text')?.setValue(this.commentToEdit.text);
+    }else{
+      this.modalTitle.set('Add your Comment');
+    }
+  }
+
   constructor() {
-    this.commentForm.get('text')?.valueChanges.subscribe(value => {
+    this.commentForm.get('text')?.valueChanges.subscribe((value) => {
       this.characterCount.set((value || '').length);
     });
   }
@@ -65,16 +81,36 @@ export class CommentModal {
     this.errorMessage.set(null);
     const commentText = this.text!.value;
 
-    this.commentService.createComment(this.reviewId, this.reviewType, commentText).subscribe({
-      next: (newComment) => {
+    let submissionObservable: Observable<CommentResponse>;
+
+    if (this.commentToEdit) {
+      //PUT
+      const commentId = this.commentToEdit.commentId;
+      submissionObservable = this.commentService.updateComment(
+        this.reviewId,
+        commentId,
+        this.reviewType,
+        commentText
+      );
+    } else {
+      //POST
+      submissionObservable = this.commentService.createComment(
+        this.reviewId,
+        this.reviewType,
+        commentText
+      );
+    }
+
+    submissionObservable.subscribe({
+      next: (newOrUpdated) => {
         this.isLoading.set(false);
-        this.toastService.success('Comment added!');
-        this.submitted.emit(newComment);
+        this.toastService.success(this.commentToEdit ? 'Comment updated!' : 'Comment added!');
+        this.submitted.emit(newOrUpdated);
       },
       error: (err) => {
         this.isLoading.set(false);
         this.errorMessage.set(this.errorService.getErrorMessage(err));
-        this.errorService.logError(err, 'CommentModal - Create Comment');
+        this.errorService.logError(err, 'CommentModal - Submit Comment');
       },
     });
   }

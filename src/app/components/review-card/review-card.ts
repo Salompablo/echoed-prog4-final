@@ -1,20 +1,37 @@
-import { Component, Input, Output, EventEmitter, ViewChild, signal, inject, computed, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  signal,
+  inject,
+  computed,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MusicReview, AlbumReviewResponse, SongReviewResponse, CommentResponse } from '../../models/interaction';
+import {
+  MusicReview,
+  AlbumReviewResponse,
+  SongReviewResponse,
+  CommentResponse,
+} from '../../models/interaction';
 import { Album, Song } from '../../models/music';
 import { Router, RouterLink } from '@angular/router';
 import { CommentList } from '../comment-list/comment-list';
 import { AuthService } from '../../services/auth';
 import { CommentModal } from '../comment-modal/comment-modal';
+import { DeleteConfirmationModal } from '../delete-confirmation-modal/delete-confirmation-modal';
 
 @Component({
   selector: 'app-review-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink,CommentList,CommentModal],
+  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, DeleteConfirmationModal],
   templateUrl: './review-card.html',
-  styleUrls: ['./review-card.css']
+  styleUrls: ['./review-card.css'],
 })
-export class ReviewCard implements OnChanges{
+export class ReviewCard implements OnChanges {
   @Input({ required: true }) review!: MusicReview;
 
   @Input() showUsername: boolean = true;
@@ -34,6 +51,14 @@ export class ReviewCard implements OnChanges{
   isCommentModalVisible = signal(false);
   commentCount = signal<number>(0);
 
+  isDeleteModalVisible = signal(false);
+  isDeleting = signal(false);
+
+  deletionTarget = computed(() => ({ 
+    id: this.reviewId,
+    type: 'review',
+    name: this.review.description.substring(0, 30) + '...' || this.review.user.username, 
+  }));
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['review']) {
@@ -41,9 +66,7 @@ export class ReviewCard implements OnChanges{
     }
   }
   reviewId = computed(() => {
-    return this.isAlbumReview(this.review)
-      ? this.review.albumReviewId
-      : this.review.songReviewId;
+    return this.isAlbumReview(this.review) ? this.review.albumReviewId : this.review.songReviewId;
   });
 
   reviewType = computed<'song' | 'album'>(() => {
@@ -116,13 +139,13 @@ export class ReviewCard implements OnChanges{
   }
 
   toggleCommentList(event: MouseEvent): void {
-    event.stopPropagation(); 
-    this.isCommentListVisible.update(v => !v);
+    event.stopPropagation();
+    this.isCommentListVisible.update((v) => !v);
   }
 
   openCommentModal(event: MouseEvent): void {
-    event.stopPropagation(); 
-    
+    event.stopPropagation();
+
     if (!this.authService.currentUser()) {
       this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
       return;
@@ -135,12 +158,16 @@ export class ReviewCard implements OnChanges{
   }
 
   handleCommentSubmitted(newComment: CommentResponse): void {
-    this.isCommentModalVisible.set(false); 
-    this.isCommentListVisible.set(true); 
-    this.commentCount.update(count => count + 1);
+    this.isCommentModalVisible.set(false);
+    this.isCommentListVisible.set(true);
+    this.commentCount.update((count) => count + 1);
     setTimeout(() => {
       this.commentListComponent?.addComment(newComment);
     }, 0);
+  }
+
+  handleCommentDeleted(): void {
+    this.commentCount.update((count) => Math.max(0, count - 1));
   }
 
   getAvatarUrl(profilePictureUrl: string | null | undefined): string {
@@ -150,7 +177,18 @@ export class ReviewCard implements OnChanges{
       }
       return `assets/images/default-avatars/${profilePictureUrl}`;
     }
-    return 'assets/images/default-avatars/classic-dog.png'; 
+    return 'assets/images/default-avatars/classic-dog.png';
   }
 
+  onDeleteReview(): void {
+    this.isDeleteModalVisible.set(true);
+  }
+  
+  onConfirmDelete(): void {
+   
+  }
+
+  onCloseDeleteModal(): void {
+    this.isDeleteModalVisible.set(false);
+  }
 }

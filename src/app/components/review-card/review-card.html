@@ -70,7 +70,7 @@
     </div>
 
     @if (isCommentListVisible()) {
-    <app-comment-list [reviewId]="reviewId()" [reviewType]="reviewType()" />
+    <app-comment-list [reviewId]="reviewId()" [reviewType]="reviewType()" (deleted)="handleCommentDeleted()" />
     }
   </div>
 
@@ -83,3 +83,8 @@
   />
   }
 </div>
+
+@if (isDeleteModalVisible()) {
+  <app-delete-confirmation-modal [target]="deletionTarget()" [isLoading]="isDeleting()" (confirm)="onConfirmDelete()"
+  (close)="onCloseDeleteModal()" />
+}

@@ -13,12 +13,45 @@
   margin-bottom: 0.5rem;
 }
 
+.comment-meta-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.action-button:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+}
+
 .comment-username {
   font-weight: 700;
   font-size: 0.9rem;
   color: var(--primary-color);
   text-decoration: none;
 }
+
 .comment-username:hover {
   text-decoration: underline;
 }
@@ -39,15 +72,24 @@
 .user-avatar-info-wrapper {
   display: flex;
   align-items: center;
-  gap: 0.75rem; 
-  flex: 1; 
+  gap: 0.75rem;
+  flex: 1;
   min-width: 0;
 }
 
 .user-avatar {
-  width: 2.5rem; 
+  width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
   object-fit: cover;
-  border: 0.0625rem solid var(--card-border-color); 
+  border: 0.0625rem solid var(--card-border-color);
+}
+
+.action-button:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+}
+
+.action-button .material-symbols-rounded {
+  font-size: 1.2rem;
 }

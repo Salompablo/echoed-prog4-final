@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
-import { CommentRequest, CommentResponse } from '../models/interaction';
+import { CommentRequest, CommentResponse, CommentUpdatePayload } from '../models/interaction';
 import { PagedResponse } from '../models/api';
 import { AuthService } from './auth';
 
@@ -48,5 +48,33 @@ export class CommentService {
         : API_ENDPOINTS.COMMENTS.POST_ALBUM_REVIEW_COMMENT(reviewId);
 
     return this.api.post<CommentResponse>(endpoint, request);
+  }
+
+  updateComment(
+    reviewId: number,
+    commentId: number,
+    commentType: 'song' | 'album',
+    newText: string
+  ): Observable<CommentResponse> {
+    const payload: CommentUpdatePayload = { text: newText };
+    const endpoint =
+      commentType === 'song'
+        ? API_ENDPOINTS.COMMENTS.PATCH_SONG_REVIEW_COMMENT(reviewId, commentId)
+        : API_ENDPOINTS.COMMENTS.PATCH_ALBUM_REVIEW_COMMENT(reviewId, commentId);
+
+    return this.api.patch<CommentResponse>(endpoint, payload);
+  }
+
+  deleteComment(
+    reviewId: number,
+    commentId: number,
+    commentType: 'song' | 'album'
+  ): Observable<void> {
+    const endpoint =
+      commentType === 'song'
+        ? API_ENDPOINTS.COMMENTS.DELETE_SONG_REVIEW_COMMENT(reviewId, commentId)
+        : API_ENDPOINTS.COMMENTS.DELETE_ALBUM_REVIEW_COMMENT(reviewId, commentId);
+
+    return this.api.delete<void>(endpoint);
   }
 }
