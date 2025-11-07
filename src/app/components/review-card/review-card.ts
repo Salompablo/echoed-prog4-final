@@ -25,12 +25,13 @@ import { Router, RouterLink } from '@angular/router';
 import { CommentList } from '../comment-list/comment-list';
 import { AuthService } from '../../services/auth';
 import { CommentModal } from '../comment-modal/comment-modal';
+import { DeleteConfirmationModal } from '../delete-confirmation-modal/delete-confirmation-modal';
 import { ReactionBar } from '../reaction-bar/reaction-bar';
 
 @Component({
   selector: 'app-review-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, ReactionBar],
+  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, DeleteConfirmationModal, ReactionBar],
   templateUrl: './review-card.html',
   styleUrls: ['./review-card.css'],
 })
@@ -58,6 +59,15 @@ export class ReviewCard implements OnChanges {
   isCommentModalVisible = signal(false);
   commentCount = signal<number>(0);
 
+  isDeleteModalVisible = signal(false);
+  isDeleting = signal(false);
+
+  deletionTarget = computed(() => ({ 
+    id: this.reviewId,
+    type: 'review',
+    name: this.review.description.substring(0, 30) + '...' || this.review.user.username, 
+  }));
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['review']) {
       this.commentCount.set(this.review.totalComments || 0);
@@ -69,6 +79,11 @@ export class ReviewCard implements OnChanges {
 
   reviewType = computed<'song' | 'album'>(() => {
     return this.isAlbumReview(this.review) ? 'album' : 'song';
+  });
+
+  userAvatarUrl = computed(() => {
+    const picUrl = this.review?.user?.profilePictureUrl;
+    return this.getAvatarUrl(picUrl);
   });
 
   isAlbumReview(review: MusicReview): review is AlbumReviewResponse {
@@ -174,20 +189,29 @@ export class ReviewCard implements OnChanges {
     }, 0);
   }
 
-  private updateCounter(type: ReactionType, delta: number): void {
-    switch (type) {
-      case ReactionType.LIKE:
-        this.review.totalLikes = Math.max(0, this.review.totalLikes + delta);
-        break;
-      case ReactionType.LOVE:
-        this.review.totalLoves = Math.max(0, this.review.totalLoves + delta);
-        break;
-      case ReactionType.WOW:
-        this.review.totalWows = Math.max(0, this.review.totalWows + delta);
-        break;
-      case ReactionType.DISLIKE:
-        this.review.totalDislikes = Math.max(0, this.review.totalDislikes + delta);
-        break;
+  handleCommentDeleted(): void {
+    this.commentCount.update((count) => Math.max(0, count - 1));
+  }
+
+  getAvatarUrl(profilePictureUrl: string | null | undefined): string {
+    if (profilePictureUrl) {
+      if (profilePictureUrl.startsWith('http://') || profilePictureUrl.startsWith('https://')) {
+        return profilePictureUrl;
+      }
+      return `assets/images/default-avatars/${profilePictureUrl}`;
     }
+    return 'assets/images/default-avatars/classic-dog.png';
+  }
+
+  onDeleteReview(): void {
+    this.isDeleteModalVisible.set(true);
+  }
+  
+  onConfirmDelete(): void {
+   
+  }
+
+  onCloseDeleteModal(): void {
+    this.isDeleteModalVisible.set(false);
   }
 }

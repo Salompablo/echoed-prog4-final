@@ -1,0 +1,111 @@
+/* Replicate the overall modal styles from reactivate-account-modal.css */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--backdrop-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-index-modal, 1000);
+    padding: 1rem;
+    box-sizing: border-box;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-content {
+    background: var(--card-bg-color);
+    border: 0.0625rem solid var(--card-border-color);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
+    max-width: 30rem;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-title {
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.modal-content p {
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    /* Alineamos a la derecha */
+    margin-top: 1.5rem;
+}
+
+.button {
+    padding: 0.875rem 1.5rem;
+    border-radius: 9999rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    min-width: 6rem;
+}
+
+.button.secondary {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 0.0625rem solid var(--card-border-color);
+}
+
+.button.secondary:hover {
+    background-color: var(--card-border-color);
+}
+
+.button.danger {
+    background-color: #d9534f;
+    /* Color rojo */
+    color: #ffffff;
+}
+
+.button.danger:hover:not(:disabled) {
+    filter: brightness(110%);
+}
+
+.button.danger:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--secondary-color);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(1.25rem);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

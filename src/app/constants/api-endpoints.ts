@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   USERS: {
     ME: '/users/me',
     BY_USERNAME: (username: string) => `/users/username/${username}`,
+    BY_USERID: (userId: number) => `/users/${userId}`,
     UPDATE: (userId: number) => `/users/${userId}`,
     USER_SONG_REVIEWS: (userId: number, pageNumber: number, size: number, sort: string = 'date') =>
       `/songreviews/user/${userId}?pageNumber=${pageNumber}&size=${size}&sort=${sort}`,
@@ -43,8 +44,13 @@ export const API_ENDPOINTS = {
   COMMENTS: {
     GET_SONG_REVIEW_COMMENTS: (reviewId: number) => `/songreviews/${reviewId}/comments`,
     POST_SONG_REVIEW_COMMENT: (reviewId: number) => `/songreviews/${reviewId}/comments`,
+    PATCH_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) => `/songreviews/${reviewId}/comments/${commentId}`,
+    DELETE_SONG_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/songreviews/${reviewId}/comments/${commentId}`,
     GET_ALBUM_REVIEW_COMMENTS: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
     POST_ALBUM_REVIEW_COMMENT: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
+    PATCH_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) => `/albumreviews/${reviewId}/comments/${commentId}`,
+    DELETE_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/albumreviews/${reviewId}/comments/${commentId}`,
+
   },
   REACTIONS: {
     ADD_TO_REVIEW: (reviewId: number | string) =>

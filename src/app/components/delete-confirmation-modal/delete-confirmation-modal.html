@@ -1,0 +1,22 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content card">
+        <h3 class="modal-title">{{ modalTitle() }}</h3>
+
+        <p>
+            {{ confirmationMessage() }}
+        </p>
+
+        <div class="modal-actions">
+            <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading">
+                Cancel
+            </button>
+            <button type="button" class="button danger" (click)="onConfirm()" [disabled]="isLoading">
+                @if (isLoading) {
+                <span>Deleting...</span>
+                } @else {
+                <span>Delete</span>
+                }
+            </button>
+        </div>
+    </div>
+</div>

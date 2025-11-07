@@ -1,6 +1,6 @@
 <div class="modal-backdrop" (click)="onBackdropClick($event)">
   <div class="modal-content card" (click)="$event.stopPropagation()">
-    <h3 class="modal-title">Add your Comment</h3>
+    <h3 class="modal-title">{{modalTitle()}}</h3>
     <button type="button" class="close-button" (click)="onCancel()" aria-label="Close modal">
       ×
     </button>
@@ -41,9 +41,9 @@
         </button>
         <button type="submit" class="button primary" [disabled]="commentForm.invalid || isLoading()">
           @if (isLoading()) {
-            <span>Submitting...</span>
+            <span> {{commentToEdit ? 'Saving...' : 'Submitting...'}} </span>
           } @else {
-            <span>Submit Comment</span>
+            <span> {{commentToEdit ? 'Save changes' : 'Submit Comment'}} </span>
           }
         </button>
       </div>

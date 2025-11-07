@@ -26,6 +26,10 @@ export interface CommentResponse {
   userReaction: ReactionResponse | null;
 }
 
+export interface CommentUpdatePayload{
+  text: string;
+}
+
 export interface ReviewSong {
   songId: number | null;
   spotifyId: string;

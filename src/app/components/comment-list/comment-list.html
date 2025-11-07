@@ -18,7 +18,13 @@
   @else {
     <div class="comments-wrapper">
       @for (comment of comments(); track comment.commentId) {
-        <app-comment-card [comment]="comment" />
+        <app-comment-card 
+        [comment]="comment"
+        [reviewType]="reviewType"
+        [reviewId]="reviewId"
+        (editRequest)="onEditRequest($event)"
+        (deleteEvent)="removeComment($event)"
+        />
       }
     </div>
   }
@@ -35,5 +41,13 @@
         Load More Comments
       </button>
     </div>
+  }
+
+  @if (isEditModalVisible() && commentToEdit()) {
+    <app-comment-modal
+      [reviewId]="reviewId"
+      [reviewType]="reviewType"
+      [commentToEdit]="commentToEdit()" (close)="closeEditModal()"
+      (submitted)="handleCommentUpdate($event)" />
   }
   </div>

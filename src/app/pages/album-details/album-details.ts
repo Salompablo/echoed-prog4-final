@@ -9,10 +9,11 @@ import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { DatePipe } from '@angular/common';
+import { ReviewList } from '../../components/review-list/review-list';
 
 @Component({
   selector: 'app-album-details',
-  imports: [RouterLink, ReviewModal, DatePipe],
+  imports: [RouterLink, ReviewModal, DatePipe, ReviewList],
   templateUrl: './album-details.html',
   styleUrl: './album-details.css',
 })
