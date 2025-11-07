@@ -31,7 +31,15 @@ import { ReactionBar } from '../reaction-bar/reaction-bar';
 @Component({
   selector: 'app-review-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, DeleteConfirmationModal, ReactionBar],
+  imports: [
+    CommonModule,
+    DatePipe,
+    RouterLink,
+    CommentList,
+    CommentModal,
+    DeleteConfirmationModal,
+    ReactionBar,
+  ],
   templateUrl: './review-card.html',
   styleUrls: ['./review-card.css'],
 })
@@ -62,10 +70,10 @@ export class ReviewCard implements OnChanges {
   isDeleteModalVisible = signal(false);
   isDeleting = signal(false);
 
-  deletionTarget = computed(() => ({ 
+  deletionTarget = computed(() => ({
     id: this.reviewId,
     type: 'review',
-    name: this.review.description.substring(0, 30) + '...' || this.review.user.username, 
+    name: this.review.description.substring(0, 30) + '...' || this.review.user.username,
   }));
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -206,9 +214,24 @@ export class ReviewCard implements OnChanges {
   onDeleteReview(): void {
     this.isDeleteModalVisible.set(true);
   }
-  
-  onConfirmDelete(): void {
-   
+
+  onConfirmDelete(): void {}
+
+  private updateCounter(type: ReactionType, delta: number): void {
+    switch (type) {
+      case ReactionType.LIKE:
+        this.review.totalLikes = Math.max(0, this.review.totalLikes + delta);
+        break;
+      case ReactionType.LOVE:
+        this.review.totalLoves = Math.max(0, this.review.totalLoves + delta);
+        break;
+      case ReactionType.WOW:
+        this.review.totalWows = Math.max(0, this.review.totalWows + delta);
+        break;
+      case ReactionType.DISLIKE:
+        this.review.totalDislikes = Math.max(0, this.review.totalDislikes + delta);
+        break;
+    }
   }
 
   onCloseDeleteModal(): void {

@@ -121,7 +121,7 @@ export class CommentCard implements OnInit {
 
   onCloseDeleteModal(): void {
     this.isDeleteModalVisible.set(false);
-
+  }
   onReactionChanged(newReaction: ReactionResponse | null): void {
     if (!this.comment) return;
 
