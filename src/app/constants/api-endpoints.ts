@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   USERS: {
     ME: '/users/me',
     BY_USERNAME: (username: string) => `/users/username/${username}`,
+    BY_USERID: (userId: number) => `/users/${userId}`,
     UPDATE: (userId: number) => `/users/${userId}`,
     USER_SONG_REVIEWS: (userId: number, pageNumber: number, size: number, sort: string = 'date') =>
       `/songreviews/user/${userId}?pageNumber=${pageNumber}&size=${size}&sort=${sort}`,

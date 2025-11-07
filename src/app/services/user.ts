@@ -29,6 +29,14 @@ export class UserService {
   }
 
   /**
+   * Fetches a user profile by userId.
+   * @param userId - 
+   */
+  getUserProfileByUserId(userId : number): Observable<FullUserProfile>{
+    return this.apiService.get<FullUserProfile>(API_ENDPOINTS.USERS.BY_USERID(userId));
+  }
+
+  /**
    * Updates the profile (picture, bio) for a given user ID.
    * @param userId - The ID of the user to update.
    * @param data - The data to update (picture URL, biography).
