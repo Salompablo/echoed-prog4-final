@@ -1,4 +1,5 @@
 <div class="review-card card" [class.modal-is-open]="isCommentModalVisible()">
+
   <div class="review-clickable-content" (click)="onCardClick()">
     @if (showMusicInfo) {
     <div class="music-info">
@@ -6,14 +7,12 @@
         <img [src]="getMusicImage()" [alt]="getMusicTitle() + ' cover'" class="music-thumbnail" />
       </a>
       <div class="music-details">
-        <a [routerLink]="getMusicLink()" (click)="$event.stopPropagation()" class="music-title">{{
-          getMusicTitle()
-        }}</a>
+        <a [routerLink]="getMusicLink()" (click)="$event.stopPropagation()" class="music-title">{{ getMusicTitle()
+          }}</a>
         <p class="music-artist">{{ getMusicArtist() }}</p>
       </div>
     </div>
-    }
-
+    } @if (showUsername || showDate) {
     <div class="review-header">
       <div class="user-info">
         @if (showUsername) {
@@ -28,51 +27,44 @@
       <div class="rating">
         <span class="stars">
           @for (star of getStarArray(); track star) {
-          <span
-            class="star"
-            [class.filled]="isStarFilled(star)"
-            [class.half]="isStarHalf(star)"
-            [class.empty]="!isStarFilled(star) && !isStarHalf(star)"
-          ></span>
+          <span class="star" [class.filled]="isStarFilled(star)" [class.half]="isStarHalf(star)"
+            [class.empty]="!isStarFilled(star) && !isStarHalf(star)"></span>
           }
         </span>
       </div>
       }
     </div>
-
-    @if (showDescription && review.description) {
+    } @if (showDescription && review.description) {
     <div class="review-content">
       <p>{{ review.description }}</p>
     </div>
     }
-    <div class="review-actions">
+  </div>
+
+  @if(showActions) {
+  <div class="review-footer">
+    <app-reaction-bar [reactedType]="reactedTypes.REVIEW" [parentId]="reviewId()" [userReaction]="review.userReaction"
+      [totalLikes]="review.totalLikes" [totalDislikes]="review.totalDislikes" [totalLoves]="review.totalLoves"
+      [totalWows]="review.totalWows" (reactionChange)="onReactionChanged($event)" />
+
+    <div class="comment-actions">
       <button (click)="toggleCommentList($event)" class="action-button">
         <span class="material-symbols-rounded">
           {{ isCommentListVisible() ? 'forum' : 'forum' }}
         </span>
-        {{ isCommentListVisible() ? 'Hide Comments' : 'View Comments' }}
-
         @if (commentCount() > 0) {
         <span class="comment-count">{{ commentCount() }}</span>
         }
       </button>
       <button (click)="openCommentModal($event)" class="action-button">
         <span class="material-symbols-rounded">add_comment</span>
-        Comment
       </button>
     </div>
-
-    @if (isCommentListVisible()) {
-    <app-comment-list [reviewId]="reviewId()" [reviewType]="reviewType()" />
-    }
   </div>
-
-  @if (isCommentModalVisible()) {
-  <app-comment-modal
-    [reviewId]="reviewId()"
-    [reviewType]="reviewType()"
-    (close)="closeCommentModal()"
-    (submitted)="handleCommentSubmitted($event)"
-  />
+  } @if (isCommentListVisible()) {
+  <app-comment-list [reviewId]="reviewId()" [reviewType]="reviewType()" />
+  } @if (isCommentModalVisible()) {
+  <app-comment-modal [reviewId]="reviewId()" [reviewType]="reviewType()" (close)="closeCommentModal()"
+    (submitted)="handleCommentSubmitted($event)" />
   }
 </div>

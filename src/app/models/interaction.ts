@@ -2,7 +2,6 @@ import { UserProfile } from './user';
 import { Album, Song } from './music';
 import { FullUserProfile} from './user';
 
-
 export interface ReactionResponse {
   reactionId: number;
   userId: number;
@@ -11,6 +10,7 @@ export interface ReactionResponse {
   reactedType: ReactedType;  
   reactionType: ReactionType; 
 }
+
 export interface CommentResponse {
   commentId: number;
   reviewId: number;
@@ -25,6 +25,7 @@ export interface CommentResponse {
   totalLoves: number;
   userReaction: ReactionResponse | null;
 }
+
 export interface ReviewSong {
   songId: number | null;
   spotifyId: string;

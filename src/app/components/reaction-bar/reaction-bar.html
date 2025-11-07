@@ -1,0 +1,29 @@
+<div class="reaction-bar-container" [class.loading]="isLoading()">
+    <button type="button" class="reaction-button like"
+        [class.active]="userReaction()?.reactionType === reactionTypes.LIKE" [disabled]="isLoading()"
+        (click)="handleClick(reactionTypes.LIKE)" aria-label="Like">
+        <span class="material-symbols-rounded">thumb_up</span>
+        <span class="count">{{ totalLikes() }}</span>
+    </button>
+
+    <button type="button" class="reaction-button love"
+        [class.active]="userReaction()?.reactionType === reactionTypes.LOVE" [disabled]="isLoading()"
+        (click)="handleClick(reactionTypes.LOVE)" aria-label="Love">
+        <span class="material-symbols-rounded">favorite</span>
+        <span class="count">{{ totalLoves() }}</span>
+    </button>
+
+    <button type="button" class="reaction-button wow"
+        [class.active]="userReaction()?.reactionType === reactionTypes.WOW" [disabled]="isLoading()"
+        (click)="handleClick(reactionTypes.WOW)" aria-label="Wow">
+        <span class="material-symbols-rounded">sentiment_very_satisfied</span>
+        <span class="count">{{ totalWows() }}</span>
+    </button>
+
+    <button type="button" class="reaction-button dislike"
+        [class.active]="userReaction()?.reactionType === reactionTypes.DISLIKE" [disabled]="isLoading()"
+        (click)="handleClick(reactionTypes.DISLIKE)" aria-label="Dislike">
+        <span class="material-symbols-rounded">thumb_down</span>
+        <span class="count">{{ totalDislikes() }}</span>
+    </button>
+</div>
