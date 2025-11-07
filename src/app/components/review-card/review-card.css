@@ -2,13 +2,16 @@
   padding: 1.5rem;
   border: 0;
   margin-bottom: 0;
-  cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .review-card:hover {
   transform: translateY(-0.125rem);
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.review-clickable-content {
+  cursor: pointer;
 }
 
 /* Music Info Section (for profile view) */
@@ -214,7 +217,7 @@
   }
 }
 
-.review-actions {
+.review-footer {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -222,6 +225,13 @@
   padding-top: 0.75rem;
   border-top: 1px solid var(--card-border-color);
   position: relative;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .action-button {
@@ -246,10 +256,9 @@
 }
 
 .action-button .material-symbols-rounded {
-  font-size: 1.2rem; 
+  font-size: 1.2rem;
 }
 
-/* Dark mode support (if implemented) */
 html.dark .review-card:hover {
   box-shadow: 0 0.25rem 0.5rem rgba(255, 255, 255, 0.1);
 }
@@ -262,7 +271,7 @@ html.dark .review-card:hover {
   font-weight: 700;
   line-height: 1;
   padding: 0.15rem 0.4rem;
-  border-radius: 0.5rem; 
+  border-radius: 0.5rem;
   background-color: var(--primary-color);
   color: var(--btn-text-color);
   margin-left: 0.4rem;
@@ -272,9 +281,11 @@ html.dark .review-card:hover {
   background-color: var(--accent-color);
   color: var(--bg-color);
 }
+
 .review-card.modal-is-open:hover {
   transform: none;
 }
+
 .review-card.modal-is-open {
   transition: box-shadow 0.2s ease;
 }

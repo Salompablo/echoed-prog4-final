@@ -40,7 +40,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error) => {
       // Check if it's an HTTP 401 error
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        // 3. If the 401 error is from LOGIN, REGISTER, or REFRESH endpoints,
+        // 3. If the 401 error is from LOGIN, REGISTER, REFRESH or CHANGE_PASSWORD endpoints,
         //    do NOT attempt to refresh the token. Just let the error pass through
         //    to be handled by the component's .catchError()
         if (

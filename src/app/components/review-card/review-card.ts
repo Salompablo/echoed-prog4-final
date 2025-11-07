@@ -1,20 +1,40 @@
-import { Component, Input, Output, EventEmitter, ViewChild, signal, inject, computed, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  signal,
+  inject,
+  computed,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MusicReview, AlbumReviewResponse, SongReviewResponse, CommentResponse } from '../../models/interaction';
+import {
+  MusicReview,
+  AlbumReviewResponse,
+  SongReviewResponse,
+  CommentResponse,
+  ReactionType,
+  ReactedType,
+  ReactionResponse,
+} from '../../models/interaction';
 import { Album, Song } from '../../models/music';
 import { Router, RouterLink } from '@angular/router';
 import { CommentList } from '../comment-list/comment-list';
 import { AuthService } from '../../services/auth';
 import { CommentModal } from '../comment-modal/comment-modal';
+import { ReactionBar } from '../reaction-bar/reaction-bar';
 
 @Component({
   selector: 'app-review-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink,CommentList,CommentModal],
+  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, ReactionBar],
   templateUrl: './review-card.html',
-  styleUrls: ['./review-card.css']
+  styleUrls: ['./review-card.css'],
 })
-export class ReviewCard implements OnChanges{
+export class ReviewCard implements OnChanges {
   @Input({ required: true }) review!: MusicReview;
 
   @Input() showUsername: boolean = true;
@@ -23,9 +43,13 @@ export class ReviewCard implements OnChanges{
   @Input() showDescription: boolean = true;
   @Input() showMusicInfo: boolean = false;
   @Input() showUserAvatar: boolean = false;
+  @Input() showActions: boolean = true;
 
   @Output() cardClick = new EventEmitter<MusicReview>();
   @ViewChild(CommentList) commentListComponent?: CommentList;
+
+  public reactionTypes = ReactionType;
+  public reactedTypes = ReactedType;
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -34,16 +58,13 @@ export class ReviewCard implements OnChanges{
   isCommentModalVisible = signal(false);
   commentCount = signal<number>(0);
 
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['review']) {
       this.commentCount.set(this.review.totalComments || 0);
     }
   }
   reviewId = computed(() => {
-    return this.isAlbumReview(this.review)
-      ? this.review.albumReviewId
-      : this.review.songReviewId;
+    return this.isAlbumReview(this.review) ? this.review.albumReviewId : this.review.songReviewId;
   });
 
   reviewType = computed<'song' | 'album'>(() => {
@@ -110,14 +131,29 @@ export class ReviewCard implements OnChanges{
     this.cardClick.emit(this.review);
   }
 
+  onReactionChanged(newReaction: ReactionResponse | null): void {
+    if (!this.review) return;
+
+    const oldReaction = this.review.userReaction;
+    this.review.userReaction = newReaction;
+
+    if (oldReaction) {
+      this.updateCounter(oldReaction.reactionType, -1);
+    }
+
+    if (newReaction) {
+      this.updateCounter(newReaction.reactionType, 1);
+    }
+  }
+
   toggleCommentList(event: MouseEvent): void {
-    event.stopPropagation(); 
-    this.isCommentListVisible.update(v => !v);
+    event.stopPropagation();
+    this.isCommentListVisible.update((v) => !v);
   }
 
   openCommentModal(event: MouseEvent): void {
-    event.stopPropagation(); 
-    
+    event.stopPropagation();
+
     if (!this.authService.currentUser()) {
       this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
       return;
@@ -130,11 +166,28 @@ export class ReviewCard implements OnChanges{
   }
 
   handleCommentSubmitted(newComment: CommentResponse): void {
-    this.isCommentModalVisible.set(false); 
-    this.isCommentListVisible.set(true); 
-    this.commentCount.update(count => count + 1);
+    this.isCommentModalVisible.set(false);
+    this.isCommentListVisible.set(true);
+    this.commentCount.update((count) => count + 1);
     setTimeout(() => {
       this.commentListComponent?.addComment(newComment);
     }, 0);
+  }
+
+  private updateCounter(type: ReactionType, delta: number): void {
+    switch (type) {
+      case ReactionType.LIKE:
+        this.review.totalLikes = Math.max(0, this.review.totalLikes + delta);
+        break;
+      case ReactionType.LOVE:
+        this.review.totalLoves = Math.max(0, this.review.totalLoves + delta);
+        break;
+      case ReactionType.WOW:
+        this.review.totalWows = Math.max(0, this.review.totalWows + delta);
+        break;
+      case ReactionType.DISLIKE:
+        this.review.totalDislikes = Math.max(0, this.review.totalDislikes + delta);
+        break;
+    }
   }
 }

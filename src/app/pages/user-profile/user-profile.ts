@@ -44,6 +44,7 @@ export class UserProfile implements OnInit {
   isDeactivateModalVisible = signal(false);
   isAvatarModalVisible = signal(false);
   isChangePasswordModalVisible = signal(false);
+  showAllStats = signal(false);
 
   songReviews = signal<SongReviewResponse[]>([]);
   albumReviews = signal<AlbumReviewResponse[]>([]);
@@ -339,5 +340,9 @@ export class UserProfile implements OnInit {
 
   closeChangePasswordModal(): void {
     this.isChangePasswordModalVisible.set(false);
+  }
+
+  toggleShowAllStats(): void {
+    this.showAllStats.update((v) => !v);
   }
 }

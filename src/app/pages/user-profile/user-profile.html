@@ -65,10 +65,12 @@
               <input type="text" id="username" name="username" class="form-input" required minlength="3" maxlength="50"
                 placeholder="Your username" [ngModel]="profileForm().username" (ngModelChange)="updateUsername($event)"
                 #usernameInput="ngModel" />
-              @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
+              @if (usernameInput.invalid && (usernameInput.dirty ||
+              usernameInput.touched)) {
               <div class="error-validation">
-                @if (usernameInput.errors?.['required']) { <small>Username is required.</small> }
-                @if (usernameInput.errors?.['minlength']) {
+                @if (usernameInput.errors?.['required']) {
+                <small>Username is required.</small>
+                } @if (usernameInput.errors?.['minlength']) {
                 <small>Must be at least 3 characters.</small> } @if
                 (usernameInput.errors?.['maxlength']) {
                 <small>Must not exceed 50 characters.</small> }
@@ -92,10 +94,14 @@
             }
 
             <div class="form-actions">
-              <button type="button" (click)="saveProfile()"
-                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()" class="save-btn">
+              <button type="button" (click)="saveProfile()" [disabled]="
+                  saving() ||
+                  profileEditForm.invalid ||
+                  !hasUnsavedChanges()
+                " class="save-btn">
                 @if (!saving()) {
-                <span class="material-symbols-rounded">save</span> Save Changes } @if (saving()) {
+                <span class="material-symbols-rounded">save</span> Save
+                Changes } @if (saving()) {
                 <span>Saving...</span> }
               </button>
               <button type="button" (click)="toggleEditMode()" [disabled]="saving()" class="cancel-btn">
@@ -105,7 +111,8 @@
 
             @if (hasUnsavedChanges()) {
             <div class="unsaved-warning">
-              <span class="material-symbols-rounded">warning</span> You have unsaved changes
+              <span class="material-symbols-rounded">warning</span> You
+              have unsaved changes
             </div>
             }
           </form>
@@ -113,6 +120,7 @@
         }
       </div>
     </div>
+
     <div class="profile-stats">
       <h2 class="stats-title">Statistics</h2>
       @if (profile.userStats; as stats) {
@@ -141,22 +149,40 @@
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">star_rate</span>
           <div class="stat-info">
-            <span class="stat-number">{{ stats.averageRating | number : '1.1-1' }}</span>
+            <span class="stat-number">{{
+              stats.averageRating | number : '1.1-1'
+              }}</span>
             <span class="stat-label">Avg Rating</span>
           </div>
         </div>
+
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">chat_bubble</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalComments ?? 0 }}</span>
-            <span class="stat-label">Comments</span>
+            <span class="stat-label">Total Comments</span>
           </div>
         </div>
         <div class="stat-card">
-          <span class="material-symbols-rounded stat-icon">favorite</span>
+          <span class="material-symbols-rounded stat-icon">audiotrack</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.songComments ?? 0 }}</span>
+            <span class="stat-label">Song Comments</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">library_music</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.albumComments ?? 0 }}</span>
+            <span class="stat-label">Album Comments</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">multiple_stop</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalReactions ?? 0 }}</span>
-            <span class="stat-label">Reacts Given</span>
+            <span class="stat-label">Total Reacts Given</span>
           </div>
         </div>
         <div class="stat-card">
@@ -167,14 +193,49 @@
           </div>
         </div>
         <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">favorite</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.lovesGiven ?? 0 }}</span>
+            <span class="stat-label">Loves Given</span>
+          </div>
+        </div>
+        @if (showAllStats()) {
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">sentiment_satisfied</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.wowsGiven ?? 0 }}</span>
+            <span class="stat-label">Wows Given</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">thumb_down</span>
+          <div class="stat-info">
+            <span class="stat-number">{{ stats.dislikesGiven ?? 0 }}</span>
+            <span class="stat-label">Dislikes Given</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">recommend</span>
           <div class="stat-info">
             <span class="stat-number">{{
-              (stats.likesReceived ?? 0) + (stats.lovesReceived ?? 0) + (stats.wowsReceived ?? 0)
+              (stats.likesReceived ?? 0) +
+              (stats.lovesReceived ?? 0) +
+              (stats.wowsReceived ?? 0)
               }}</span>
             <span class="stat-label">Positive Recvd</span>
           </div>
         </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">gpp_bad</span>
+          <div class="stat-info">
+            <span class="stat-number">{{
+              stats.dislikesReceived ?? 0
+              }}</span>
+            <span class="stat-label">Negative Recvd</span>
+          </div>
+        </div>
+
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">calendar_month</span>
           <div class="stat-info">
@@ -185,10 +246,34 @@
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">graphic_eq</span>
           <div class="stat-info">
-            <span class="stat-number">{{ stats.commentsThisMonth ?? 0 }}</span>
+            <span class="stat-number">{{
+              stats.commentsThisMonth ?? 0
+              }}</span>
             <span class="stat-label">Comments (Month)</span>
           </div>
         </div>
+        <div class="stat-card">
+          <span class="material-symbols-rounded stat-icon">bolt</span>
+          <div class="stat-info">
+            <span class="stat-number">{{
+              stats.reactionsThisMonth ?? 0
+              }}</span>
+            <span class="stat-label">Reacts (Month)</span>
+          </div>
+        </div>
+        }
+      </div>
+
+      <div class="stats-toggle-section">
+        <button (click)="toggleShowAllStats()" class="button-as-link">
+          @if (showAllStats()) {
+          <span class="material-symbols-rounded">unfold_less</span>
+          <span class="button-link-text">Show Less</span>
+          } @else {
+          <span class="material-symbols-rounded">unfold_more</span>
+          <span class="button-link-text">Show More</span>
+          }
+        </button>
       </div>
       } @else {
       <div class="stats-loading">Statistics not available.</div>
@@ -209,80 +294,64 @@
           </button>
         </div>
       </div>
-
       <div class="reviews-content">
-        @switch (activeTab()) {
-          @case ('reviews') {
-            <app-review-list
-              [reviews]="allReviews()"
-              [loading]="reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0"
-              [showUsername]="false"
-              [showMusicInfo]="true"
-              emptyMessage="No reviews yet. Start reviewing your favorite music!" />
-            @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
-              <div class="load-more-section">
-                @if (hasMoreSongReviews()) {
-                  <button
-                    (click)="loadMoreSongReviews()"
-                    class="load-more-btn"
-                    [disabled]="reviewsLoading()">
-                    @if(reviewsLoading()) { <span>Loading...</span> } @else {
-                    <span>Load More Songs</span> }
-                  </button>
-                }
-                @if (hasMoreAlbumReviews()) {
-                  <button
-                    (click)="loadMoreAlbumReviews()"
-                    class="load-more-btn"
-                    [disabled]="reviewsLoading()">
-                    @if(reviewsLoading()) { <span>Loading...</span> } @else {
-                    <span>Load More Albums</span> }
-                  </button>
-                }
-              </div>
+        @switch (activeTab()) { @case ('reviews') {
+        <app-review-list [reviews]="allReviews()" [loading]="
+            reviewsLoading() &&
+            songReviews().length === 0 &&
+            albumReviews().length === 0
+          " [showUsername]="false" [showMusicInfo]="true"
+          emptyMessage="No reviews yet. Start reviewing your favorite music!" />
+        @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
+        <div class="load-more-section">
+          @if (hasMoreSongReviews()) {
+          <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+            @if(reviewsLoading()) {
+            <span>Loading...</span>
+            } @else {
+            <span>Load More Songs</span>
             }
-          }
-          @case ('song-reviews') {
-            <app-review-list
-              [reviews]="songReviews()"
-              [loading]="reviewsLoading() && songReviews().length === 0"
-              [showUsername]="false"
-              [showMusicInfo]="true"
-              emptyMessage="No song reviews yet" />
-            @if (hasMoreSongReviews()) {
-              <button
-                (click)="loadMoreSongReviews()"
-                class="load-more-btn"
-                [disabled]="reviewsLoading()">
-                @if(reviewsLoading()) { <span>Loading...</span> } @else { <span>Load More Songs</span> }
-              </button>
+          </button>
+          } @if (hasMoreAlbumReviews()) {
+          <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+            @if(reviewsLoading()) {
+            <span>Loading...</span>
+            } @else {
+            <span>Load More Albums</span>
             }
+          </button>
           }
-          @case ('album-reviews') {
-            <app-review-list
-              [reviews]="albumReviews()"
-              [loading]="reviewsLoading() && albumReviews().length === 0"
-              [showUsername]="false"
-              [showMusicInfo]="true"
-              emptyMessage="No album reviews yet" />
-            @if (hasMoreAlbumReviews()) {
-              <button
-                (click)="loadMoreAlbumReviews()"
-                class="load-more-btn"
-                [disabled]="reviewsLoading()">
-                @if(reviewsLoading()) { <span>Loading...</span> } @else {
-                <span>Load More Albums</span> }
-              </button>
-            }
+        </div>
+        } } @case ('song-reviews') {
+        <app-review-list [reviews]="songReviews()" [loading]="reviewsLoading() && songReviews().length === 0"
+          [showUsername]="false" [showMusicInfo]="true" emptyMessage="No song reviews yet" />
+        @if (hasMoreSongReviews()) {
+        <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+          @if(reviewsLoading()) {
+          <span>Loading...</span>
+          } @else {
+          <span>Load More Songs</span>
           }
-        }
+        </button>
+        } } @case ('album-reviews') {
+        <app-review-list [reviews]="albumReviews()" [loading]="reviewsLoading() && albumReviews().length === 0"
+          [showUsername]="false" [showMusicInfo]="true" emptyMessage="No album reviews yet" />
+        @if (hasMoreAlbumReviews()) {
+        <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+          @if(reviewsLoading()) {
+          <span>Loading...</span>
+          } @else {
+          <span>Load More Albums</span>
+          }
+        </button>
+        } } }
       </div>
     </div>
     <div class="danger-zone card">
       <h4>Danger Zone</h4>
       <p>
-        Deactivating your account will hide your profile and all of your content. You can reactivate
-        your account by logging in again.
+        Deactivating your account will hide your profile and all of your
+        content. You can reactivate your account by logging in again.
       </p>
       <button (click)="openDeactivateModal()" class="button danger-btn">
         Deactivate My Account
@@ -295,14 +364,11 @@
 </div>
 
 @if(isChangePasswordModalVisible()){
-<app-change-password-modal (close)="closeChangePasswordModal()">
-</app-change-password-modal>
-}
-@if (isDeactivateModalVisible()) {
-<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()" (close)="closeDeactivateModal()">
-</app-deactivate-account-modal>
-}
-@if (isAvatarModalVisible()) {
-<app-avatar-picker-modal (close)="closeAvatarModal()" (avatarSelected)="onAvatarSelected($event)">
-</app-avatar-picker-modal>
+<app-change-password-modal (close)="closeChangePasswordModal()"></app-change-password-modal>
+} @if (isDeactivateModalVisible()) {
+<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()"
+  (close)="closeDeactivateModal()"></app-deactivate-account-modal>
+} @if (isAvatarModalVisible()) {
+<app-avatar-picker-modal (close)="closeAvatarModal()"
+  (avatarSelected)="onAvatarSelected($event)"></app-avatar-picker-modal>
 }

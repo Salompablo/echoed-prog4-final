@@ -350,6 +350,11 @@ html.dark .profile-stats {
   font-style: italic;
 }
 
+.stats-toggle-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
 .profile-reviews {
   margin-bottom: 2rem;
 }
@@ -566,8 +571,12 @@ hr.review-separator {
 }
 
 .button-as-link:hover {
-  text-decoration: underline;
+  text-decoration: none;
   filter: brightness(110%);
+}
+
+.button-as-link:hover .button-link-text {
+  text-decoration: underline;
 }
 
 @media (max-width: 48rem) {
