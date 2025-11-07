@@ -15,14 +15,15 @@ export class CommentService {
 
   getCommentsForReview(
     reviewId: number,
-    reviewType: 'song' | 'album'
+    reviewType: 'song' | 'album',
+    pageNumber: number,
+    size: number
   ): Observable<PagedResponse<CommentResponse>> {
     const endpoint =
       reviewType === 'song'
         ? API_ENDPOINTS.COMMENTS.GET_SONG_REVIEW_COMMENTS(reviewId)
         : API_ENDPOINTS.COMMENTS.GET_ALBUM_REVIEW_COMMENTS(reviewId);
-    const params = '?size=100&pageNumber=0&sort=createdAt';
-    
+    const params = `?size=${size}&pageNumber=${pageNumber}&sort=createdAt&direction=desc`;
     return this.api.get<PagedResponse<CommentResponse>>(`${endpoint}${params}`);
   }
 

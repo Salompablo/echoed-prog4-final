@@ -1,21 +1,39 @@
 <div class="comment-list-container">
+  
   @if (isLoading()) {
     <div class="loading-state">
       <p>Loading comments...</p>
     </div>
-  } @else if (error()) {
+  } 
+  @else if (error()) {
     <div class="error-state">
       <p>{{ error() }}</p>
     </div>
-  } @else if (comments().length === 0) {
+  } 
+  @else if (comments().length === 0) {
     <div class="empty-state">
       <p>No comments yet. Be the first to comment!</p>
     </div>
-  } @else {
+  } 
+  @else {
     <div class="comments-wrapper">
       @for (comment of comments(); track comment.commentId) {
         <app-comment-card [comment]="comment" />
       }
     </div>
   }
-</div>
+
+  @if (isLoadingMore()) {
+    <div class="loading-more-state">
+      <p>Loading more...</p>
+    </div>
+  }
+
+  @if (hasMoreComments() && !isLoading() && !isLoadingMore()) {
+    <div class="load-more-section">
+      <button (click)="loadComments()" class="load-more-btn" [disabled]="isLoadingMore()">
+        Load More Comments
+      </button>
+    </div>
+  }
+  </div>
