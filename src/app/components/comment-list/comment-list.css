@@ -1,0 +1,59 @@
+.comment-list-container {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border-color);
+}
+
+.comments-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  padding: 1rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.error-state {
+  color: var(--toast-error-text);
+  font-style: normal;
+  font-weight: 500;
+}
+.loading-more-state {
+  padding: 1rem;
+  text-align: center;
+  color: var(--secondary-color);
+}
+
+.load-more-section {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.load-more-btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: 700;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+  border-radius: 9999rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.load-more-btn:hover:not(:disabled) {
+  background-color: var(--card-border-color);
+  box-shadow: 0 0.25rem 0.5rem rgba(78, 52, 46, 0.05);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,17 +1,20 @@
-import { Component, Input, Output, EventEmitter, computed, signal } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, signal, inject, computed, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MusicReview, AlbumReviewResponse, SongReviewResponse } from '../../models/interaction';
+import { MusicReview, AlbumReviewResponse, SongReviewResponse, CommentResponse } from '../../models/interaction';
 import { Album, Song } from '../../models/music';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CommentList } from '../comment-list/comment-list';
+import { AuthService } from '../../services/auth';
+import { CommentModal } from '../comment-modal/comment-modal';
 
 @Component({
   selector: 'app-review-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink],
+  imports: [CommonModule, DatePipe, RouterLink,CommentList,CommentModal],
   templateUrl: './review-card.html',
   styleUrls: ['./review-card.css']
 })
-export class ReviewCard{
+export class ReviewCard implements OnChanges{
   @Input({ required: true }) review!: MusicReview;
 
   @Input() showUsername: boolean = true;
@@ -22,6 +25,30 @@ export class ReviewCard{
   @Input() showUserAvatar: boolean = false;
 
   @Output() cardClick = new EventEmitter<MusicReview>();
+  @ViewChild(CommentList) commentListComponent?: CommentList;
+
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  isCommentListVisible = signal(false);
+  isCommentModalVisible = signal(false);
+  commentCount = signal<number>(0);
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['review']) {
+      this.commentCount.set(this.review.totalComments || 0);
+    }
+  }
+  reviewId = computed(() => {
+    return this.isAlbumReview(this.review)
+      ? this.review.albumReviewId
+      : this.review.songReviewId;
+  });
+
+  reviewType = computed<'song' | 'album'>(() => {
+    return this.isAlbumReview(this.review) ? 'album' : 'song';
+  });
 
   isAlbumReview(review: MusicReview): review is AlbumReviewResponse {
     return 'album' in review;
@@ -81,5 +108,33 @@ export class ReviewCard{
 
   onCardClick(): void {
     this.cardClick.emit(this.review);
+  }
+
+  toggleCommentList(event: MouseEvent): void {
+    event.stopPropagation(); 
+    this.isCommentListVisible.update(v => !v);
+  }
+
+  openCommentModal(event: MouseEvent): void {
+    event.stopPropagation(); 
+    
+    if (!this.authService.currentUser()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
+      return;
+    }
+    this.isCommentModalVisible.set(true);
+  }
+
+  closeCommentModal(): void {
+    this.isCommentModalVisible.set(false);
+  }
+
+  handleCommentSubmitted(newComment: CommentResponse): void {
+    this.isCommentModalVisible.set(false); 
+    this.isCommentListVisible.set(true); 
+    this.commentCount.update(count => count + 1);
+    setTimeout(() => {
+      this.commentListComponent?.addComment(newComment);
+    }, 0);
   }
 }

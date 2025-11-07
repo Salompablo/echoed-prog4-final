@@ -38,7 +38,13 @@ export const API_ENDPOINTS = {
     GET_ALBUM_REVIEW_BY_ID: (id: number) => `/albumreviews/${id}`,
     GET_ALBUM_REVIEWS_BY_USER: (userId: number) => `/albumreviews/user/${userId}`,
     DELETE_ALBUM_REVIEW: (reviewId: number) => `/albumreviews/delete/${reviewId}`,
-    UPDATE_ALBUM_REVIEW: (albumReviewId: number) => `/albumreviews/${albumReviewId}`
+    UPDATE_ALBUM_REVIEW: (albumReviewId: number) => `/albumreviews/${albumReviewId}`,
+  },
+  COMMENTS: {
+    GET_SONG_REVIEW_COMMENTS: (reviewId: number) => `/songreviews/${reviewId}/comments`,
+    POST_SONG_REVIEW_COMMENT: (reviewId: number) => `/songreviews/${reviewId}/comments`,
+    GET_ALBUM_REVIEW_COMMENTS: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
+    POST_ALBUM_REVIEW_COMMENT: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
   },
   SONGS: {
     MOST_REVIEWED_SONGS: '/stats/songs/mostReviewed',

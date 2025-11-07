@@ -1,0 +1,37 @@
+.comment-card {
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-color);
+  border-radius: 0.5rem;
+  border: 1px solid var(--card-border-color);
+  margin-top: 0.5rem;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.comment-username {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.comment-username:hover {
+  text-decoration: underline;
+}
+
+.comment-date {
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+}
+
+.comment-body p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

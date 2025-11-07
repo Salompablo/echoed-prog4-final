@@ -1,0 +1,141 @@
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--backdrop-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-index-modal);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: var(--card-bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
+  max-width: 40rem; 
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  position: relative;
+}
+
+.modal-title {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: var(--secondary-color);
+  padding: 0;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+  border-radius: 0.75rem;
+  box-sizing: border-box;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--primary-color) 20%, transparent);
+}
+
+textarea.input-error {
+  border-color: #d9534f;
+}
+
+.character-counter {
+  font-size: 0.75rem;
+  color: var(--secondary-color);
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.error-validation small {
+  color: #d9534f;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.error-api {
+  color: #d9534f;
+  background-color: color-mix(in srgb, #d9534f 15%, transparent);
+  border: 0.0625rem solid #d9534f;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.button {
+  padding: 0.875rem 1.5rem;
+  border-radius: 9999rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
+.button.primary {
+  background-color: var(--primary-color);
+  color: var(--btn-text-color);
+}
+.button.primary:disabled {
+  background-color: var(--secondary-color);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.button.secondary {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 0.0625rem solid var(--card-border-color);
+}

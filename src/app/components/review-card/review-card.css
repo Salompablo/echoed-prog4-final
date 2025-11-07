@@ -214,7 +214,67 @@
   }
 }
 
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--card-border-color);
+  position: relative;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.action-button:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+}
+
+.action-button .material-symbols-rounded {
+  font-size: 1.2rem; 
+}
+
 /* Dark mode support (if implemented) */
 html.dark .review-card:hover {
   box-shadow: 0 0.25rem 0.5rem rgba(255, 255, 255, 0.1);
+}
+
+.comment-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.5rem; 
+  background-color: var(--primary-color);
+  color: var(--btn-text-color);
+  margin-left: 0.4rem;
+}
+
+.action-button:hover .comment-count {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+}
+.review-card.modal-is-open:hover {
+  transform: none;
+}
+.review-card.modal-is-open {
+  transition: box-shadow 0.2s ease;
 }
