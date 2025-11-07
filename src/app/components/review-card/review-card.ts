@@ -50,6 +50,11 @@ export class ReviewCard implements OnChanges{
     return this.isAlbumReview(this.review) ? 'album' : 'song';
   });
 
+  userAvatarUrl = computed(() => {
+    const picUrl = this.review?.user?.profilePictureUrl;
+    return this.getAvatarUrl(picUrl);
+  });
+
   isAlbumReview(review: MusicReview): review is AlbumReviewResponse {
     return 'album' in review;
   }
@@ -137,4 +142,15 @@ export class ReviewCard implements OnChanges{
       this.commentListComponent?.addComment(newComment);
     }, 0);
   }
+
+  getAvatarUrl(profilePictureUrl: string | null | undefined): string {
+    if (profilePictureUrl) {
+      if (profilePictureUrl.startsWith('http://') || profilePictureUrl.startsWith('https://')) {
+        return profilePictureUrl;
+      }
+      return `assets/images/default-avatars/${profilePictureUrl}`;
+    }
+    return 'assets/images/default-avatars/classic-dog.png'; 
+  }
+
 }

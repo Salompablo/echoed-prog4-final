@@ -15,14 +15,21 @@
     }
 
     <div class="review-header">
-      <div class="user-info">
-        @if (showUsername) {
-        <a [routerLink]="getUserProfileLink()" (click)="$event.stopPropagation()" class="username">
-          <strong>{{ review.user.username }}</strong>
+      <div class="user-avatar-info-wrapper"> 
+        @if (showUserAvatar) {
+        <a [routerLink]="getUserProfileLink()" (click)="$event.stopPropagation()" class="user-avatar-link">
+            <img [src]="userAvatarUrl()" [alt]="review.user.username + ' avatar'" class="user-avatar" />
         </a>
-        } @if (showDate) {
-        <span class="review-date">{{ review.date | date : 'short' }}</span>
         }
+        <div class="user-info">
+          @if (showUsername) {
+          <a [routerLink]="getUserProfileLink()" (click)="$event.stopPropagation()" class="username">
+            <strong>@{{ review.user.username }}</strong>
+          </a>
+          } @if (showDate) {
+          <span class="review-date">{{ review.date | date : 'short' }}</span>
+          }
+        </div>
       </div>
       @if (showRating) {
       <div class="rating">

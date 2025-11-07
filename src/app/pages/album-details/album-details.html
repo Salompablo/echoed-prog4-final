@@ -32,7 +32,7 @@
           Make an Echo
         </button>
         <button class="primary write-review-btn" (click)="openTracklist()">
-          {{ showTracks ? 'Hide Tracklist' : 'Show Tracklistt' }}
+          {{ showTracks ? 'Hide Tracklist' : 'Show Tracklist' }}
         </button>
       </div>
 
@@ -81,31 +81,14 @@
 
   <div class="community-reviews">
     <h2>Our Community's Echoes:</h2>
+    <app-review-list
+    [reviews]="reviews()"
+    [loading]="isLoadingReviews()"
+    [showMusicInfo]="false"
+    [showUserAvatar]="true"
+    emptyMessage="No reviews yet. Be the first to make an echo!"
+    ></app-review-list>
 
-    @if (isLoadingReviews()) {
-    <p>Loading reviews...</p>
-    } @else if (reviews().length === 0) {
-    <p class="no-reviews">No reviews yet. Be the first to make an echo!</p>
-    } @else {
-    <div class="reviews-list">
-      @for (review of reviews(); track review.albumReviewId) {
-      <div class="review-card card">
-        <div class="review-header">
-          <div class="user-info">
-            <strong>{{ review.user.username }}</strong>
-            <span class="review-date">{{ review.date | date:'short' }}</span>
-          </div>
-          <div class="rating">
-            <span class="stars">★ {{ review.rating }}/5</span>
-          </div>
-        </div>
-        <div class="review-content">
-          <p>{{ review.description }}</p>
-        </div>
-      </div>
-      }
-    </div>
-    }
   </div>
 </section>
 
