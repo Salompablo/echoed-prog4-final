@@ -1,4 +1,4 @@
-import { UserProfile } from '../pages/user-profile/user-profile';
+import { UserProfile } from './user';
 import { Album, Song } from './music';
 import { FullUserProfile} from './user';
 
@@ -68,6 +68,7 @@ export interface Review{
   totalWows: number;
   totalLoves: number;
   userReaction: ReactionResponse | null;
+  totalComments: number;
 }
 
 export interface SongReviewResponse extends Review {

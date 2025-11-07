@@ -1,0 +1,27 @@
+.comment-list-container {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border-color);
+}
+
+.comments-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  padding: 1rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.error-state {
+  color: var(--toast-error-text);
+  font-style: normal;
+  font-weight: 500;
+}
