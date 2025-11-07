@@ -16,6 +16,9 @@ import {
   AlbumReviewResponse,
   SongReviewResponse,
   CommentResponse,
+  ReactionType,
+  ReactedType,
+  ReactionResponse,
 } from '../../models/interaction';
 import { Album, Song } from '../../models/music';
 import { Router, RouterLink } from '@angular/router';
@@ -23,11 +26,12 @@ import { CommentList } from '../comment-list/comment-list';
 import { AuthService } from '../../services/auth';
 import { CommentModal } from '../comment-modal/comment-modal';
 import { DeleteConfirmationModal } from '../delete-confirmation-modal/delete-confirmation-modal';
+import { ReactionBar } from '../reaction-bar/reaction-bar';
 
 @Component({
   selector: 'app-review-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, DeleteConfirmationModal],
+  imports: [CommonModule, DatePipe, RouterLink, CommentList, CommentModal, DeleteConfirmationModal, ReactionBar],
   templateUrl: './review-card.html',
   styleUrls: ['./review-card.css'],
 })
@@ -40,9 +44,13 @@ export class ReviewCard implements OnChanges {
   @Input() showDescription: boolean = true;
   @Input() showMusicInfo: boolean = false;
   @Input() showUserAvatar: boolean = false;
+  @Input() showActions: boolean = true;
 
   @Output() cardClick = new EventEmitter<MusicReview>();
   @ViewChild(CommentList) commentListComponent?: CommentList;
+
+  public reactionTypes = ReactionType;
+  public reactedTypes = ReactedType;
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -136,6 +144,21 @@ export class ReviewCard implements OnChanges {
 
   onCardClick(): void {
     this.cardClick.emit(this.review);
+  }
+
+  onReactionChanged(newReaction: ReactionResponse | null): void {
+    if (!this.review) return;
+
+    const oldReaction = this.review.userReaction;
+    this.review.userReaction = newReaction;
+
+    if (oldReaction) {
+      this.updateCounter(oldReaction.reactionType, -1);
+    }
+
+    if (newReaction) {
+      this.updateCounter(newReaction.reactionType, 1);
+    }
   }
 
   toggleCommentList(event: MouseEvent): void {

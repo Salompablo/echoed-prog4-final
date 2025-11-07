@@ -1,6 +1,11 @@
 import { Component, computed, inject, Input, OnInit, output, signal, WritableSignal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { CommentResponse } from '../../models/interaction';
+import {
+  CommentResponse,
+  ReactedType,
+  ReactionResponse,
+  ReactionType,
+} from '../../models/interaction';
 import { RouterLink } from '@angular/router';
 import { UserService } from '../../services/user';
 import { FullUserProfile } from '../../models/user';
@@ -10,11 +15,12 @@ import { CommentService } from '../../services/comment';
 import { ErrorService } from '../../services/error';
 import { ToastService } from '../../services/toast';
 import { DeleteConfirmationModal } from '../delete-confirmation-modal/delete-confirmation-modal';
+import { ReactionBar } from '../reaction-bar/reaction-bar';
 
 @Component({
   selector: 'app-comment-card',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, DeleteConfirmationModal],
+  imports: [CommonModule, DatePipe, RouterLink, DeleteConfirmationModal, ReactionBar],
   templateUrl: './comment-card.html',
   styleUrl: './comment-card.css',
 })
@@ -33,6 +39,9 @@ export class CommentCard implements OnInit {
   errorService = inject(ErrorService);
 
   user: WritableSignal<FullUserProfile | null> = signal(null);
+
+  public reactionTypes = ReactionType;
+  public reactedTypes = ReactedType;
 
   isDeleteModalVisible = signal(false);
   isDeleting = signal(false);
@@ -112,5 +121,36 @@ export class CommentCard implements OnInit {
 
   onCloseDeleteModal(): void {
     this.isDeleteModalVisible.set(false);
+
+  onReactionChanged(newReaction: ReactionResponse | null): void {
+    if (!this.comment) return;
+
+    const oldReaction = this.comment.userReaction;
+    this.comment.userReaction = newReaction;
+
+    if (oldReaction) {
+      this.updateCounter(oldReaction.reactionType, -1);
+    }
+
+    if (newReaction) {
+      this.updateCounter(newReaction.reactionType, 1);
+    }
+  }
+
+  private updateCounter(type: ReactionType, delta: number): void {
+    switch (type) {
+      case ReactionType.LIKE:
+        this.comment.totalLikes = Math.max(0, this.comment.totalLikes + delta);
+        break;
+      case ReactionType.LOVE:
+        this.comment.totalLoves = Math.max(0, this.comment.totalLoves + delta);
+        break;
+      case ReactionType.WOW:
+        this.comment.totalWows = Math.max(0, this.comment.totalWows + delta);
+        break;
+      case ReactionType.DISLIKE:
+        this.comment.totalDislikes = Math.max(0, this.comment.totalDislikes + delta);
+        break;
+    }
   }
 }

@@ -34,3 +34,10 @@
 <app-delete-confirmation-modal [target]="deletionTarget()" [isLoading]="isDeleting()" (confirm)="onConfirmDelete()"
   (close)="onCloseDeleteModal()" />
 }
+
+  <div class="comment-footer">
+    <app-reaction-bar [reactedType]="reactedTypes.COMMENT" [parentId]="comment.commentId"
+      [userReaction]="comment.userReaction" [totalLikes]="comment.totalLikes" [totalDislikes]="comment.totalDislikes"
+      [totalWows]="comment.totalWows" [totalLoves]="comment.totalLoves" (reactionChange)="onReactionChanged($event)" />
+  </div>
+</div>

@@ -45,6 +45,10 @@
   background-color: var(--bg-color);
 }
 
+.action-button .material-symbols-rounded {
+  font-size: 1.2rem;
+}
+
 .comment-username {
   font-weight: 700;
   font-size: 0.9rem;
@@ -61,12 +65,25 @@
   color: var(--secondary-color);
 }
 
-.comment-body p {
-  margin: 0;
+.comment-body {
   font-size: 0.95rem;
   line-height: 1.5;
-  white-space: pre-wrap;
+  color: var(--text-color);
   word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.comment-body p {
+  margin: 0;
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--card-border-color);
 }
 
 .user-avatar-info-wrapper {
@@ -83,13 +100,4 @@
   border-radius: 50%;
   object-fit: cover;
   border: 0.0625rem solid var(--card-border-color);
-}
-
-.action-button:hover {
-  color: var(--primary-color);
-  background-color: var(--bg-color);
-}
-
-.action-button .material-symbols-rounded {
-  font-size: 1.2rem;
 }

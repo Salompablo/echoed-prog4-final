@@ -52,6 +52,20 @@ export const API_ENDPOINTS = {
     DELETE_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/albumreviews/${reviewId}/comments/${commentId}`,
 
   },
+  REACTIONS: {
+    ADD_TO_REVIEW: (reviewId: number | string) =>
+      `/reviews/${reviewId}/reactions`,
+    ADD_TO_COMMENT: (commentId: number | string) =>
+      `/comments/${commentId}/reactions`,
+    UPDATE: (reactionId: number | string) => 
+      `/reactions/${reactionId}`,
+    DELETE: (
+      reactedType: 'review' | 'comment',
+      parentId: number | string,
+      reactionId: number | string
+    ) =>
+      `/${reactedType}s/${parentId}/reactions/${reactionId}`,
+  },
   SONGS: {
     MOST_REVIEWED_SONGS: '/stats/songs/mostReviewed',
   },
