@@ -57,12 +57,13 @@
       [showMusicInfo]="false"
       [showUserAvatar]="true"
       emptyMessage="No reviews yet. Be the first to make an echo!"
-      (reviewDeleted)="onReviewDeleted($event)" />
+      (reviewDeleted)="onReviewDeleted($event)"
+      (reviewEditRequest)="onReviewEditRequest($event)" />
   </div>
 </section>
 
 @if (isModalOpen() && song) {
-<app-review-modal [type]="'song'" [item]="song" (closed)="closeReviewModal()" (submitted)="handleReviewSubmit($event)">
+<app-review-modal [type]="'song'" [item]="song" [existingReview]="reviewToEdit()" (closed)="closeReviewModal()" (submitted)="handleReviewSubmit($event)">
 </app-review-modal>
 }
 }

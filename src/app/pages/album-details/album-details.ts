@@ -4,7 +4,7 @@ import { AlbumSearchResponse } from '../../models/music';
 import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 import { ReviewModal } from '../../components/review-modal/review-modal';
-import { AlbumReviewRequest, AlbumReviewResponse } from '../../models/interaction';
+import { AlbumReviewRequest, AlbumReviewResponse, MusicReview } from '../../models/interaction';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
@@ -27,6 +27,8 @@ export class AlbumDetails implements OnInit {
   isModalOpen = signal(false);
   errorMessage = signal<string | null>(null);
   loadError = signal<string | null>(null);
+  userExistingReview = signal<AlbumReviewResponse | null>(null);
+  reviewToEdit = signal<{ rating: number; description: string } | null>(null);
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -86,6 +88,7 @@ export class AlbumDetails implements OnInit {
     this.reviewService.getAlbumReviews(spotifyId).subscribe({
       next: (response) => {
         this.reviews.set(response.content);
+        this.checkUserExistingReview();
         this.isLoadingReviews.set(false);
       },
       error: (err) => {
@@ -93,6 +96,21 @@ export class AlbumDetails implements OnInit {
         this.isLoadingReviews.set(false);
       },
     });
+  }
+
+  checkUserExistingReview(): void {
+    const currentUserId = this.currentUser()?.userId;
+    if (!currentUserId) {
+      this.userExistingReview.set(null);
+      return;
+    }
+
+    const existing = this.reviews().find((review) => {
+      const reviewUserId = (review.user as any).userId ?? (review.user as any).id;
+      return reviewUserId === currentUserId;
+    });
+
+    this.userExistingReview.set(existing || null);
   }
 
   openTracklist(){
@@ -108,12 +126,34 @@ export class AlbumDetails implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+
+    const existing = this.userExistingReview();
+    if (existing) {
+      this.reviewToEdit.set({
+        rating: existing.rating,
+        description: existing.description,
+      });
+    } else {
+      this.reviewToEdit.set(null);
+    }
+
     this.isModalOpen.set(true);
     this.errorMessage.set(null);
   }
 
   closeReviewModal(): void {
     this.isModalOpen.set(false);
+    this.reviewToEdit.set(null);
+  }
+
+  onReviewEditRequest(review: MusicReview): void {
+    const albumReview = review as AlbumReviewResponse;
+    this.reviewToEdit.set({
+      rating: albumReview.rating,
+      description: albumReview.description,
+    });
+    this.isModalOpen.set(true);
+    this.errorMessage.set(null);
   }
 
   handleReviewSubmit(reviewData: Partial<AlbumReviewRequest>): void {
@@ -128,18 +168,37 @@ export class AlbumDetails implements OnInit {
       description: reviewData.description!,
     };
 
-    this.reviewService.createAlbumReview(this.album.spotifyId, request).subscribe({
-      next: (response) => {
-        console.log('Review created successfully', response);
-        this.isModalOpen.set(false);
-        this.loadReviews(this.album!.spotifyId);
-      },
-      error: (err) => {
-        const message = this.errorService.getErrorMessage(err);
-        this.errorMessage.set(message);
-        this.errorService.logError(err, 'AlbumDetails - Create Review');
-      },
-    });
+    const existingReview = this.userExistingReview();
+
+    if (existingReview) {
+      this.reviewService.updateAlbumReview(existingReview.albumReviewId, request).subscribe({
+        next: (response) => {
+          console.log('Review updated successfully', response);
+          this.isModalOpen.set(false);
+          this.reviewToEdit.set(null);
+          this.loadReviews(this.album!.spotifyId);
+        },
+        error: (err) => {
+          const message = this.errorService.getErrorMessage(err);
+          this.errorMessage.set(message);
+          this.errorService.logError(err, 'AlbumDetails - Update Review');
+        },
+      });
+    } else {
+      this.reviewService.createAlbumReview(this.album.spotifyId, request).subscribe({
+        next: (response) => {
+          console.log('Review created successfully', response);
+          this.isModalOpen.set(false);
+          this.reviewToEdit.set(null);
+          this.loadReviews(this.album!.spotifyId);
+        },
+        error: (err) => {
+          const message = this.errorService.getErrorMessage(err);
+          this.errorMessage.set(message);
+          this.errorService.logError(err, 'AlbumDetails - Create Review');
+        },
+      });
+    }
   }
 
   formatDuration(ms: number | undefined): string {
@@ -162,5 +221,6 @@ export class AlbumDetails implements OnInit {
     this.reviews.update((current) =>
       current.filter((review) => review.albumReviewId !== reviewId)
     );
+    this.checkUserExistingReview();
   }
 }

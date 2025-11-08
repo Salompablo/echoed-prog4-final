@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 import { ReviewModal } from '../../components/review-modal/review-modal';
-import { SongReviewRequest, SongReviewResponse } from '../../models/interaction';
+import { MusicReview, SongReviewRequest, SongReviewResponse } from '../../models/interaction';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
@@ -26,6 +26,8 @@ export class SongDetails implements OnInit {
   isModalOpen = signal(false);
   errorMessage = signal<string | null>(null);
   loadError = signal<string | null>(null);
+  userExistingReview = signal<SongReviewResponse | null>(null);
+  reviewToEdit = signal<{ rating: number; description: string } | null>(null);
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -85,6 +87,7 @@ export class SongDetails implements OnInit {
     this.reviewService.getSongReviews(spotifyId).subscribe({
       next: (response) => {
         this.reviews.set(response.content);
+        this.checkUserExistingReview();
         this.isLoadingReviews.set(false);
       },
       error: (err) => {
@@ -95,17 +98,54 @@ export class SongDetails implements OnInit {
     });
   }
 
+  checkUserExistingReview(): void {
+    const currentUserId = this.currentUser()?.userId;
+    if (!currentUserId) {
+      this.userExistingReview.set(null);
+      return;
+    }
+
+    const existing = this.reviews().find((review) => {
+      const reviewUserId = (review.user as any).userId ?? (review.user as any).id;
+      return reviewUserId === currentUserId;
+    });
+
+    this.userExistingReview.set(existing || null);
+  }
+
   openReviewModal(): void {
     if (!this.currentUser()) {
       this.router.navigate(['/login']);
       return;
     }
+
+    const existing = this.userExistingReview();
+    if (existing) {
+      this.reviewToEdit.set({
+        rating: existing.rating,
+        description: existing.description,
+      });
+    } else {
+      this.reviewToEdit.set(null);
+    }
+
     this.isModalOpen.set(true);
     this.errorMessage.set(null);
   }
 
   closeReviewModal(): void {
     this.isModalOpen.set(false);
+    this.reviewToEdit.set(null);
+  }
+
+  onReviewEditRequest(review: MusicReview): void {
+    const songReview = review as SongReviewResponse;
+    this.reviewToEdit.set({
+      rating: songReview.rating,
+      description: songReview.description,
+    });
+    this.isModalOpen.set(true);
+    this.errorMessage.set(null);
   }
 
   handleReviewSubmit(reviewData: Partial<SongReviewRequest>): void {
@@ -120,20 +160,37 @@ export class SongDetails implements OnInit {
       description: reviewData.description!,
     };
 
-    this.reviewService.createSongReview(this.song.spotifyId, request).subscribe({
-      next: (response) => {
-        // TODO: We will add a Toast Service later, change this
-        console.log('Review created successfully', response);
-        this.isModalOpen.set(false);
-        this.loadReviews(this.song!.spotifyId);
-      },
-      error: (err) => {
-        // TODO: We will add a Toast Service later, change this
-        const message = this.errorService.getErrorMessage(err);
-        this.errorMessage.set(message);
-        this.errorService.logError(err, 'SongDetails - Create Review');
-      },
-    });
+    const existingReview = this.userExistingReview();
+
+    if (existingReview) {
+      this.reviewService.updateSongReview(existingReview.songReviewId, request).subscribe({
+        next: (response) => {
+          console.log('Review updated successfully', response);
+          this.isModalOpen.set(false);
+          this.reviewToEdit.set(null);
+          this.loadReviews(this.song!.spotifyId);
+        },
+        error: (err) => {
+          const message = this.errorService.getErrorMessage(err);
+          this.errorMessage.set(message);
+          this.errorService.logError(err, 'SongDetails - Update Review');
+        },
+      });
+    } else {
+      this.reviewService.createSongReview(this.song.spotifyId, request).subscribe({
+        next: (response) => {
+          console.log('Review created successfully', response);
+          this.isModalOpen.set(false);
+          this.reviewToEdit.set(null);
+          this.loadReviews(this.song!.spotifyId);
+        },
+        error: (err) => {
+          const message = this.errorService.getErrorMessage(err);
+          this.errorMessage.set(message);
+          this.errorService.logError(err, 'SongDetails - Create Review');
+        },
+      });
+    }
   }
 
   formatDuration(ms: number | undefined): string {
@@ -156,5 +213,6 @@ export class SongDetails implements OnInit {
     this.reviews.update((current) =>
       current.filter((review) => review.songReviewId !== reviewId)
     );
+    this.checkUserExistingReview();
   }
 }

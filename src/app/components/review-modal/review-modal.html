@@ -64,7 +64,7 @@
                 Cancel
               </button>
               <button type="submit" class="button primary" [disabled]="reviewForm.invalid">
-                Submit Echo
+                {{ isEditMode() ? 'Update Echo' : 'Submit Echo' }}
               </button>
             </div>
           </form>

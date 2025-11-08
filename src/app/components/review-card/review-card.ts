@@ -62,6 +62,7 @@ export class ReviewCard implements OnChanges {
   @ViewChild(CommentList) commentListComponent?: CommentList;
 
   deleteEvent = output<number>();
+  editRequest = output<MusicReview>();
 
   public reactionTypes = ReactionType;
   public reactedTypes = ReactedType;
@@ -231,6 +232,10 @@ export class ReviewCard implements OnChanges {
 
   onDeleteReview(): void {
     this.isDeleteModalVisible.set(true);
+  }
+
+  onEditReview(): void {
+    this.editRequest.emit(this.review);
   }
 
   onConfirmDelete(): void {

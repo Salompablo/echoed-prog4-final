@@ -283,6 +283,10 @@ html.dark .review-card:hover {
   color: var(--bg-color);
 }
 
+.edit-btn:hover {
+  color: var(--primary-color);
+}
+
 .delete-btn:hover {
   color: #dc2626;
 }
