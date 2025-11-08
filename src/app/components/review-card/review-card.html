@@ -67,6 +67,9 @@
         <span class="material-symbols-rounded">add_comment</span>
       </button>
       @if (isOwner()) {
+      <button (click)="onEditReview()" class="action-button edit-btn" aria-label="Edit Echo">
+        <span class="material-symbols-rounded">edit</span>
+      </button>
       <button (click)="onDeleteReview()" class="action-button delete-btn" aria-label="Delete Echo">
         <span class="material-symbols-rounded">delete</span>
       </button>

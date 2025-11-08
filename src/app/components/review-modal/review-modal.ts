@@ -13,6 +13,7 @@ import { StarRating } from '../star-rating/star-rating';
 export class ReviewModal {
   type = input.required<'song' | 'album'>();
   item = input.required<SongSearchResponse | AlbumSearchResponse>();
+  existingReview = input<{ rating: number; description: string } | null>(null);
   closed = output<void>();
   submitted = output<SongReviewRequest | AlbumReviewRequest>();
 
@@ -35,6 +36,8 @@ export class ReviewModal {
 
   characterCount = signal<number>(0);
 
+  isEditMode = computed(() => this.existingReview() !== null);
+
   isCharCountValid = computed(() => {
     const count = this.characterCount();
     return count >= this.MIN_CHARS && count <= this.MAX_CHARS;
@@ -44,6 +47,18 @@ export class ReviewModal {
     // Track description changes and update character count
     this.reviewForm.get('description')?.valueChanges.subscribe((value) => {
       this.characterCount.set((value || '').length);
+    });
+
+    // Pre-fill form when existing review is provided
+    effect(() => {
+      const existing = this.existingReview();
+      if (existing) {
+        this.reviewForm.patchValue({
+          rating: existing.rating,
+          description: existing.description,
+        });
+        this.characterCount.set(existing.description.length);
+      }
     });
   }
 

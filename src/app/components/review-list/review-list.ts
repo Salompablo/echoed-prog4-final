@@ -28,6 +28,7 @@ export class ReviewList {
 
   @Output() reviewSelected = new EventEmitter<MusicReview>();
   @Output() reviewDeleted = new EventEmitter<number>();
+  @Output() reviewEditRequest = new EventEmitter<MusicReview>();
 
   trackByReviewId(index: number, review: MusicReview): number {
     return 'songReviewId' in review ? review.songReviewId : review.albumReviewId;
@@ -39,5 +40,9 @@ export class ReviewList {
 
   onReviewDeleted(reviewId: number): void {
     this.reviewDeleted.emit(reviewId);
+  }
+
+  onReviewEditRequest(review: MusicReview): void {
+    this.reviewEditRequest.emit(review);
   }
 }

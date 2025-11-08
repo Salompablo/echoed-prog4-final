@@ -88,13 +88,14 @@
     [showUserAvatar]="true"
     emptyMessage="No reviews yet. Be the first to make an echo!"
     (reviewDeleted)="onReviewDeleted($event)"
+    (reviewEditRequest)="onReviewEditRequest($event)"
     ></app-review-list>
 
   </div>
 </section>
 
 @if (isModalOpen() && album) {
-<app-review-modal [type]="'album'" [item]="album" (closed)="closeReviewModal()"
+<app-review-modal [type]="'album'" [item]="album" [existingReview]="reviewToEdit()" (closed)="closeReviewModal()"
   (submitted)="handleReviewSubmit($event)">
 </app-review-modal>
 }
