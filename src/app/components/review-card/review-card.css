@@ -2,14 +2,15 @@
   padding: 1.5rem;
   border: 0;
   margin-bottom: 0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  top: 0; 
+  transition: top 0.2s ease, box-shadow 0.2s ease;
 }
 
 .review-card:hover {
-  transform: translateY(-0.125rem);
+  top: -0.125rem;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
-
 .review-clickable-content {
   cursor: pointer;
 }

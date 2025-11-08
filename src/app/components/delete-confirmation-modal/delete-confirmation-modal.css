@@ -1,4 +1,4 @@
-/* Replicate the overall modal styles from reactivate-account-modal.css */
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -46,8 +46,7 @@
 .modal-actions {
     display: flex;
     gap: 1rem;
-    justify-content: flex-end;
-    /* Alineamos a la derecha */
+    justify-content: center;
     margin-top: 1.5rem;
 }
 
@@ -74,7 +73,6 @@
 
 .button.danger {
     background-color: #d9534f;
-    /* Color rojo */
     color: #ffffff;
 }
 
