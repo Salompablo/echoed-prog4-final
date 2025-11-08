@@ -402,4 +402,13 @@ export class UserProfile implements OnInit, OnDestroy {
   toggleShowAllStats(): void {
     this.showAllStats.update((v) => !v);
   }
+
+  onReviewDeleted(reviewId: number): void {
+    this.songReviews.update((current) =>
+      current.filter((review) => review.songReviewId !== reviewId)
+    );
+    this.albumReviews.update((current) =>
+      current.filter((review) => review.albumReviewId !== reviewId)
+    );
+  }
 }

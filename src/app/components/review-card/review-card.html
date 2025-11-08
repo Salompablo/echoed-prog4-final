@@ -66,6 +66,11 @@
       <button (click)="openCommentModal($event)" class="action-button">
         <span class="material-symbols-rounded">add_comment</span>
       </button>
+      @if (isOwner()) {
+      <button (click)="onDeleteReview()" class="action-button delete-btn" aria-label="Delete Echo">
+        <span class="material-symbols-rounded">delete</span>
+      </button>
+      }
     </div>
   </div>
   } @if (isCommentListVisible()) {

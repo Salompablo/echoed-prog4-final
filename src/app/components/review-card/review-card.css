@@ -283,6 +283,14 @@ html.dark .review-card:hover {
   color: var(--bg-color);
 }
 
+.delete-btn:hover {
+  color: #dc2626;
+}
+
+html.dark .delete-btn:hover {
+  color: #f87171;
+}
+
 .review-card.modal-is-open:hover {
   transform: none;
 }

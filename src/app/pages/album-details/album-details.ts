@@ -157,4 +157,10 @@ export class AlbumDetails implements OnInit {
 
     return `${minutes}:${formattedSeconds}`;
   }
+
+  onReviewDeleted(reviewId: number): void {
+    this.reviews.update((current) =>
+      current.filter((review) => review.albumReviewId !== reviewId)
+    );
+  }
 }

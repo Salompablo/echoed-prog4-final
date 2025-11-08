@@ -330,6 +330,7 @@
           [showUsername]="false"
           [showMusicInfo]="true"
           emptyMessage="No reviews yet. Start reviewing your favorite music!"
+          (reviewDeleted)="onReviewDeleted($event)"
         />
         @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
         <div class="load-more-section">
@@ -366,6 +367,7 @@
           [showUsername]="false"
           [showMusicInfo]="true"
           emptyMessage="No song reviews yet"
+          (reviewDeleted)="onReviewDeleted($event)"
         />
         @if (hasMoreSongReviews()) {
         <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
@@ -382,6 +384,7 @@
           [showUsername]="false"
           [showMusicInfo]="true"
           emptyMessage="No album reviews yet"
+          (reviewDeleted)="onReviewDeleted($event)"
         />
         @if (hasMoreAlbumReviews()) {
         <button

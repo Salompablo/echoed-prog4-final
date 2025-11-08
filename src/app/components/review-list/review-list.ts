@@ -27,6 +27,7 @@ export class ReviewList {
   @Input() emptyMessage: string = 'No reviews yet';
 
   @Output() reviewSelected = new EventEmitter<MusicReview>();
+  @Output() reviewDeleted = new EventEmitter<number>();
 
   trackByReviewId(index: number, review: MusicReview): number {
     return 'songReviewId' in review ? review.songReviewId : review.albumReviewId;
@@ -34,5 +35,9 @@ export class ReviewList {
 
   onReviewClick(review: MusicReview): void {
     this.reviewSelected.emit(review);
+  }
+
+  onReviewDeleted(reviewId: number): void {
+    this.reviewDeleted.emit(reviewId);
   }
 }

@@ -9,6 +9,7 @@ import {
   computed,
   OnChanges,
   SimpleChanges,
+  output,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {
@@ -27,6 +28,9 @@ import { AuthService } from '../../services/auth';
 import { CommentModal } from '../comment-modal/comment-modal';
 import { DeleteConfirmationModal } from '../delete-confirmation-modal/delete-confirmation-modal';
 import { ReactionBar } from '../reaction-bar/reaction-bar';
+import { ReviewService } from '../../services/review';
+import { ToastService } from '../../services/toast';
+import { ErrorService } from '../../services/error';
 
 @Component({
   selector: 'app-review-card',
@@ -57,11 +61,16 @@ export class ReviewCard implements OnChanges {
   @Output() cardClick = new EventEmitter<MusicReview>();
   @ViewChild(CommentList) commentListComponent?: CommentList;
 
+  deleteEvent = output<number>();
+
   public reactionTypes = ReactionType;
   public reactedTypes = ReactedType;
 
   private authService = inject(AuthService);
   private router = inject(Router);
+  private reviewService = inject(ReviewService);
+  private toastService = inject(ToastService);
+  private errorService = inject(ErrorService);
 
   isCommentListVisible = signal(false);
   isCommentModalVisible = signal(false);
@@ -92,6 +101,13 @@ export class ReviewCard implements OnChanges {
   userAvatarUrl = computed(() => {
     const picUrl = this.review?.user?.profilePictureUrl;
     return this.getAvatarUrl(picUrl);
+  });
+
+  isOwner = computed(() => {
+    const currentUser = this.authService.currentUser();
+    if (!currentUser || !this.review?.user) return false;
+    const reviewUserId = (this.review.user as any).userId ?? (this.review.user as any).id;
+    return currentUser.userId === reviewUserId;
   });
 
   isAlbumReview(review: MusicReview): review is AlbumReviewResponse {
@@ -217,7 +233,29 @@ export class ReviewCard implements OnChanges {
     this.isDeleteModalVisible.set(true);
   }
 
-  onConfirmDelete(): void {}
+  onConfirmDelete(): void {
+    this.isDeleting.set(true);
+    const reviewId = this.reviewId();
+    const reviewType = this.reviewType();
+
+    const deleteObservable = reviewType === 'song'
+      ? this.reviewService.deleteSongReview(reviewId)
+      : this.reviewService.deleteAlbumReview(reviewId);
+
+    deleteObservable.subscribe({
+      next: () => {
+        this.toastService.success('Echo deleted successfully!');
+        this.deleteEvent.emit(reviewId);
+        this.isDeleteModalVisible.set(false);
+        this.isDeleting.set(false);
+      },
+      error: (err) => {
+        this.toastService.error(this.errorService.getErrorMessage(err));
+        this.errorService.logError(err, 'ReviewCard - Delete Review');
+        this.isDeleting.set(false);
+      },
+    });
+  }
 
   private updateCounter(type: ReactionType, delta: number): void {
     switch (type) {

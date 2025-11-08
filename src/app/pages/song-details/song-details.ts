@@ -151,4 +151,10 @@ export class SongDetails implements OnInit {
 
     return `${minutes}:${formattedSeconds}`;
   }
+
+  onReviewDeleted(reviewId: number): void {
+    this.reviews.update((current) =>
+      current.filter((review) => review.songReviewId !== reviewId)
+    );
+  }
 }

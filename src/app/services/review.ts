@@ -78,7 +78,7 @@ export class ReviewService {
    * @returns Observable that completes when the review is deleted
    */
   deleteSongReview(reviewId: number): Observable<void> {
-    return this.api.delete<void>(`${API_ENDPOINTS.REVIEWS.SONG_REVIEWS}/${reviewId}`);
+    return this.api.delete<void>(API_ENDPOINTS.REVIEWS.DELETE_SONG_REVIEW(reviewId));
   }
 
   /**
@@ -87,7 +87,7 @@ export class ReviewService {
    * @returns Observable that completes when the review is deleted
    */
   deleteAlbumReview(reviewId: number): Observable<void> {
-    return this.api.delete<void>(`${API_ENDPOINTS.REVIEWS.ALBUM_REVIEWS}/${reviewId}`);
+    return this.api.delete<void>(API_ENDPOINTS.REVIEWS.DELETE_ALBUM_REVIEW(reviewId));
   }
 
   /**

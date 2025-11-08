@@ -87,6 +87,7 @@
     [showMusicInfo]="false"
     [showUserAvatar]="true"
     emptyMessage="No reviews yet. Be the first to make an echo!"
+    (reviewDeleted)="onReviewDeleted($event)"
     ></app-review-list>
 
   </div>
