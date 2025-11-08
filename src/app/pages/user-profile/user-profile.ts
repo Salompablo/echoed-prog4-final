@@ -1,8 +1,18 @@
-import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  Injector,
+  OnDestroy,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { UserService } from '../../services/user';
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
@@ -15,6 +25,7 @@ import { DeactivateAccountModal } from '../../components/deactivate-account-moda
 import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-picker-modal';
 import { ChangePasswordModal } from '../../components/change-password-modal/change-password-modal';
 import { ReviewList } from '../../components/review-list/review-list';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -31,15 +42,21 @@ import { ReviewList } from '../../components/review-list/review-list';
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css',
 })
-export class UserProfile implements OnInit {
+export class UserProfile implements OnInit, OnDestroy {
   private userService = inject(UserService);
   public authService = inject(AuthService);
   private reviewService = inject(ReviewService);
   private toastService = inject(ToastService);
   private errorService = inject(ErrorService);
   private datePipe = inject(DatePipe);
+  private route = inject(ActivatedRoute);
+  private injector = inject(Injector);
+  private routeSubscription!: Subscription;
 
   userProfile: WritableSignal<FullUserProfile | null> = signal(null);
+  otherUser: FullUserProfile | undefined;
+
+  userId = signal<string | undefined>(undefined);
   isEditMode = signal(false);
   isDeactivateModalVisible = signal(false);
   isAvatarModalVisible = signal(false);
@@ -50,6 +67,16 @@ export class UserProfile implements OnInit {
   albumReviews = signal<AlbumReviewResponse[]>([]);
   reviewsLoading = signal(false);
   activeTab = signal<'reviews' | 'song-reviews' | 'album-reviews'>('reviews');
+
+  constructor() {
+    effect(
+      () => {
+        this.userId();
+        this.loadProfileAndReviews();
+      },
+      { allowSignalWrites: true, injector: this.injector }
+    );
+  }
 
   allReviews = computed(() => {
     const songs = this.songReviews();
@@ -138,17 +165,45 @@ export class UserProfile implements OnInit {
     );
   });
 
+  isCurrentUserProfile = computed(() => {
+    const routeId = this.userId();
+    const sessionId = this.sessionUser()?.userId;
+
+    if (routeId === undefined || routeId === String(sessionId)) {
+      return true;
+    }
+    return false;
+  });
+
   ngOnInit(): void {
-    this.loadProfileAndReviews();
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
+      this.userId.set(params.get('userId') || undefined);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 
   async loadProfileAndReviews(): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
+
+    const currentUserId = this.userId();
+
     try {
-      const profile = await firstValueFrom(this.userService.getCurrentUserProfile());
-      this.userProfile.set(profile);
-      this.initializeForm(profile);
+      if (currentUserId != undefined) {
+        const numberId: number = +currentUserId;
+        this.otherUser = await firstValueFrom(this.userService.getUserProfileByUserId(numberId));
+        this.userProfile.set(this.otherUser);
+        this.initializeForm(this.otherUser);
+      } else {
+        const profile = await firstValueFrom(this.userService.getCurrentUserProfile());
+        this.userProfile.set(profile);
+        this.initializeForm(profile);
+      }
 
       await this.resetAndLoadReviews();
     } catch (error) {
