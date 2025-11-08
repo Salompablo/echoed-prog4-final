@@ -132,8 +132,10 @@ export class ReviewCard implements OnChanges {
   }
 
   getUserProfileLink(): string[] {
-    if (!this.review?.user?.userId) return [];
-    return ['/profile', this.review.user.userId.toString()];
+    const u: any = this.review?.user as any;
+    const uid = u?.userId ?? u?.id;
+    if (uid == null) return [];
+    return ['/profile', String(uid)];
   }
 
   getStarArray(): number[] {

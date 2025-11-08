@@ -284,7 +284,12 @@
     </div>
     <div class="profile-reviews">
       <div class="reviews-header">
+        @if (isCurrentUserProfile()) {
         <h2 class="reviews-title">My Reviews</h2>
+        }@else {
+          <h2 class="reviews-title">{{userProfile()?.username}}' reviews</h2>
+        }
+
         <div class="reviews-tabs">
           <button (click)="changeTab('reviews')" [class.active]="activeTab() === 'reviews'" class="tab-btn">
             All Reviews
