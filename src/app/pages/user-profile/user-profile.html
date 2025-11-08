@@ -27,7 +27,9 @@
         @if (!isEditMode()) {
         <div class="profile-view">
           <h1 class="username">@ {{ profile.username }}</h1>
+          @if (isCurrentUserProfile()) {
           <p class="email">{{ authService.currentUser()?.email }}</p>
+          }
 
           @if (profile.roles.length) {
           <div class="roles">
@@ -52,10 +54,11 @@
             <p class="bio-text">{{ profile.biography }}</p>
           </div>
           }
-
+          @if (isCurrentUserProfile()) {
           <button (click)="toggleEditMode()" class="edit-btn">
             <span class="material-symbols-rounded">edit</span> Edit Profile
           </button>
+          }
         </div>
         } @else {
         <div class="profile-edit">
@@ -347,6 +350,7 @@
         } } }
       </div>
     </div>
+    @if (isCurrentUserProfile()) {
     <div class="danger-zone card">
       <h4>Danger Zone</h4>
       <p>
@@ -357,6 +361,7 @@
         Deactivate My Account
       </button>
     </div>
+    }
   </div>
   } @else {
   <p>User profile could not be loaded.</p>

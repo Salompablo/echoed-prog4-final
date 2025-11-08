@@ -72,7 +72,6 @@ export class CommentCard implements OnInit {
         this.userService.getUserProfileByUserId(this.comment.userId)
       );
       this.user.set(profile);
-      console.log('User id: ' + this.user()?.id);
     } catch (error) {
       console.error(
         `Failed to load user profile for comment from ${this.comment.username}:`,
