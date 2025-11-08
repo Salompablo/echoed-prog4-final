@@ -6,11 +6,12 @@ import { MusicReview } from '../../models/interaction';
 import { RouterLink } from '@angular/router';
 import { GenericCarouselComponent } from '../generic-carousel/generic-carousel';
 import { forkJoin } from 'rxjs';
+import { LoadingSpinner } from '../loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-review-carousel',
   standalone: true,
-  imports: [CommonModule, RouterLink, GenericCarouselComponent],
+  imports: [CommonModule, RouterLink, GenericCarouselComponent,LoadingSpinner],
   templateUrl: './review-carousel.html',
   styleUrls: ['./review-carousel.css'],
 })

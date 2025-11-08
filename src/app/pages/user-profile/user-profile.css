@@ -19,21 +19,6 @@
   gap: 1rem;
 }
 
-.spinner {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 0.25rem solid var(--card-border-color);
-  border-top-color: var(--primary-color);
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .error-state .error-icon {
   font-size: 2.5rem;
   color: #d9534f;

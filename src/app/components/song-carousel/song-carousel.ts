@@ -5,11 +5,12 @@ import { ErrorService } from '../../services/error';
 import { SongSearchResponse } from '../../models/music';
 import { RouterLink } from '@angular/router';
 import { GenericCarouselComponent } from '../generic-carousel/generic-carousel';
+import { LoadingSpinner } from '../loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-song-carousel',
   standalone: true,
-  imports: [CommonModule, RouterLink, GenericCarouselComponent],
+  imports: [CommonModule, RouterLink, GenericCarouselComponent,LoadingSpinner],
   templateUrl: './song-carousel.html',
   styleUrls: ['./song-carousel.css'],
 })

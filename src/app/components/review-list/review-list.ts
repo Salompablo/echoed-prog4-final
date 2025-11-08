@@ -2,13 +2,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MusicReview } from '../../models/interaction';
 import { ReviewCard } from '../review-card/review-card';
+import { LoadingSpinner } from '../loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [CommonModule, ReviewCard],
+  imports: [CommonModule, ReviewCard, LoadingSpinner],
   templateUrl: './review-list.html',
-  styleUrls: ['./review-list.css']
+  styleUrls: ['./review-list.css'],
 })
 export class ReviewList {
   @Input({ required: true }) reviews: MusicReview[] = [];
@@ -28,9 +29,7 @@ export class ReviewList {
   @Output() reviewSelected = new EventEmitter<MusicReview>();
 
   trackByReviewId(index: number, review: MusicReview): number {
-    return 'songReviewId' in review
-      ? review.songReviewId
-      : review.albumReviewId;
+    return 'songReviewId' in review ? review.songReviewId : review.albumReviewId;
   }
 
   onReviewClick(review: MusicReview): void {

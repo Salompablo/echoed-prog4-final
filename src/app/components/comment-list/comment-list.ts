@@ -5,11 +5,12 @@ import { CommentCard } from '../comment-card/comment-card';
 import { ToastService } from '../../services/toast';
 import { CommentService } from '../../services/comment';
 import { CommentModal } from '../comment-modal/comment-modal';
+import { LoadingSpinner } from '../loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-comment-list',
   standalone: true,
-  imports: [CommonModule, CommentCard, CommentModal],
+  imports: [CommonModule, CommentCard, CommentModal, LoadingSpinner],
   templateUrl: './comment-list.html',
   styleUrl: './comment-list.css',
 })

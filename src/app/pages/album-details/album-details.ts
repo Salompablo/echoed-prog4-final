@@ -10,10 +10,11 @@ import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { DatePipe } from '@angular/common';
 import { ReviewList } from '../../components/review-list/review-list';
+import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-album-details',
-  imports: [RouterLink, ReviewModal, DatePipe, ReviewList],
+  imports: [RouterLink, ReviewModal, DatePipe, ReviewList,LoadingSpinner],
   templateUrl: './album-details.html',
   styleUrl: './album-details.css',
 })

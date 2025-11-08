@@ -1,24 +1,26 @@
 @if (isLoading()) {
-  <p>Loading songs...</p>
+<app-loading-spinner message="Loading songs..."></app-loading-spinner>
 } @else if (error()) {
-  <p class="error-message">{{ error() }}</p>
-} 
-@else if (mostReviewedSongs().length > 0) {
-  <app-generic-carousel
-    title="Most Reviewed Songs"
-    [items]="mostReviewedSongs()"
-    [itemsVisible]="10"
-    [itemTemplate]="songItemTemplate">
-  </app-generic-carousel>
+<p class="error-message">{{ error() }}</p>
+} @else if (mostReviewedSongs().length > 0) {
+<app-generic-carousel
+  title="Most Reviewed Songs"
+  [items]="mostReviewedSongs()"
+  [itemsVisible]="10"
+  [itemTemplate]="songItemTemplate"
+>
+</app-generic-carousel>
 } @else {
-  <p>No reviewed songs found.</p>
+<p>No reviewed songs found.</p>
 }
 
 <ng-template #songItemTemplate let-song>
   <a [routerLink]="['/songs', song.spotifyId]" class="slide-link">
-    <img [src]="song.imageUrl || 'assets/default-avatar.svg'"
-         [alt]="song.name + ' cover'"
-         class="song-image"/>
+    <img
+      [src]="song.imageUrl || 'assets/default-avatar.svg'"
+      [alt]="song.name + ' cover'"
+      class="song-image"
+    />
     <div class="song-info">
       <h3 class="song-title">{{ song.name }}</h3>
       <p class="song-artist">{{ song.artistName }}</p>

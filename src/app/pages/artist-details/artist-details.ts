@@ -4,10 +4,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SearchService } from '../../services/search';
 import { of, switchMap } from 'rxjs';
 import { ArtistAlbumsCarousel } from '../../components/artist-albums-carousel/artist-albums-carousel';
+import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-artist-details',
-  imports: [RouterLink, ArtistAlbumsCarousel],
+  imports: [RouterLink, ArtistAlbumsCarousel,LoadingSpinner],
   templateUrl: './artist-details.html',
   styleUrl: './artist-details.css',
 })

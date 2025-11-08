@@ -1,60 +1,64 @@
 @if (isLoading()) {
-  <p>Loading reviews...</p>
+<app-loading-spinner message="Loading reviews..."></app-loading-spinner>
 } @else if (error()) {
-  <p class="error-message">{{ error() }}</p>
-}
-@else if (latestReviews().length > 0) {
-  <app-generic-carousel
-    title="Latest Reviews"
-    [items]="latestReviews()"
-    [itemsVisible]="10"
-    [itemTemplate]="reviewItemTemplate"
-    [autoPlay]="true"
-    [autoPlayInterval]="3000"
-    [pauseOnHover]="true">
-  </app-generic-carousel>
+<p class="error-message">{{ error() }}</p>
+} @else if (latestReviews().length > 0) {
+<app-generic-carousel
+  title="Latest Reviews"
+  [items]="latestReviews()"
+  [itemsVisible]="10"
+  [itemTemplate]="reviewItemTemplate"
+  [autoPlay]="true"
+  [autoPlayInterval]="3000"
+  [pauseOnHover]="true"
+>
+</app-generic-carousel>
 } @else {
-  <p>No reviews found.</p>
+<p>No reviews found.</p>
 }
 
 <ng-template #reviewItemTemplate let-review>
   @if (isSongReview(review)) {
-    <a [routerLink]="['/songs', review.song.spotifyId]" class="review-link">
-      <div class="review-image-wrapper">
-        <img [src]="review.song.imageUrl || 'assets/default-avatar.svg'"
-             [alt]="review.song.name + ' cover'"
-             class="review-image"/>
-        @if (review.description) {
-          <div class="review-overlay">
-            <p class="review-description">{{ review.description }}</p>
-          </div>
-        }
+  <a [routerLink]="['/songs', review.song.spotifyId]" class="review-link">
+    <div class="review-image-wrapper">
+      <img
+        [src]="review.song.imageUrl || 'assets/default-avatar.svg'"
+        [alt]="review.song.name + ' cover'"
+        class="review-image"
+      />
+      @if (review.description) {
+      <div class="review-overlay">
+        <p class="review-description">{{ review.description }}</p>
       </div>
-      <div class="review-info">
-        <div class="review-rating">★ {{ review.rating }}/5</div>
-        <h3 class="review-title">{{ review.song.name }}</h3>
-        <p class="review-artist">{{ review.song.artistName }}</p>
-        <p class="review-user">by @{{ review.user.username }}</p>
-      </div>
-    </a>
+      }
+    </div>
+    <div class="review-info">
+      <div class="review-rating">★ {{ review.rating }}/5</div>
+      <h3 class="review-title">{{ review.song.name }}</h3>
+      <p class="review-artist">{{ review.song.artistName }}</p>
+      <p class="review-user">by @{{ review.user.username }}</p>
+    </div>
+  </a>
   } @else {
-    <a [routerLink]="['/albums', review.album.spotifyId]" class="review-link">
-      <div class="review-image-wrapper">
-        <img [src]="review.album.imageUrl || 'assets/default-avatar.svg'"
-             [alt]="review.album.name + ' cover'"
-             class="review-image"/>
-        @if (review.description) {
-          <div class="review-overlay">
-            <p class="review-description">{{ review.description }}</p>
-          </div>
-        }
+  <a [routerLink]="['/albums', review.album.spotifyId]" class="review-link">
+    <div class="review-image-wrapper">
+      <img
+        [src]="review.album.imageUrl || 'assets/default-avatar.svg'"
+        [alt]="review.album.name + ' cover'"
+        class="review-image"
+      />
+      @if (review.description) {
+      <div class="review-overlay">
+        <p class="review-description">{{ review.description }}</p>
       </div>
-      <div class="review-info">
-        <div class="review-rating">★ {{ review.rating }}/5</div>
-        <h3 class="review-title">{{ review.album.name }}</h3>
-        <p class="review-artist">{{ review.album.artistName }}</p>
-        <p class="review-user">by @{{ review.user.username }}</p>
-      </div>
-    </a>
+      }
+    </div>
+    <div class="review-info">
+      <div class="review-rating">★ {{ review.rating }}/5</div>
+      <h3 class="review-title">{{ review.album.name }}</h3>
+      <p class="review-artist">{{ review.album.artistName }}</p>
+      <p class="review-user">by @{{ review.user.username }}</p>
+    </div>
+  </a>
   }
 </ng-template>
