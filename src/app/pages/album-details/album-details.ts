@@ -8,6 +8,7 @@ import { AlbumReviewRequest, AlbumReviewResponse, MusicReview } from '../../mode
 import { AuthService } from '../../services/auth';
 import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
+import { ToastService } from '../../services/toast';
 import { DatePipe } from '@angular/common';
 import { ReviewList } from '../../components/review-list/review-list';
 import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
@@ -36,6 +37,7 @@ export class AlbumDetails implements OnInit {
   private authService = inject(AuthService);
   private reviewService = inject(ReviewService);
   private errorService = inject(ErrorService);
+  private toastService = inject(ToastService);
 
   currentUser = this.authService.currentUser;
 
@@ -173,7 +175,7 @@ export class AlbumDetails implements OnInit {
     if (existingReview) {
       this.reviewService.updateAlbumReview(existingReview.albumReviewId, request).subscribe({
         next: (response) => {
-          console.log('Review updated successfully', response);
+          this.toastService.success('Echo updated successfully!');
           this.isModalOpen.set(false);
           this.reviewToEdit.set(null);
           this.loadReviews(this.album!.spotifyId);
@@ -187,7 +189,7 @@ export class AlbumDetails implements OnInit {
     } else {
       this.reviewService.createAlbumReview(this.album.spotifyId, request).subscribe({
         next: (response) => {
-          console.log('Review created successfully', response);
+          this.toastService.success('Echo created successfully!');
           this.isModalOpen.set(false);
           this.reviewToEdit.set(null);
           this.loadReviews(this.album!.spotifyId);
