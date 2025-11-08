@@ -5,10 +5,11 @@ import { AlbumSearchResponse } from '../../models/music';
 import { GenericCarouselComponent } from '../generic-carousel/generic-carousel';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LoadingSpinner } from '../loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-album-carousel',
-  imports: [GenericCarouselComponent, RouterLink,CommonModule],
+  imports: [GenericCarouselComponent, RouterLink,CommonModule,LoadingSpinner],
   templateUrl: './album-carousel.html',
   styleUrl: './album-carousel.css',
 })

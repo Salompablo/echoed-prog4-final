@@ -1,29 +1,31 @@
-@if (!isLoading) {
-@if (artist) {
+@if (!isLoading) { @if (artist) {
 <section class="artist-detail-container">
-    <div class="artist-header-block card">
-        <div class="cover-container">
-            <img [src]="artist.imageUrl" [alt]="'Cover of ' + artist.name" class="album-cover">
-        </div>
-
-        <div class="metadata-info">
-            <span class="music-type">ARTIST</span>
-
-            <h1>{{ artist.name }}</h1>
-
-            <div class="artist-meta">
-                <span>Followers in Spotify: <span class="meta-value">{{ artist.followers}} </span></span>
-                <span> | </span>
-                <span>
-                    <a [href]="artist.spotifyLink" target="_blank">Listen in Spotify</a>
-                </span>
-            </div>
-        </div>
+  <div class="artist-header-block card">
+    <div class="cover-container">
+      <img [src]="artist.imageUrl" [alt]="'Cover of ' + artist.name" class="album-cover" />
     </div>
-    <app-artist-albums-carousel [albums]="artist.albums" class="discography-section"></app-artist-albums-carousel>
 
+    <div class="metadata-info">
+      <span class="music-type">ARTIST</span>
+
+      <h1>{{ artist.name }}</h1>
+
+      <div class="artist-meta">
+        <span
+          >Followers in Spotify: <span class="meta-value">{{ artist.followers }} </span></span
+        >
+        <span> | </span>
+        <span>
+          <a [href]="artist.spotifyLink" target="_blank">Listen in Spotify</a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <app-artist-albums-carousel
+    [albums]="artist.albums"
+    class="discography-section"
+  ></app-artist-albums-carousel>
 </section>
-}
-}@else {
-<p class="artist-detail-container">Loading artist details...</p>
+} }@else {
+<app-loading-spinner message="Loading artist details..."></app-loading-spinner>
 }

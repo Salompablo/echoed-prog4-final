@@ -4,17 +4,11 @@
   gap: 1rem;
 }
 
-.loading-state,
 .error-state,
 .empty-state {
   padding: 2rem;
   text-align: center;
   color: var(--text-color);
-}
-
-.loading-state p {
-  font-size: 1rem;
-  color: var(--secondary-color);
 }
 
 .error-state {

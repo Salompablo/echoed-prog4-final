@@ -10,7 +10,6 @@
   gap: 0.5rem;
 }
 
-.loading-state,
 .error-state,
 .empty-state {
   padding: 1rem;
@@ -25,12 +24,6 @@
   font-style: normal;
   font-weight: 500;
 }
-.loading-more-state {
-  padding: 1rem;
-  text-align: center;
-  color: var(--secondary-color);
-}
-
 .load-more-section {
   text-align: center;
   margin-top: 1rem;

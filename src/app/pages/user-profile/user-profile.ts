@@ -26,6 +26,7 @@ import { AvatarPickerModal } from '../../components/avatar-picker-modal/avatar-p
 import { ChangePasswordModal } from '../../components/change-password-modal/change-password-modal';
 import { ReviewList } from '../../components/review-list/review-list';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-user-profile',
@@ -37,6 +38,7 @@ import { ActivatedRoute } from '@angular/router';
     AvatarPickerModal,
     ChangePasswordModal,
     ReviewList,
+    LoadingSpinner
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.html',

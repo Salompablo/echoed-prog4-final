@@ -1,9 +1,6 @@
 <div class="profile-container">
   @if (loading()) {
-  <div class="loading-state">
-    <div class="spinner"></div>
-    <p>Loading profile...</p>
-  </div>
+  <app-loading-spinner message="Loading profile..."></app-loading-spinner>
   } @else if (error() && !loading()) {
   <div class="error-state error-api">
     <span class="material-symbols-rounded error-icon">error</span>
@@ -14,8 +11,12 @@
   <div class="profile-content">
     <div class="profile-header">
       <div class="profile-avatar" [class.is-editing]="isEditMode()">
-        <img [src]="avatarUrl()" [alt]="userProfile()?.username + ' profile avatar'"
-          class="profile-picture avatar-image" [class.is-editing]="isEditMode()" />
+        <img
+          [src]="avatarUrl()"
+          [alt]="userProfile()?.username + ' profile avatar'"
+          class="profile-picture avatar-image"
+          [class.is-editing]="isEditMode()"
+        />
 
         @if (isEditMode()) {
         <button class="avatar-edit-overlay" (click)="openAvatarModal()" aria-label="Change avatar">
@@ -29,9 +30,7 @@
           <h1 class="username">@ {{ profile.username }}</h1>
           @if (isCurrentUserProfile()) {
           <p class="email">{{ authService.currentUser()?.email }}</p>
-          }
-
-          @if (profile.roles.length) {
+          } @if (profile.roles.length) {
           <div class="roles">
             <span class="material-symbols-rounded role-icon">workspace_premium</span>
             <span class="roles-text">{{ rolesText() }}</span>
@@ -53,8 +52,7 @@
             <span class="material-symbols-rounded bio-icon">description</span>
             <p class="bio-text">{{ profile.biography }}</p>
           </div>
-          }
-          @if (isCurrentUserProfile()) {
+          } @if (isCurrentUserProfile()) {
           <button (click)="toggleEditMode()" class="edit-btn">
             <span class="material-symbols-rounded">edit</span> Edit Profile
           </button>
@@ -65,11 +63,20 @@
           <form #profileEditForm="ngForm">
             <div class="form-group">
               <label for="username">Username</label>
-              <input type="text" id="username" name="username" class="form-input" required minlength="3" maxlength="50"
-                placeholder="Your username" [ngModel]="profileForm().username" (ngModelChange)="updateUsername($event)"
-                #usernameInput="ngModel" />
-              @if (usernameInput.invalid && (usernameInput.dirty ||
-              usernameInput.touched)) {
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-input"
+                required
+                minlength="3"
+                maxlength="50"
+                placeholder="Your username"
+                [ngModel]="profileForm().username"
+                (ngModelChange)="updateUsername($event)"
+                #usernameInput="ngModel"
+              />
+              @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
               <div class="error-validation">
                 @if (usernameInput.errors?.['required']) {
                 <small>Username is required.</small>
@@ -82,9 +89,16 @@
             </div>
             <div class="form-group">
               <label for="biography">Biography</label>
-              <textarea id="biography" name="biography" class="form-textarea" rows="3" maxlength="500"
-                placeholder="Tell us about yourself..." [ngModel]="profileForm().biography"
-                (ngModelChange)="updateBiography($event)"></textarea>
+              <textarea
+                id="biography"
+                name="biography"
+                class="form-textarea"
+                rows="3"
+                maxlength="500"
+                placeholder="Tell us about yourself..."
+                [ngModel]="profileForm().biography"
+                (ngModelChange)="updateBiography($event)"
+              ></textarea>
             </div>
 
             @if (!isGoogleAccount()){
@@ -97,25 +111,29 @@
             }
 
             <div class="form-actions">
-              <button type="button" (click)="saveProfile()" [disabled]="
-                  saving() ||
-                  profileEditForm.invalid ||
-                  !hasUnsavedChanges()
-                " class="save-btn">
+              <button
+                type="button"
+                (click)="saveProfile()"
+                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()"
+                class="save-btn"
+              >
                 @if (!saving()) {
-                <span class="material-symbols-rounded">save</span> Save
-                Changes } @if (saving()) {
+                <span class="material-symbols-rounded">save</span> Save Changes } @if (saving()) {
                 <span>Saving...</span> }
               </button>
-              <button type="button" (click)="toggleEditMode()" [disabled]="saving()" class="cancel-btn">
+              <button
+                type="button"
+                (click)="toggleEditMode()"
+                [disabled]="saving()"
+                class="cancel-btn"
+              >
                 <span class="material-symbols-rounded">cancel</span> Cancel
               </button>
             </div>
 
             @if (hasUnsavedChanges()) {
             <div class="unsaved-warning">
-              <span class="material-symbols-rounded">warning</span> You
-              have unsaved changes
+              <span class="material-symbols-rounded">warning</span> You have unsaved changes
             </div>
             }
           </form>
@@ -152,9 +170,7 @@
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">star_rate</span>
           <div class="stat-info">
-            <span class="stat-number">{{
-              stats.averageRating | number : '1.1-1'
-              }}</span>
+            <span class="stat-number">{{ stats.averageRating | number : '1.1-1' }}</span>
             <span class="stat-label">Avg Rating</span>
           </div>
         </div>
@@ -222,19 +238,15 @@
           <span class="material-symbols-rounded stat-icon">recommend</span>
           <div class="stat-info">
             <span class="stat-number">{{
-              (stats.likesReceived ?? 0) +
-              (stats.lovesReceived ?? 0) +
-              (stats.wowsReceived ?? 0)
-              }}</span>
+              (stats.likesReceived ?? 0) + (stats.lovesReceived ?? 0) + (stats.wowsReceived ?? 0)
+            }}</span>
             <span class="stat-label">Positive Recvd</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">gpp_bad</span>
           <div class="stat-info">
-            <span class="stat-number">{{
-              stats.dislikesReceived ?? 0
-              }}</span>
+            <span class="stat-number">{{ stats.dislikesReceived ?? 0 }}</span>
             <span class="stat-label">Negative Recvd</span>
           </div>
         </div>
@@ -249,18 +261,14 @@
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">graphic_eq</span>
           <div class="stat-info">
-            <span class="stat-number">{{
-              stats.commentsThisMonth ?? 0
-              }}</span>
+            <span class="stat-number">{{ stats.commentsThisMonth ?? 0 }}</span>
             <span class="stat-label">Comments (Month)</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">bolt</span>
           <div class="stat-info">
-            <span class="stat-number">{{
-              stats.reactionsThisMonth ?? 0
-              }}</span>
+            <span class="stat-number">{{ stats.reactionsThisMonth ?? 0 }}</span>
             <span class="stat-label">Reacts (Month)</span>
           </div>
         </div>
@@ -287,33 +295,50 @@
         @if (isCurrentUserProfile()) {
         <h2 class="reviews-title">My Reviews</h2>
         }@else {
-          <h2 class="reviews-title">{{userProfile()?.username}}' reviews</h2>
+        <h2 class="reviews-title">{{ userProfile()?.username }}' reviews</h2>
         }
 
         <div class="reviews-tabs">
-          <button (click)="changeTab('reviews')" [class.active]="activeTab() === 'reviews'" class="tab-btn">
+          <button
+            (click)="changeTab('reviews')"
+            [class.active]="activeTab() === 'reviews'"
+            class="tab-btn"
+          >
             All Reviews
           </button>
-          <button (click)="changeTab('song-reviews')" [class.active]="activeTab() === 'song-reviews'" class="tab-btn">
+          <button
+            (click)="changeTab('song-reviews')"
+            [class.active]="activeTab() === 'song-reviews'"
+            class="tab-btn"
+          >
             Songs ({{ profile.userStats?.totalSongReviews ?? 0 }})
           </button>
-          <button (click)="changeTab('album-reviews')" [class.active]="activeTab() === 'album-reviews'" class="tab-btn">
+          <button
+            (click)="changeTab('album-reviews')"
+            [class.active]="activeTab() === 'album-reviews'"
+            class="tab-btn"
+          >
             Albums ({{ profile.userStats?.totalAlbumReviews ?? 0 }})
           </button>
         </div>
       </div>
       <div class="reviews-content">
         @switch (activeTab()) { @case ('reviews') {
-        <app-review-list [reviews]="allReviews()" [loading]="
-            reviewsLoading() &&
-            songReviews().length === 0 &&
-            albumReviews().length === 0
-          " [showUsername]="false" [showMusicInfo]="true"
-          emptyMessage="No reviews yet. Start reviewing your favorite music!" />
+        <app-review-list
+          [reviews]="allReviews()"
+          [loading]="reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0"
+          [showUsername]="false"
+          [showMusicInfo]="true"
+          emptyMessage="No reviews yet. Start reviewing your favorite music!"
+        />
         @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
         <div class="load-more-section">
           @if (hasMoreSongReviews()) {
-          <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+          <button
+            (click)="loadMoreSongReviews()"
+            class="load-more-btn"
+            [disabled]="reviewsLoading()"
+          >
             @if(reviewsLoading()) {
             <span>Loading...</span>
             } @else {
@@ -321,7 +346,11 @@
             }
           </button>
           } @if (hasMoreAlbumReviews()) {
-          <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+          <button
+            (click)="loadMoreAlbumReviews()"
+            class="load-more-btn"
+            [disabled]="reviewsLoading()"
+          >
             @if(reviewsLoading()) {
             <span>Loading...</span>
             } @else {
@@ -331,8 +360,13 @@
           }
         </div>
         } } @case ('song-reviews') {
-        <app-review-list [reviews]="songReviews()" [loading]="reviewsLoading() && songReviews().length === 0"
-          [showUsername]="false" [showMusicInfo]="true" emptyMessage="No song reviews yet" />
+        <app-review-list
+          [reviews]="songReviews()"
+          [loading]="reviewsLoading() && songReviews().length === 0"
+          [showUsername]="false"
+          [showMusicInfo]="true"
+          emptyMessage="No song reviews yet"
+        />
         @if (hasMoreSongReviews()) {
         <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
           @if(reviewsLoading()) {
@@ -342,10 +376,19 @@
           }
         </button>
         } } @case ('album-reviews') {
-        <app-review-list [reviews]="albumReviews()" [loading]="reviewsLoading() && albumReviews().length === 0"
-          [showUsername]="false" [showMusicInfo]="true" emptyMessage="No album reviews yet" />
+        <app-review-list
+          [reviews]="albumReviews()"
+          [loading]="reviewsLoading() && albumReviews().length === 0"
+          [showUsername]="false"
+          [showMusicInfo]="true"
+          emptyMessage="No album reviews yet"
+        />
         @if (hasMoreAlbumReviews()) {
-        <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
+        <button
+          (click)="loadMoreAlbumReviews()"
+          class="load-more-btn"
+          [disabled]="reviewsLoading()"
+        >
           @if(reviewsLoading()) {
           <span>Loading...</span>
           } @else {
@@ -359,8 +402,8 @@
     <div class="danger-zone card">
       <h4>Danger Zone</h4>
       <p>
-        Deactivating your account will hide your profile and all of your
-        content. You can reactivate your account by logging in again.
+        Deactivating your account will hide your profile and all of your content. You can reactivate
+        your account by logging in again.
       </p>
       <button (click)="openDeactivateModal()" class="button danger-btn">
         Deactivate My Account
@@ -376,9 +419,13 @@
 @if(isChangePasswordModalVisible()){
 <app-change-password-modal (close)="closeChangePasswordModal()"></app-change-password-modal>
 } @if (isDeactivateModalVisible()) {
-<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()"
-  (close)="closeDeactivateModal()"></app-deactivate-account-modal>
+<app-deactivate-account-modal
+  [isGoogleAccount]="isGoogleAccount()"
+  (close)="closeDeactivateModal()"
+></app-deactivate-account-modal>
 } @if (isAvatarModalVisible()) {
-<app-avatar-picker-modal (close)="closeAvatarModal()"
-  (avatarSelected)="onAvatarSelected($event)"></app-avatar-picker-modal>
+<app-avatar-picker-modal
+  (close)="closeAvatarModal()"
+  (avatarSelected)="onAvatarSelected($event)"
+></app-avatar-picker-modal>
 }

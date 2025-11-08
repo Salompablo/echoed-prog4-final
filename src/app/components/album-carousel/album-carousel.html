@@ -1,5 +1,5 @@
 @if (isLoading()) {
-<p>Loading albums...</p>
+<app-loading-spinner message="Loading albums..."></app-loading-spinner>
 } @else if (error()) {
 <p class="error-message">{{ error() }}</p>
 } @else if (mostReviewedAlbums().length > 0) {
