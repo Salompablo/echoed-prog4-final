@@ -60,11 +60,11 @@
             </div>
 
             <div class="modal-actions">
-              <button type="button" class="button secondary" (click)="onCancel()">
+              <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isSubmitting()">
                 Cancel
               </button>
-              <button type="submit" class="button primary" [disabled]="reviewForm.invalid">
-                {{ isEditMode() ? 'Update Echo' : 'Submit Echo' }}
+              <button type="submit" class="button primary" [disabled]="reviewForm.invalid || isSubmitting()">
+                {{ isSubmitting() ? 'Submitting...' : (isEditMode() ? 'Update Echo' : 'Submit Echo') }}
               </button>
             </div>
           </form>

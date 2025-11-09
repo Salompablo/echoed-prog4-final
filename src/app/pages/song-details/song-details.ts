@@ -25,6 +25,7 @@ export class SongDetails implements OnInit {
   isLoading: boolean = true;
   isLoadingReviews = signal(false);
   isModalOpen = signal(false);
+  isSubmittingReview = signal(false);
   errorMessage = signal<string | null>(null);
   loadError = signal<string | null>(null);
   userExistingReview = signal<SongReviewResponse | null>(null);
@@ -47,6 +48,9 @@ export class SongDetails implements OnInit {
         this.isLoading = true;
         this.reviews.set([]); // Reset reviews when navigating to a new song
         this.loadError.set(null); // Reset error state
+        this.reviewToEdit.set(null); // Reset review edit state
+        this.userExistingReview.set(null); // Reset existing review
+        this.isModalOpen.set(false); // Close modal if open
 
         if (songId) {
           return this.searchService.getSongDetail(songId);
@@ -132,7 +136,6 @@ export class SongDetails implements OnInit {
     }
 
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   closeReviewModal(): void {
@@ -147,13 +150,14 @@ export class SongDetails implements OnInit {
       description: songReview.description,
     });
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   handleReviewSubmit(reviewData: Partial<SongReviewRequest>): void {
-    if (!this.song || !this.currentUser()) {
+    if (!this.song || !this.currentUser() || this.isSubmittingReview()) {
       return;
     }
+
+    this.isSubmittingReview.set(true);
 
     const userId = this.currentUser()!.userId;
     const request: SongReviewRequest = {
@@ -170,12 +174,14 @@ export class SongDetails implements OnInit {
           this.toastService.success('Echo updated successfully!');
           this.isModalOpen.set(false);
           this.reviewToEdit.set(null);
+          this.isSubmittingReview.set(false);
           this.loadReviews(this.song!.spotifyId);
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'SongDetails - Update Review');
+          this.isSubmittingReview.set(false);
         },
       });
     } else {
@@ -184,12 +190,14 @@ export class SongDetails implements OnInit {
           this.toastService.success('Echo created successfully!');
           this.isModalOpen.set(false);
           this.reviewToEdit.set(null);
+          this.isSubmittingReview.set(false);
           this.loadReviews(this.song!.spotifyId);
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'SongDetails - Create Review');
+          this.isSubmittingReview.set(false);
         },
       });
     }

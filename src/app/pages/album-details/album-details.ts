@@ -26,6 +26,7 @@ export class AlbumDetails implements OnInit {
   isLoading: boolean = true;
   isLoadingReviews = signal(false);
   isModalOpen = signal(false);
+  isSubmittingReview = signal(false);
   errorMessage = signal<string | null>(null);
   loadError = signal<string | null>(null);
   userExistingReview = signal<AlbumReviewResponse | null>(null);
@@ -49,6 +50,9 @@ export class AlbumDetails implements OnInit {
           this.isLoading = true;
           this.reviews.set([]); // Reset reviews when navigating to a new album
           this.loadError.set(null); // Reset error state
+          this.reviewToEdit.set(null); // Reset review edit state
+          this.userExistingReview.set(null); // Reset existing review
+          this.isModalOpen.set(false); // Close modal if open
 
           if (albumId) {
             return this.searchService.getAlbumDetail(albumId);
@@ -140,7 +144,6 @@ export class AlbumDetails implements OnInit {
     }
 
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   closeReviewModal(): void {
@@ -155,13 +158,14 @@ export class AlbumDetails implements OnInit {
       description: albumReview.description,
     });
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   handleReviewSubmit(reviewData: Partial<AlbumReviewRequest>): void {
-    if (!this.album || !this.currentUser()) {
+    if (!this.album || !this.currentUser() || this.isSubmittingReview()) {
       return;
     }
+
+    this.isSubmittingReview.set(true);
 
     const userId = this.currentUser()!.userId;
     const request: AlbumReviewRequest = {
@@ -178,12 +182,14 @@ export class AlbumDetails implements OnInit {
           this.toastService.success('Echo updated successfully!');
           this.isModalOpen.set(false);
           this.reviewToEdit.set(null);
+          this.isSubmittingReview.set(false);
           this.loadReviews(this.album!.spotifyId);
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'AlbumDetails - Update Review');
+          this.isSubmittingReview.set(false);
         },
       });
     } else {
@@ -192,12 +198,14 @@ export class AlbumDetails implements OnInit {
           this.toastService.success('Echo created successfully!');
           this.isModalOpen.set(false);
           this.reviewToEdit.set(null);
+          this.isSubmittingReview.set(false);
           this.loadReviews(this.album!.spotifyId);
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'AlbumDetails - Create Review');
+          this.isSubmittingReview.set(false);
         },
       });
     }

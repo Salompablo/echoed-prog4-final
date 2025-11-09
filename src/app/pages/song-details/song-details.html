@@ -40,12 +40,6 @@
       <button class="primary write-review-btn" (click)="openReviewModal()">
         Make an Echo
       </button>
-
-      @if (errorMessage()) {
-      <div class="error-alert">
-        {{ errorMessage() }}
-      </div>
-      }
     </div>
   </div>
 
@@ -63,7 +57,7 @@
 </section>
 
 @if (isModalOpen() && song) {
-<app-review-modal [type]="'song'" [item]="song" [existingReview]="reviewToEdit()" (closed)="closeReviewModal()" (submitted)="handleReviewSubmit($event)">
+<app-review-modal [type]="'song'" [item]="song" [existingReview]="reviewToEdit()" [isSubmitting]="isSubmittingReview()" (closed)="closeReviewModal()" (submitted)="handleReviewSubmit($event)">
 </app-review-modal>
 }
 }
