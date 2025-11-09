@@ -49,6 +49,9 @@ export class AlbumDetails implements OnInit {
           this.isLoading = true;
           this.reviews.set([]); // Reset reviews when navigating to a new album
           this.loadError.set(null); // Reset error state
+          this.reviewToEdit.set(null); // Reset review edit state
+          this.userExistingReview.set(null); // Reset existing review
+          this.isModalOpen.set(false); // Close modal if open
 
           if (albumId) {
             return this.searchService.getAlbumDetail(albumId);
@@ -140,7 +143,6 @@ export class AlbumDetails implements OnInit {
     }
 
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   closeReviewModal(): void {
@@ -155,7 +157,6 @@ export class AlbumDetails implements OnInit {
       description: albumReview.description,
     });
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   handleReviewSubmit(reviewData: Partial<AlbumReviewRequest>): void {
@@ -182,7 +183,7 @@ export class AlbumDetails implements OnInit {
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'AlbumDetails - Update Review');
         },
       });
@@ -196,7 +197,7 @@ export class AlbumDetails implements OnInit {
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'AlbumDetails - Create Review');
         },
       });

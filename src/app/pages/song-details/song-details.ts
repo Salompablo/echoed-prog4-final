@@ -47,6 +47,9 @@ export class SongDetails implements OnInit {
         this.isLoading = true;
         this.reviews.set([]); // Reset reviews when navigating to a new song
         this.loadError.set(null); // Reset error state
+        this.reviewToEdit.set(null); // Reset review edit state
+        this.userExistingReview.set(null); // Reset existing review
+        this.isModalOpen.set(false); // Close modal if open
 
         if (songId) {
           return this.searchService.getSongDetail(songId);
@@ -132,7 +135,6 @@ export class SongDetails implements OnInit {
     }
 
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   closeReviewModal(): void {
@@ -147,7 +149,6 @@ export class SongDetails implements OnInit {
       description: songReview.description,
     });
     this.isModalOpen.set(true);
-    this.errorMessage.set(null);
   }
 
   handleReviewSubmit(reviewData: Partial<SongReviewRequest>): void {
@@ -174,7 +175,7 @@ export class SongDetails implements OnInit {
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'SongDetails - Update Review');
         },
       });
@@ -188,7 +189,7 @@ export class SongDetails implements OnInit {
         },
         error: (err) => {
           const message = this.errorService.getErrorMessage(err);
-          this.errorMessage.set(message);
+          this.toastService.error(message);
           this.errorService.logError(err, 'SongDetails - Create Review');
         },
       });
