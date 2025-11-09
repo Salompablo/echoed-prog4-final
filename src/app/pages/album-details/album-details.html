@@ -86,7 +86,7 @@
 </section>
 
 @if (isModalOpen() && album) {
-<app-review-modal [type]="'album'" [item]="album" [existingReview]="reviewToEdit()" (closed)="closeReviewModal()"
+<app-review-modal [type]="'album'" [item]="album" [existingReview]="reviewToEdit()" [isSubmitting]="isSubmittingReview()" (closed)="closeReviewModal()"
   (submitted)="handleReviewSubmit($event)">
 </app-review-modal>
 }

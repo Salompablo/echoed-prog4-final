@@ -14,6 +14,7 @@ export class ReviewModal {
   type = input.required<'song' | 'album'>();
   item = input.required<SongSearchResponse | AlbumSearchResponse>();
   existingReview = input<{ rating: number; description: string } | null>(null);
+  isSubmitting = input<boolean>(false);
   closed = output<void>();
   submitted = output<SongReviewRequest | AlbumReviewRequest>();
 
