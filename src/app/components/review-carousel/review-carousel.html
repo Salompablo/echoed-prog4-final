@@ -44,7 +44,7 @@
     <div class="review-image-wrapper">
       <img
         [src]="review.album.imageUrl || 'assets/default-avatar.svg'"
-        [alt]="review.album.name + ' cover'"
+        [alt]="review.album.title + ' cover'"
         class="review-image"
       />
       @if (review.description) {
@@ -55,7 +55,7 @@
     </div>
     <div class="review-info">
       <div class="review-rating">★ {{ review.rating }}/5</div>
-      <h3 class="review-title">{{ review.album.name }}</h3>
+      <h3 class="review-title">{{ review.album.title }}</h3>
       <p class="review-artist">{{ review.album.artistName }}</p>
       <p class="review-user">by @{{ review.user.username }}</p>
     </div>

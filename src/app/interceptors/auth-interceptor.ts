@@ -48,6 +48,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           req.url.includes(API_ENDPOINTS.AUTH.REGISTER) ||
           req.url.includes(API_ENDPOINTS.AUTH.REFRESH) ||
           req.url.includes(API_ENDPOINTS.USERS.CHANGE_PASSWORD) ||
+          req.url.includes(API_ENDPOINTS.SPOTIFY.UNIFIED_SEARCH) ||
           req.url.includes(API_ENDPOINTS.USERS.DEACTIVATE)
         ) {
           // If it was the REFRESH endpoint itself that failed, trigger the modal
