@@ -28,6 +28,11 @@
   <div class="comment-body">
     <p>{{ comment.text }}</p>
   </div>
+  <div class="comment-footer">
+    <app-reaction-bar [reactedType]="reactedTypes.COMMENT" [parentId]="comment.commentId"
+      [userReaction]="comment.userReaction" [totalLikes]="comment.totalLikes" [totalDislikes]="comment.totalDislikes"
+      [totalWows]="comment.totalWows" [totalLoves]="comment.totalLoves" (reactionChange)="onReactionChanged($event)" />
+  </div>
 </div>
 
 @if (isDeleteModalVisible()) {
@@ -35,9 +40,5 @@
   (close)="onCloseDeleteModal()" />
 }
 
-  <div class="comment-footer">
-    <app-reaction-bar [reactedType]="reactedTypes.COMMENT" [parentId]="comment.commentId"
-      [userReaction]="comment.userReaction" [totalLikes]="comment.totalLikes" [totalDislikes]="comment.totalDislikes"
-      [totalWows]="comment.totalWows" [totalLoves]="comment.totalLoves" (reactionChange)="onReactionChanged($event)" />
-  </div>
+  
 
