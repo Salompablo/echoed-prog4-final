@@ -27,7 +27,7 @@
       <div class="profile-details">
         @if (!isEditMode()) {
         <div class="profile-view">
-          <h1 class="username">@ {{ profile.username }}</h1>
+          <h1 class="username">@{{ profile.username }}</h1>
           @if (isCurrentUserProfile()) {
           <p class="email">{{ authService.currentUser()?.email }}</p>
           } @if (profile.roles.length) {
@@ -37,10 +37,10 @@
           </div>
           }
 
-          <div class="account-type">
+          <!-- <div class="account-type">
             <span class="material-symbols-rounded provider-icon">link</span>
             <span>{{ accountTypeText() }}</span>
-          </div>
+          </div> -->
 
           @if (profile.joinDate) {
           <div class="join-date">
