@@ -7,11 +7,11 @@
   <div class="dropdown-content">
 
     @if (authService.currentUser()) {
-    <a routerLink="/profile" (click)="closeDropdown()"> My Profile </a>
-    <a (click)="logout()"> Logout </a>
+    <a routerLink="/profile" (click)="closeDropdown()"> {{"profile-dropdown.my-profile" | translate}} </a>
+    <a (click)="logout()"> {{"profile-dropdown.logout" | translate}} </a>
     } @else {
-    <a routerLink="/register" (click)="closeDropdown()"> Sign Up </a>
-    <a routerLink="/login" (click)="closeDropdown()"> Login </a>
+    <a routerLink="/register" (click)="closeDropdown()"> {{"profile-dropdown.sign-up" | translate}} </a>
+    <a routerLink="/login" (click)="closeDropdown()"> {{"profile-dropdown.login" | translate}} </a>
     }
   </div>
   }

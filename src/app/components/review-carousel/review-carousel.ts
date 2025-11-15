@@ -7,11 +7,12 @@ import { RouterLink } from '@angular/router';
 import { GenericCarouselComponent } from '../generic-carousel/generic-carousel';
 import { forkJoin } from 'rxjs';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-review-carousel',
   standalone: true,
-  imports: [CommonModule, RouterLink, GenericCarouselComponent,LoadingSpinner],
+  imports: [CommonModule, RouterLink, GenericCarouselComponent,LoadingSpinner, TranslateModule],
   templateUrl: './review-carousel.html',
   styleUrls: ['./review-carousel.css'],
 })

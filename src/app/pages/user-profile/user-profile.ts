@@ -27,6 +27,7 @@ import { ChangePasswordModal } from '../../components/change-password-modal/chan
 import { ReviewList } from '../../components/review-list/review-list';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-profile',
@@ -38,7 +39,8 @@ import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner
     AvatarPickerModal,
     ChangePasswordModal,
     ReviewList,
-    LoadingSpinner
+    LoadingSpinner,
+    TranslateModule
   ],
   providers: [DatePipe],
   templateUrl: './user-profile.html',

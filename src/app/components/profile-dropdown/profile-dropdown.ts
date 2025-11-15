@@ -1,10 +1,11 @@
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-dropdown',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslateModule],
   templateUrl: './profile-dropdown.html',
   styleUrl: './profile-dropdown.css',
 })

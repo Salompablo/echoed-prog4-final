@@ -6,10 +6,11 @@ import { passwordMatcher } from '../../validators/password-matcher';
 import { SignupRequest } from '../../models/auth';
 import { ErrorService } from '../../services/error';
 import { OAUTH2_LINKS } from '../../constants/api-endpoints';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })

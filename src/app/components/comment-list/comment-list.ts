@@ -6,11 +6,12 @@ import { ToastService } from '../../services/toast';
 import { CommentService } from '../../services/comment';
 import { CommentModal } from '../comment-modal/comment-modal';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-comment-list',
   standalone: true,
-  imports: [CommonModule, CommentCard, CommentModal, LoadingSpinner],
+  imports: [CommonModule, CommentCard, CommentModal, LoadingSpinner, TranslateModule],
   templateUrl: './comment-list.html',
   styleUrl: './comment-list.css',
 })

@@ -1,49 +1,49 @@
 <div class="register-container">
-    <h2>Create Account</h2>
-    <p class="subtitle">Join Echoed and discover your next musical obsession.</p>
+    <h2>{{"register.title" | translate}}</h2>
+    <p class="subtitle">{{"register.subtitle" | translate}}</p>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
         <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email">{{"register.email" | translate}}</label>
             <input type="email" id="email" formControlName="email" />
 
             @if (email?.invalid && (email?.dirty || email?.touched)) {
             <div class="error-validation">
                 @if (email?.errors?.['required']) {
-                <small>Email is required.</small>
+                <small>{{"register.email-required" | translate}}</small>
                 }
                 @if (email?.errors?.['email']) {
-                <small>Must be a valid email.</small>
+                <small>{{"register.email-invalid" | translate}}</small>
                 }
             </div>
             }
         </div>
 
         <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">{{"register.username" | translate}}</label>
             <input type="text" id="username" formControlName="username" />
 
             @if (username?.invalid && (username?.dirty || username?.touched)) {
             <div class="error-validation">
                 @if (username?.errors?.['required']) {
-                <small>Username is required.</small>
+                <small>{{"register.username-required" | translate}}</small>
                 }
                 @if (username?.errors?.['minlength']) {
-                <small>Must be at least 3 characters.</small>
+                <small>{{"register.username-minlength" | translate}}</small>
                 }
                 @if (username?.errors?.['maxlength']) {
-                <small>Must not exceed 50 characters.</small>
+                <small>{{"register.username-maxlength" | translate}}</small>
                 }
                 @if (username?.errors?.['pattern']){
-                <small>Must not contain symbols</small>
+                <small>{{"register.username-pattern" | translate}}</small>
                 }
             </div>
             }
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">{{"register.password" | translate}}</label>
 
             <div class="password-input-wrapper">
                 <input [type]="passwordsHidden ? 'password' : 'text'" id="password" formControlName="password" />
@@ -51,9 +51,9 @@
                 <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
 
                     @if (passwordsHidden) {
-                    <span>Show</span>
+                    <span>{{"register.show" | translate}}</span>
                     } @else {
-                    <span>Hide</span>
+                    <span>{{"register.hide" | translate}}</span>
                     }
                 </button>
             </div>
@@ -61,27 +61,27 @@
             @if (password?.invalid && (password?.dirty || password?.touched)) {
             <div class="error-validation">
                 @if (password?.errors?.['required']) {
-                <small>Password is required.</small>
+                <small>{{"register.password-required" | translate}}</small>
                 }
                 @if (password?.errors?.['minlength']) {
-                <small>Must be at least 8 characters.</small>
+                <small>{{"register.password-minlength" | translate}}</small>
                 }
                 @if (password?.errors?.['maxlength']) {
-                <small>Must not exceed 120 characters.</small>
+                <small>{{"register.password-maxlength" | translate}}</small>
                 }
             </div>
             }
         </div>
 
         <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
+            <label for="confirmPassword">{{"register.confirm-password" | translate}}</label>
             <input [type]="passwordsHidden ? 'password' : 'text'" id="confirmPassword"
                 formControlName="confirmPassword" />
 
             @if (confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) {
             <div class="error-validation">
                 @if (confirmPassword?.errors?.['required']) {
-                <small>You must confirm the password.</small>
+                <small>{{"register.confirm-password-required" | translate}}</small>
                 }
             </div>
             }
@@ -89,7 +89,7 @@
 
         @if (registerForm.errors?.['passwordMismatch'] && confirmPassword?.touched) {
         <div class="error-validation">
-            <small>Passwords do not match.</small>
+            <small>{{"register.password-error" | translate}}</small>
         </div>
         }
 
@@ -100,10 +100,10 @@
         }
 
         <button type="submit" [disabled]="registerForm.invalid">
-            Sign Up
+            {{"register.sign-up" | translate}}
         </button>
 
-        <div class="separator">Or continue with</div>
+        <div class="separator">{{"register.continue-with" | translate}}</div>
         <div class="oauth-buttons">
             <a [href]="googleOAuthUrl" class="oauth-btn google">
 
@@ -112,7 +112,6 @@
         </div>
     </form>
 
-    <div class="redirect-link">
-        Already have an account? <a href="/login">Sign In</a>
+    <div class="redirect-link">{{"register.existing-account" | translate}} <a href="/login">Sign In</a>
     </div>
 </div>

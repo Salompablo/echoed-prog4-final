@@ -3,10 +3,11 @@ import { UserService } from '../../services/user';
 import { ErrorService } from '../../services/error';
 import { ToastService } from '../../services/toast';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reactivate-account-modal',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './reactivate-account-modal.html',
   styleUrl: './reactivate-account-modal.css',
 })

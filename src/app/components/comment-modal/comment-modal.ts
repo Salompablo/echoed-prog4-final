@@ -6,11 +6,12 @@ import { ToastService } from '../../services/toast';
 import { ErrorService } from '../../services/error';
 import { CommentResponse } from '../../models/interaction';
 import { Observable } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-comment-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './comment-modal.html',
   styleUrl: './comment-modal.css',
 })
@@ -40,14 +41,16 @@ export class CommentModal implements OnInit {
 
   characterCount = signal(0);
 
-  modalTitle = signal('Add your Comment');
+  modalTitle = signal('');
 
   ngOnInit(): void {
     if (this.commentToEdit) {
-      this.modalTitle.set('Edit your Comment');
+      // Usar clave para título de Edición
+      this.modalTitle.set('comment-modal.title-edit');
       this.commentForm.get('text')?.setValue(this.commentToEdit.text);
-    }else{
-      this.modalTitle.set('Add your Comment');
+    } else {
+      // Usar clave para título de Creación
+      this.modalTitle.set('comment-modal.title-add');
     }
   }
 

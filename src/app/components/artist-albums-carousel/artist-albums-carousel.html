@@ -1,21 +1,20 @@
 @if (albums.length > 0) {
-<app-generic-carousel title="Discography:" [items]="albums" class="card" [itemsVisible]="5" [itemTemplate]="albumItemTemplate">
+<app-generic-carousel [title]="'artist-album-carousel.title' | translate" [items]="albums" class="card"
+    [itemsVisible]="5" [itemTemplate]="albumItemTemplate">
 </app-generic-carousel>
 } @else {
 <div class="discography-section card">
-    <h2>Discography:</h2>
-    <p class="no-albums-message">No albums found for this artist.</p>
+    <h2>{{"artist-album-carousel.title" | translate}}</h2>
+    <p class="no-albums-message">{{"artist-album-carousel.no-found" | translate}}</p>
 </div>
 }
 
 <ng-template #albumItemTemplate let-album>
-    <a [routerLink]="['/albums', album.spotifyId]"
-    class="slide-link">
-        <img [src]="album.imageUrl || 'assets/default-avatar.svg'" [alt]="album.title + ' cover'"
-        class="album-image">
+    <a [routerLink]="['/albums', album.spotifyId]" class="slide-link">
+        <img [src]="album.imageUrl || 'assets/default-avatar.svg'" [alt]="album.title + ' cover'" class="album-image">
         <div class="album-info">
             <h3 class="album-title"> {{album.title}} </h3>
         </div>
     </a>
-    
-</ng-template> 
+
+</ng-template>

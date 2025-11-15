@@ -1,16 +1,14 @@
 <div class="modal-backdrop" (click)="onBackdropClick($event)">
     <div class="modal-content card">
-        <h3 class="modal-title">Are you sure?</h3>
+        <h3 class="modal-title">{{"deactivate-account-modal.are-you-sure" | translate}}</h3>
 
         @if (isGoogleAccount) {
         <p>
-            This will deactivate your account. All your activity will be hidden.
-            You can reactivate your account by logging in again.
+            {{"deactivate-account-modal.description-google" | translate}}
         </p>
         } @else {
         <p>
-            This will deactivate your account. All your activity will be hidden.
-            Please enter your password to confirm.
+            {{"deactivate-account-modal.description-local" | translate}}
         </p>
         }
 
@@ -18,12 +16,12 @@
 
             @if (!isGoogleAccount) {
             <div class="form-group">
-                <label for="password">Enter your password to confirm:</label>
+                <label for="password">{{"deactivate-account-modal.password" | translate}}</label>
                 <input type="password" id="password" formControlName="password" class="form-input"
                     [class.input-error]="password?.invalid && password?.touched" />
                 @if (password?.invalid && password?.touched) {
                 <div class="error-validation">
-                    <small>Password is required.</small>
+                    <small>{{"deactivate-account-modal.password-required" | translate}}</small>
                 </div>
                 }
             </div>
@@ -37,13 +35,12 @@
 
             <div class="modal-actions">
                 <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading()">
-                    Cancel
-                </button>
+                    {{"deactivate-account-modal.cancel" | translate}} </button>
                 <button type="submit" class="button danger" [disabled]="deactivateForm.invalid || isLoading()">
                     @if (isLoading()) {
-                    <span>Deactivating...</span>
+                    <span>{{"deactivate-account-modal.deactivating" | translate}}</span>
                     } @else {
-                    <span>Deactivate Account</span>
+                    <span>{{"deactivate-account-modal.deactivate-account" | translate}}</span>
                     }
                 </button>
             </div>

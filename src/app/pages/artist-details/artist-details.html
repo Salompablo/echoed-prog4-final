@@ -6,17 +6,17 @@
     </div>
 
     <div class="metadata-info">
-      <span class="music-type">ARTIST</span>
+      <span class="music-type">{{ "artist-details.artist" | translate}}</span>
 
       <h1>{{ artist.name }}</h1>
 
       <div class="artist-meta">
         <span
-          >Followers in Spotify: <span class="meta-value">{{ artist.followers }} </span></span
+          >{{ "artist-details.followers" | translate}}<span class="meta-value">{{ artist.followers }} </span></span
         >
         <span> | </span>
         <span>
-          <a [href]="artist.spotifyLink" target="_blank">Listen in Spotify</a>
+          <a [href]="artist.spotifyLink" target="_blank">{{ "artist-details.spotify" | translate}}</a>
         </span>
       </div>
     </div>
@@ -27,5 +27,5 @@
   ></app-artist-albums-carousel>
 </section>
 } }@else {
-<app-loading-spinner message="Loading artist details..."></app-loading-spinner>
+<app-loading-spinner [message]="'artist-details.loading' | translate"></app-loading-spinner>
 }

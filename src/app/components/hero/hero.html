@@ -3,13 +3,14 @@
   <div class="translucid-layer"></div>
   <div class="main-content">
     <span class="small-text">
-      <p>DISCOVER. REVIEW. CONNECT.</p>
+      <p>{{ "hero.title" | translate }}</p>
     </span>
-    <h1 class="main-title">The echo of great music never fades.</h1>
+    <h1 class="main-title">{{ "hero.main-title" | translate }}</h1>
     <p class="description">
-      Echoed is your platform to rate, review, and debate the albums that define your world. Ready
-      to be heard?
+      {{ "hero.description" | translate }}
     </p>
-    <button class="redirect-button echo-button" (click)="startEchoing()">Echo</button>
+    <button class="redirect-button echo-button" (click)="startEchoing()">
+        {{ "hero.echo" | translate }}
+    </button>
   </div>
 </div>

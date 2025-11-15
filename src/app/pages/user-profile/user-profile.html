@@ -1,22 +1,18 @@
 <div class="profile-container">
   @if (loading()) {
-  <app-loading-spinner message="Loading profile..."></app-loading-spinner>
+  <app-loading-spinner [message]="'user-profile.loading' | translate"></app-loading-spinner>
   } @else if (error() && !loading()) {
   <div class="error-state error-api">
     <span class="material-symbols-rounded error-icon">error</span>
     <p>{{ error() }}</p>
-    <button (click)="refreshProfile()" class="retry-btn">Try Again</button>
+    <button (click)="refreshProfile()" class="retry-btn">{{"user-profile.try-again" | translate}}</button>
   </div>
   } @else if (userProfile(); as profile) {
   <div class="profile-content">
     <div class="profile-header">
       <div class="profile-avatar" [class.is-editing]="isEditMode()">
-        <img
-          [src]="avatarUrl()"
-          [alt]="userProfile()?.username + ' profile avatar'"
-          class="profile-picture avatar-image"
-          [class.is-editing]="isEditMode()"
-        />
+        <img [src]="avatarUrl()" [alt]="userProfile()?.username + ' profile avatar'"
+          class="profile-picture avatar-image" [class.is-editing]="isEditMode()" />
 
         @if (isEditMode()) {
         <button class="avatar-edit-overlay" (click)="openAvatarModal()" aria-label="Change avatar">
@@ -45,7 +41,7 @@
           @if (profile.joinDate) {
           <div class="join-date">
             <span class="material-symbols-rounded date-icon">calendar_today</span>
-            <span>Joined {{ formattedJoinDate() }}</span>
+            <span>{{"user-profile.joined" | translate}}{{ formattedJoinDate() }}</span>
           </div>
           } @if (profile.biography) {
           <div class="biography">
@@ -54,7 +50,7 @@
           </div>
           } @if (isCurrentUserProfile()) {
           <button (click)="toggleEditMode()" class="edit-btn">
-            <span class="material-symbols-rounded">edit</span> Edit Profile
+            <span class="material-symbols-rounded">edit</span> {{"user-profile.edit-profile" | translate}}
           </button>
           }
         </div>
@@ -62,78 +58,53 @@
         <div class="profile-edit">
           <form #profileEditForm="ngForm">
             <div class="form-group">
-              <label for="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                class="form-input"
-                required
-                minlength="3"
-                maxlength="50"
-                placeholder="Your username"
-                [ngModel]="profileForm().username"
-                (ngModelChange)="updateUsername($event)"
-                #usernameInput="ngModel"
-              />
+              <label for="username">{{"user-profile.username" | translate}}</label>
+              <input type="text" id="username" name="username" class="form-input" required minlength="3" maxlength="50"
+                [placeholder]="'user-profile.username-placeholder' | translate" [ngModel]="profileForm().username"
+                (ngModelChange)="updateUsername($event)" #usernameInput="ngModel" />
               @if (usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)) {
               <div class="error-validation">
                 @if (usernameInput.errors?.['required']) {
-                <small>Username is required.</small>
+                <small>{{"user-profile.username-required" | translate}}</small>
                 } @if (usernameInput.errors?.['minlength']) {
-                <small>Must be at least 3 characters.</small> } @if
+                <small>{{"user-profile.username-minlength" | translate}}</small> } @if
                 (usernameInput.errors?.['maxlength']) {
-                <small>Must not exceed 50 characters.</small> }
+                <small>{{"user-profile.username-maxlength" | translate}}</small> }
               </div>
               }
             </div>
             <div class="form-group">
-              <label for="biography">Biography</label>
-              <textarea
-                id="biography"
-                name="biography"
-                class="form-textarea"
-                rows="3"
-                maxlength="500"
-                placeholder="Tell us about yourself..."
-                [ngModel]="profileForm().biography"
-                (ngModelChange)="updateBiography($event)"
-              ></textarea>
+              <label for="biography">{{"user-profile.biography" | translate}}</label>
+              <textarea id="biography" name="biography" class="form-textarea" rows="3" maxlength="500"
+                [placeholder]="'user-profile.biography-placeholder' | translate" [ngModel]="profileForm().biography"
+                (ngModelChange)="updateBiography($event)"></textarea>
             </div>
 
             @if (!isGoogleAccount()){
             <div class="change-password-link">
               <button type="button" class="button-as-link" (click)="openChangePasswordModal()">
                 <span class="material-symbols-rounded">lock</span>
-                Change Password
+                {{"user-profile.change-password" | translate}}
               </button>
             </div>
             }
 
             <div class="form-actions">
-              <button
-                type="button"
-                (click)="saveProfile()"
-                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()"
-                class="save-btn"
-              >
+              <button type="button" (click)="saveProfile()"
+                [disabled]="saving() || profileEditForm.invalid || !hasUnsavedChanges()" class="save-btn">
                 @if (!saving()) {
-                <span class="material-symbols-rounded">save</span> Save Changes } @if (saving()) {
-                <span>Saving...</span> }
+                <span class="material-symbols-rounded">save</span> {{"user-profile.save-changes" | translate}} } @if
+                (saving()) {
+                <span>{{"user-profile.saving" | translate}}</span> }
               </button>
-              <button
-                type="button"
-                (click)="toggleEditMode()"
-                [disabled]="saving()"
-                class="cancel-btn"
-              >
-                <span class="material-symbols-rounded">cancel</span> Cancel
+              <button type="button" (click)="toggleEditMode()" [disabled]="saving()" class="cancel-btn">
+                <span class="material-symbols-rounded">cancel</span> {{"user-profile.cancel" | translate}}
               </button>
             </div>
 
             @if (hasUnsavedChanges()) {
             <div class="unsaved-warning">
-              <span class="material-symbols-rounded">warning</span> You have unsaved changes
+              <span class="material-symbols-rounded">warning</span> {{"user-profile.unsaved-changes" | translate}}
             </div>
             }
           </form>
@@ -143,35 +114,35 @@
     </div>
 
     <div class="profile-stats">
-      <h2 class="stats-title">Statistics</h2>
+      <h2 class="stats-title">{{"user-profile.statistics" | translate}}</h2>
       @if (profile.userStats; as stats) {
       <div class="stats-grid">
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">bar_chart</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalReviews ?? 0 }}</span>
-            <span class="stat-label">Total Reviews</span>
+            <span class="stat-label">{{"user-profile.total-reviews" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">music_note</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalSongReviews ?? 0 }}</span>
-            <span class="stat-label">Song Reviews</span>
+            <span class="stat-label">{{"user-profile.song-reviews" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">album</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalAlbumReviews ?? 0 }}</span>
-            <span class="stat-label">Album Reviews</span>
+            <span class="stat-label">{{"user-profile.album-reviews" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">star_rate</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.averageRating | number : '1.1-1' }}</span>
-            <span class="stat-label">Avg Rating</span>
+            <span class="stat-label">{{"user-profile.avg-rating" | translate}}</span>
           </div>
         </div>
 
@@ -179,21 +150,21 @@
           <span class="material-symbols-rounded stat-icon">chat_bubble</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalComments ?? 0 }}</span>
-            <span class="stat-label">Total Comments</span>
+            <span class="stat-label">{{"user-profile.total-comments" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">audiotrack</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.songComments ?? 0 }}</span>
-            <span class="stat-label">Song Comments</span>
+            <span class="stat-label">{{"user-profile.song-comments" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">library_music</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.albumComments ?? 0 }}</span>
-            <span class="stat-label">Album Comments</span>
+            <span class="stat-label">{{"user-profile.album-comments" | translate}}</span>
           </div>
         </div>
 
@@ -201,21 +172,21 @@
           <span class="material-symbols-rounded stat-icon">multiple_stop</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.totalReactions ?? 0 }}</span>
-            <span class="stat-label">Total Reacts Given</span>
+            <span class="stat-label">{{"user-profile.total-reacts-given" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">thumb_up</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.likesGiven ?? 0 }}</span>
-            <span class="stat-label">Likes Given</span>
+            <span class="stat-label">{{"user-profile.likes-given" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">favorite</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.lovesGiven ?? 0 }}</span>
-            <span class="stat-label">Loves Given</span>
+            <span class="stat-label">{{"user-profile.loves-given" | translate}}</span>
           </div>
         </div>
         @if (showAllStats()) {
@@ -223,14 +194,14 @@
           <span class="material-symbols-rounded stat-icon">sentiment_satisfied</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.wowsGiven ?? 0 }}</span>
-            <span class="stat-label">Wows Given</span>
+            <span class="stat-label">{{"user-profile.wows-given" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">thumb_down</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.dislikesGiven ?? 0 }}</span>
-            <span class="stat-label">Dislikes Given</span>
+            <span class="stat-label">{{"user-profile.dislikes-given" | translate}}</span>
           </div>
         </div>
 
@@ -239,15 +210,15 @@
           <div class="stat-info">
             <span class="stat-number">{{
               (stats.likesReceived ?? 0) + (stats.lovesReceived ?? 0) + (stats.wowsReceived ?? 0)
-            }}</span>
-            <span class="stat-label">Positive Recvd</span>
+              }}</span>
+            <span class="stat-label">{{"user-profile.positive-record" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">gpp_bad</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.dislikesReceived ?? 0 }}</span>
-            <span class="stat-label">Negative Recvd</span>
+            <span class="stat-label">{{"user-profile.negative-record" | translate}}</span>
           </div>
         </div>
 
@@ -255,21 +226,21 @@
           <span class="material-symbols-rounded stat-icon">calendar_month</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.reviewsThisMonth ?? 0 }}</span>
-            <span class="stat-label">Reviews (Month)</span>
+            <span class="stat-label">{{"user-profile.review-month" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">graphic_eq</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.commentsThisMonth ?? 0 }}</span>
-            <span class="stat-label">Comments (Month)</span>
+            <span class="stat-label">{{"user-profile.comment-month" | translate}}</span>
           </div>
         </div>
         <div class="stat-card">
           <span class="material-symbols-rounded stat-icon">bolt</span>
           <div class="stat-info">
             <span class="stat-number">{{ stats.reactionsThisMonth ?? 0 }}</span>
-            <span class="stat-label">Reacts (Month)</span>
+            <span class="stat-label">{{"user-profile.reacts-month" | translate}}</span>
           </div>
         </div>
         }
@@ -279,123 +250,85 @@
         <button (click)="toggleShowAllStats()" class="button-as-link">
           @if (showAllStats()) {
           <span class="material-symbols-rounded">unfold_less</span>
-          <span class="button-link-text">Show Less</span>
+          <span class="button-link-text">{{"user-profile.show-less" | translate}}</span>
           } @else {
           <span class="material-symbols-rounded">unfold_more</span>
-          <span class="button-link-text">Show More</span>
+          <span class="button-link-text">{{"user-profile.show-more" | translate}}</span>
           }
         </button>
       </div>
       } @else {
-      <div class="stats-loading">Statistics not available.</div>
+      <div class="stats-loading">{{"user-profile.statistics-not-available" | translate}}</div>
       }
     </div>
     <div class="profile-reviews">
       <div class="reviews-header">
         @if (isCurrentUserProfile()) {
-        <h2 class="reviews-title">My Reviews</h2>
+        <h2 class="reviews-title">{{"user-profile.my-reviews" | translate}}</h2>
         }@else {
-        <h2 class="reviews-title">{{ userProfile()?.username }}' reviews</h2>
+        <h2 class="reviews-title">{{ userProfile()?.username }}{{"user-profile.others-reviews" | translate}}</h2>
         }
 
         <div class="reviews-tabs">
-          <button
-            (click)="changeTab('reviews')"
-            [class.active]="activeTab() === 'reviews'"
-            class="tab-btn"
-          >
-            All Reviews
+          <button (click)="changeTab('reviews')" [class.active]="activeTab() === 'reviews'" class="tab-btn">
+            {{"user-profile.all-reviews" | translate}}
           </button>
-          <button
-            (click)="changeTab('song-reviews')"
-            [class.active]="activeTab() === 'song-reviews'"
-            class="tab-btn"
-          >
-            Songs ({{ profile.userStats?.totalSongReviews ?? 0 }})
+          <button (click)="changeTab('song-reviews')" [class.active]="activeTab() === 'song-reviews'" class="tab-btn">
+            {{"user-profile.songs" | translate}} ({{ profile.userStats?.totalSongReviews ?? 0 }})
           </button>
-          <button
-            (click)="changeTab('album-reviews')"
-            [class.active]="activeTab() === 'album-reviews'"
-            class="tab-btn"
-          >
-            Albums ({{ profile.userStats?.totalAlbumReviews ?? 0 }})
+          <button (click)="changeTab('album-reviews')" [class.active]="activeTab() === 'album-reviews'" class="tab-btn">
+            {{"user-profile.albums" | translate}}({{ profile.userStats?.totalAlbumReviews ?? 0 }})
           </button>
         </div>
       </div>
       <div class="reviews-content">
         @switch (activeTab()) { @case ('reviews') {
-        <app-review-list
-          [reviews]="allReviews()"
+        <app-review-list [reviews]="allReviews()"
           [loading]="reviewsLoading() && songReviews().length === 0 && albumReviews().length === 0"
-          [showUsername]="false"
-          [showMusicInfo]="true"
-          emptyMessage="No reviews yet. Start reviewing your favorite music!"
-          (reviewDeleted)="onReviewDeleted($event)"
-        />
+          [showUsername]="false" [showMusicInfo]="true" [emptyMessage]="'user-profile.no-reviews' | translate"
+          (reviewDeleted)="onReviewDeleted($event)" />
         @if (hasMoreSongReviews() || hasMoreAlbumReviews()) {
         <div class="load-more-section">
           @if (hasMoreSongReviews()) {
-          <button
-            (click)="loadMoreSongReviews()"
-            class="load-more-btn"
-            [disabled]="reviewsLoading()"
-          >
+          <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
             @if(reviewsLoading()) {
-            <span>Loading...</span>
+            <span>{{"user-profile.reviews-loading" | translate}}</span>
             } @else {
-            <span>Load More Songs</span>
+            <span>{{"user-profile.load-more-songs" | translate}}</span>
             }
           </button>
           } @if (hasMoreAlbumReviews()) {
-          <button
-            (click)="loadMoreAlbumReviews()"
-            class="load-more-btn"
-            [disabled]="reviewsLoading()"
-          >
+          <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
             @if(reviewsLoading()) {
-            <span>Loading...</span>
+            <span>{{"user-profile.reviews-loading" | translate}}</span>
             } @else {
-            <span>Load More Albums</span>
+            <span>{{"user-profile.load-more-albums" | translate}}</span>
             }
           </button>
           }
         </div>
         } } @case ('song-reviews') {
-        <app-review-list
-          [reviews]="songReviews()"
-          [loading]="reviewsLoading() && songReviews().length === 0"
-          [showUsername]="false"
-          [showMusicInfo]="true"
-          emptyMessage="No song reviews yet"
-          (reviewDeleted)="onReviewDeleted($event)"
-        />
+        <app-review-list [reviews]="songReviews()" [loading]="reviewsLoading() && songReviews().length === 0"
+          [showUsername]="false" [showMusicInfo]="true" [emptyMessage]="'user-profile.no-song-reviews' | translate"
+          (reviewDeleted)="onReviewDeleted($event)" />
         @if (hasMoreSongReviews()) {
         <button (click)="loadMoreSongReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
           @if(reviewsLoading()) {
-          <span>Loading...</span>
+          <span>{{"user-profile.reviews-loading" | translate}}</span>
           } @else {
-          <span>Load More Songs</span>
+          <span>{{"user-profile.load-more-songs" | translate}}</span>
           }
         </button>
         } } @case ('album-reviews') {
-        <app-review-list
-          [reviews]="albumReviews()"
-          [loading]="reviewsLoading() && albumReviews().length === 0"
-          [showUsername]="false"
-          [showMusicInfo]="true"
-          emptyMessage="No album reviews yet"
-          (reviewDeleted)="onReviewDeleted($event)"
-        />
+        <app-review-list [reviews]="albumReviews()" [loading]="reviewsLoading() && albumReviews().length === 0"
+          [showUsername]="false" [showMusicInfo]="true" [emptyMessage]="'user-profile.no-album-reviews' | translate"
+          (reviewDeleted)="onReviewDeleted($event)" />
         @if (hasMoreAlbumReviews()) {
-        <button
-          (click)="loadMoreAlbumReviews()"
-          class="load-more-btn"
-          [disabled]="reviewsLoading()"
-        >
+        <button (click)="loadMoreAlbumReviews()" class="load-more-btn" [disabled]="reviewsLoading()">
           @if(reviewsLoading()) {
-          <span>Loading...</span>
+          <span>{{"user-profile.reviews-loading" | translate}}</span>
           } @else {
-          <span>Load More Albums</span>
+          <span>{{"user-profile.load-more-albums" | translate}}</span>
           }
         </button>
         } } }
@@ -403,32 +336,28 @@
     </div>
     @if (isCurrentUserProfile()) {
     <div class="danger-zone card">
-      <h4>Danger Zone</h4>
+      <h4>{{"user-profile.danger-zone" | translate}}</h4>
       <p>
-        Deactivating your account will hide your profile and all of your content. You can reactivate
-        your account by logging in again.
+        {{"user-profile.danger-zone-description" | translate}}
       </p>
       <button (click)="openDeactivateModal()" class="button danger-btn">
-        Deactivate My Account
+        {{"user-profile.deactivate-account" | translate}}
       </button>
     </div>
     }
   </div>
   } @else {
-  <p>User profile could not be loaded.</p>
+  <p> {{"user-profile.user-error" | translate}}
+  </p>
   }
 </div>
 
 @if(isChangePasswordModalVisible()){
 <app-change-password-modal (close)="closeChangePasswordModal()"></app-change-password-modal>
 } @if (isDeactivateModalVisible()) {
-<app-deactivate-account-modal
-  [isGoogleAccount]="isGoogleAccount()"
-  (close)="closeDeactivateModal()"
-></app-deactivate-account-modal>
+<app-deactivate-account-modal [isGoogleAccount]="isGoogleAccount()"
+  (close)="closeDeactivateModal()"></app-deactivate-account-modal>
 } @if (isAvatarModalVisible()) {
-<app-avatar-picker-modal
-  (close)="closeAvatarModal()"
-  (avatarSelected)="onAvatarSelected($event)"
-></app-avatar-picker-modal>
+<app-avatar-picker-modal (close)="closeAvatarModal()"
+  (avatarSelected)="onAvatarSelected($event)"></app-avatar-picker-modal>
 }

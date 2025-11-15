@@ -1,8 +1,8 @@
 <div class="modal-backdrop" (click)="onBackdropClick($event)">
     <div class="modal-content card">
-        <h3 class="modal-title">Account Deactivated</h3>
+        <h3 class="modal-title">{{"reactivate-account.title" | translate}}</h3>
         <p>
-            Your account is currently deactivated. Would you like to reactivate it to continue?
+            {{"reactivate-account.description" | translate}}
         </p>
 
         @if (errorMessage()) {
@@ -13,13 +13,13 @@
 
         <div class="modal-actions">
             <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading()">
-                Cancel
+                {{"reactivate-account.cancel" | translate}}
             </button>
             <button type="button" class="button primary" (click)="onConfirmReactivate()" [disabled]="isLoading()">
                 @if (isLoading()) {
-                <span>Reactivating...</span>
+                <span>{{"reactivate-account.reactivating" | translate}}</span>
                 } @else {
-                <span>Yes</span>
+                <span>{{"reactivate-account.yes" | translate}}</span>
                 }
             </button>
         </div>

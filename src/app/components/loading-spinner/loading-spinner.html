@@ -1,7 +1,7 @@
 <div class="loading-container" role="status" aria-live="polite">
   <div class="spinner"></div>
   @if (message) {
-    <p class="loading-text">{{ message }}</p>
+    <p class="loading-text">{{ message | translate }}</p>
   }
-  <span class="sr-only">Loading content</span>
+  <span class="sr-only">{{ "loading-spinner.loading-content-sr" | translate }}</span>
 </div>

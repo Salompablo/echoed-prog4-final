@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AlbumSearchResponse, SongSearchResponse } from '../../models/music';
 import { AlbumReviewRequest, SongReviewRequest } from '../../models/interaction';
 import { StarRating } from '../star-rating/star-rating';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-review-modal',
-  imports: [ReactiveFormsModule, StarRating],
+  imports: [ReactiveFormsModule, StarRating, TranslateModule],
   templateUrl: './review-modal.html',
   styleUrl: './review-modal.css',
 })

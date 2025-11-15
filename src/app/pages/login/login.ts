@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { ReactivateAccountModal } from '../../components/reactivate-account-modal/reactivate-account-modal';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, ReactivateAccountModal],
+  imports: [ReactiveFormsModule, CommonModule, ReactivateAccountModal, TranslateModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

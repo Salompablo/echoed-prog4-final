@@ -1,10 +1,10 @@
 @if (isLoading()) {
-<app-loading-spinner message="Loading reviews..."></app-loading-spinner>
+<app-loading-spinner [message]="'review-carousel.loading' | translate"></app-loading-spinner>
 } @else if (error()) {
 <p class="error-message">{{ error() }}</p>
 } @else if (latestReviews().length > 0) {
 <app-generic-carousel
-  title="Latest Reviews"
+  [title]="'review-carousel.latest' | translate"
   [items]="latestReviews()"
   [itemsVisible]="10"
   [itemTemplate]="reviewItemTemplate"
@@ -14,7 +14,7 @@
 >
 </app-generic-carousel>
 } @else {
-<p>No reviews found.</p>
+<p>{{"review-carousel.no-found | translate"}}</p>
 }
 
 <ng-template #reviewItemTemplate let-review>

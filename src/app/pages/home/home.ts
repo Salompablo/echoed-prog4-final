@@ -6,10 +6,11 @@ import { ReviewCarousel } from "../../components/review-carousel/review-carousel
 import { SongCarousel } from "../../components/song-carousel/song-carousel";
 import { AlbumCarousel } from "../../components/album-carousel/album-carousel";
 import { LoadingSpinner } from "../../components/loading-spinner/loading-spinner";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
-  imports: [Hero, Features, ReviewCarousel, SongCarousel, AlbumCarousel],
+  imports: [Hero, Features, ReviewCarousel, SongCarousel, AlbumCarousel, TranslateModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

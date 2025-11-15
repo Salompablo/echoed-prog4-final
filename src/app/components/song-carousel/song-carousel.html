@@ -1,17 +1,17 @@
 @if (isLoading()) {
-<app-loading-spinner message="Loading songs..."></app-loading-spinner>
+<app-loading-spinner [message]="'song-carousel.loading' | translate"></app-loading-spinner>
 } @else if (error()) {
 <p class="error-message">{{ error() }}</p>
 } @else if (mostReviewedSongs().length > 0) {
 <app-generic-carousel
-  title="Most Reviewed Songs"
+  [title]="'song-carousel.title' | translate"
   [items]="mostReviewedSongs()"
   [itemsVisible]="10"
   [itemTemplate]="songItemTemplate"
 >
 </app-generic-carousel>
 } @else {
-<p>No reviewed songs found.</p>
+<p>{{"song-carousel.no-found" | translate}}</p>
 }
 
 <ng-template #songItemTemplate let-song>
