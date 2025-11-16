@@ -1,0 +1,154 @@
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--backdrop-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-index-modal);
+  padding: 1rem;
+  box-sizing: border-box;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-content {
+  background: var(--card-bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(78, 52, 46, 0.08);
+  max-width: 26.25rem;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+html.dark .modal-content {
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-title {
+  font-family: 'Poppins', sans-serif;
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
+
+.modal-content p {
+  font-family: 'Lato', sans-serif;
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.button {
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 9999rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Lato', sans-serif;
+  min-width: 7.5rem;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button.primary {
+  color: var(--btn-text-color);
+  background-color: var(--primary-color);
+}
+
+.button.primary:hover:not(:disabled) {
+  filter: brightness(110%);
+  transform: translateY(-0.0625rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(78, 52, 46, 0.2);
+}
+
+html.dark .button.primary:hover:not(:disabled) {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.3);
+}
+
+.button.secondary {
+  color: var(--text-color);
+  background-color: var(--input-bg-color);
+  border: 0.0625rem solid var(--card-border-color);
+}
+
+.button.secondary:hover:not(:disabled) {
+  background-color: var(--card-border-color);
+  transform: translateY(-0.0625rem);
+}
+
+.error-api {
+  background-color: #fee;
+  color: #c33;
+  border: 0.0625rem solid #fcc;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+html.dark .error-api {
+  background-color: rgba(220, 38, 38, 0.15);
+  color: #fca5a5;
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(1.25rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .modal-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
