@@ -286,8 +286,14 @@
         "artists": "Artists",
         "no-results": "No results found for "
     },
-    "session-exired": {
+    "session-expired": {
         "title": "Session Expired",
-        "description": "Your session has expired. Please log in again to continue."
+        "description": "Your session has expired. Please log in again to continue.",
+        "ok": "Ok"
+    },
+    "banned-account": {
+        "title": "Account Banned",
+        "description": "This account has been banned by an administrator and cannot be accessed.",
+        "ok":"Ok"
     }
 }

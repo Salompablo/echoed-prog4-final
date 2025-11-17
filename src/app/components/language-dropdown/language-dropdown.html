@@ -1,0 +1,22 @@
+<div class="language-dropdown-container">
+    <button (click)="toggleDropdown()" class="lang-dropbtn">
+        <span class="lang-code">{{ getCurrentLangCode() }}</span>
+        <span class="material-symbols-rounded dropdown-icon">arrow_drop_down</span>
+    </button>
+
+    @if (isDropdownOpen()) {
+    <div class="lang-dropdown-content">
+        @for (lang of i18nService.languages; track lang.code) {
+        <button
+            (click)="selectLanguage(lang.code)"
+            [class.active]="i18nService.currentLang() === lang.code"
+        >
+            {{ lang.name }}
+            @if (i18nService.currentLang() === lang.code) {
+                <span class="material-symbols-rounded check-icon">done</span>
+            }
+        </button>
+        }
+    </div>
+    }
+</div>

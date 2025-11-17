@@ -34,9 +34,9 @@ export class I18nService {
     localStorage.setItem(this.storageKey, langCode);
   }
 
-  public toggleLanguage(): void{
-    const newLang = this.currentLang() === 'en' ? 'es' : 'en';
-    this.changeLanguage(newLang);
-  }
+  // public toggleLanguage(): void{
+  //   const newLang = this.currentLang() === 'en' ? 'es' : 'en';
+  //   this.changeLanguage(newLang);
+  // }
   
 }
