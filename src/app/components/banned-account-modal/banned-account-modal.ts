@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-banned-account-modal',
   standalone: true,
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './banned-account-modal.html',
   styleUrl: '../reactivate-account-modal/reactivate-account-modal.css', 
 })
