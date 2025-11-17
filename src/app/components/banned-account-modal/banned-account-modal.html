@@ -1,0 +1,13 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content card">
+        <h3 class="modal-title">Account Banned</h3>
+        <p>
+            This account has been banned by an administrator and cannot be accessed.
+        </p>
+        <div class="modal-actions">
+            <button type="button" class="button primary" (click)="onConfirm()">
+                OK
+            </button>
+        </div>
+    </div>
+</div>
