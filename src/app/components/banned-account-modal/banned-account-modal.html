@@ -1,12 +1,11 @@
 <div class="modal-backdrop" (click)="onBackdropClick($event)">
     <div class="modal-content card">
-        <h3 class="modal-title">Account Banned</h3>
+        <h3 class="modal-title">{{"banned-account.title" | translate}}</h3>
         <p>
-            This account has been banned by an administrator and cannot be accessed.
-        </p>
+            {{"banned-account.description" | translate}} </p>
         <div class="modal-actions">
             <button type="button" class="button primary" (click)="onConfirm()">
-                OK
+                {{"banned-account.ok" | translate}}
             </button>
         </div>
     </div>
