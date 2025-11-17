@@ -12,10 +12,11 @@ import { ToastService } from '../../services/toast';
 import { DatePipe } from '@angular/common';
 import { ReviewList } from '../../components/review-list/review-list';
 import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-album-details',
-  imports: [RouterLink, ReviewModal, DatePipe, ReviewList,LoadingSpinner],
+  imports: [RouterLink, ReviewModal, DatePipe, ReviewList,LoadingSpinner, TranslateModule],
   templateUrl: './album-details.html',
   styleUrl: './album-details.css',
 })

@@ -6,10 +6,11 @@ import { UserService } from '../../services/user';
 import { ErrorService } from '../../services/error';
 import { ToastService } from '../../services/toast';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-deactivate-account-modal',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './deactivate-account-modal.html',
   styleUrl: './deactivate-account-modal.css',
 })

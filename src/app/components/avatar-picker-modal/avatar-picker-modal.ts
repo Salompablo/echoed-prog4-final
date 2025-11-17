@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-avatar-picker-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './avatar-picker-modal.html',
   styleUrl: './avatar-picker-modal.css'
 })

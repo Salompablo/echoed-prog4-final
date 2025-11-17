@@ -6,10 +6,11 @@ import { GenericCarouselComponent } from '../generic-carousel/generic-carousel';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-album-carousel',
-  imports: [GenericCarouselComponent, RouterLink,CommonModule,LoadingSpinner],
+  imports: [GenericCarouselComponent, RouterLink,CommonModule,LoadingSpinner, TranslateModule],
   templateUrl: './album-carousel.html',
   styleUrl: './album-carousel.css',
 })

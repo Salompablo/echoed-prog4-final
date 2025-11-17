@@ -1,17 +1,17 @@
 <div class="modal-backdrop" (click)="onBackdropClick($event)">
   <div class="modal-content card" (click)="$event.stopPropagation()">
-    <h3 class="modal-title">{{modalTitle()}}</h3>
+    <h3 class="modal-title">{{modalTitle() | translate}}</h3>
     <button type="button" class="close-button" (click)="onCancel()" aria-label="Close modal">
       ×
     </button>
 
     <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
       <div class="form-group">
-        <label for="comment-text">Your Comment</label>
+        <label for="comment-text">{{"comment-modal.your-comment" | translate}}</label>
         <textarea
           id="comment-text"
           formControlName="text"
-          [placeholder]="'What do you think?'"
+          [placeholder]="'comment-modal.comment-placeholder' | translate" 
           rows="5"
           [maxlength]="MAX_CHARS"
           [class.input-error]="text?.invalid && text?.touched"
@@ -23,8 +23,8 @@
         
         @if (text?.invalid && text?.touched) {
           <div class="error-validation">
-            @if (text?.errors?.['required']) { <small>Comment cannot be empty.</small> }
-            @if (text?.errors?.['minlength']) { <small>Must be at least 3 characters.</small> }
+            @if (text?.errors?.['required']) { <small>{{"comment-modal.comment-empty" | translate}}</small> }
+            @if (text?.errors?.['minlength']) { <small>{{"comment-modal.comment-minlength" | translate}}</small> }
           </div>
         }
       </div>
@@ -37,13 +37,17 @@
 
       <div class="modal-actions">
         <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading()">
-          Cancel
+          {{"comment-modal.cancel" | translate}}
         </button>
         <button type="submit" class="button primary" [disabled]="commentForm.invalid || isLoading()">
           @if (isLoading()) {
-            <span> {{commentToEdit ? 'Saving...' : 'Submitting...'}} </span>
+            <span> 
+              {{ commentToEdit ? ('comment-modal.saving-loading' | translate) : ('comment-modal.submitting-loading' | translate) }} 
+            </span>
           } @else {
-            <span> {{commentToEdit ? 'Save changes' : 'Submit Comment'}} </span>
+            <span> 
+              {{ commentToEdit ? ('comment-modal.save-changes-btn' | translate) : ('comment-modal.submit-comment-btn' | translate) }} 
+            </span>
           }
         </button>
       </div>

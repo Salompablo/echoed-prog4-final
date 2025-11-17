@@ -6,10 +6,11 @@ import { UserService } from '../../services/user';
 import { ErrorService } from '../../services/error';
 import { ToastService } from '../../services/toast';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-finish-profile',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './finish-profile.html',
   styleUrl: './finish-profile.css',
 })

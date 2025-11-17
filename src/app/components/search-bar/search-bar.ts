@@ -8,11 +8,12 @@ import { SearchService } from '../../services/search';
 import { AlbumSearchResponse, SongSearchResponse, ArtistSearchResponse } from '../../models/music';
 import { Router } from '@angular/router';
 import { ErrorService } from '../../services/error';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TranslateModule],
   templateUrl: './search-bar.html',
   styleUrls: ['./search-bar.css'],
 })

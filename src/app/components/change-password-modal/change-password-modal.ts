@@ -5,10 +5,11 @@ import { UserService } from '../../services/user';
 import { ToastService } from '../../services/toast';
 import { passwordMatcher } from '../../validators/password-matcher';
 import { PasswordUpdateRequest } from '../../models/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-change-password-modal',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   templateUrl: './change-password-modal.html',
   styleUrl: '../deactivate-account-modal/deactivate-account-modal.css',
 })

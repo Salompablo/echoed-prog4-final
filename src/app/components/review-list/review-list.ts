@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MusicReview } from '../../models/interaction';
 import { ReviewCard } from '../review-card/review-card';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-review-list',
   standalone: true,
-  imports: [CommonModule, ReviewCard, LoadingSpinner],
+  imports: [CommonModule, ReviewCard, LoadingSpinner, TranslateModule],
   templateUrl: './review-list.html',
   styleUrls: ['./review-list.css'],
 })

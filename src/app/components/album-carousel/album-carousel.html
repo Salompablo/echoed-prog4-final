@@ -1,17 +1,17 @@
 @if (isLoading()) {
-<app-loading-spinner message="Loading albums..."></app-loading-spinner>
+<app-loading-spinner [message]="'album-carousel.loading' | translate"></app-loading-spinner>
 } @else if (error()) {
 <p class="error-message">{{ error() }}</p>
 } @else if (mostReviewedAlbums().length > 0) {
 <app-generic-carousel
-  title="Most Reviewed Albums"
+  [title]="'album-carousel.title' | translate"
   [items]="mostReviewedAlbums()"
   [itemsVisible]="10"
   [itemTemplate]="albumItemTemplate"
 >
 </app-generic-carousel>
 } @else {
-<p>No reviewed albums found.</p>
+<p>{{"album-carousel.no-found" | translate}}</p>
 }
 
 <ng-template #albumItemTemplate let-album>

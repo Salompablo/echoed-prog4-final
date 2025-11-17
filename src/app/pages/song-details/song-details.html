@@ -13,7 +13,7 @@
     </div>
 
     <div class="metadata-info">
-      <span class="music-type">SONG</span>
+      <span class="music-type">{{"song-details.song" | translate}}</span>
 
       <h1>{{ song.name }}
         @if(song.explicit){
@@ -30,27 +30,27 @@
       </p>
 
       <div class="song-meta">
-        <span>Release date: <span class="meta-value">{{ song.releaseDate}} </span></span>
+        <span>{{"song-details.release-date" | translate}}<span class="meta-value">{{ song.releaseDate}} </span></span>
         <span> | </span>
-        <span> Duration: <span class="meta-value">{{ formatDuration(song.durationMs) }}</span></span>
+        <span>{{"song-details.duration" | translate}}<span class="meta-value">{{ formatDuration(song.durationMs) }}</span></span>
         <span> | </span>
-        <span> <a href={{song.spotifyLink}} target="_blank">Listen in Spotify</a></span>
+        <span> <a href={{song.spotifyLink}} target="_blank">{{"song-details.spotify" | translate}}</a></span>
 
       </div>
       <button class="primary write-review-btn" (click)="openReviewModal()">
-        Make an Echo
+        {{"song-details.echo" | translate}}
       </button>
     </div>
   </div>
 
   <div class="community-reviews">
-    <h2>Our Community's Echoes:</h2>
+    <h2>{{"song-details.echoes" | translate}}</h2>
     <app-review-list
       [reviews]="reviews()"
       [loading]="isLoadingReviews()"
       [showMusicInfo]="false"
       [showUserAvatar]="true"
-      emptyMessage="No reviews yet. Be the first to make an echo!"
+      [emptyMessage]="'song-details.empty' | translate"
       (reviewDeleted)="onReviewDeleted($event)"
       (reviewEditRequest)="onReviewEditRequest($event)" />
   </div>
@@ -62,5 +62,5 @@
 }
 }
 }@else {
-<app-loading-spinner message="Loading song details..."></app-loading-spinner>
+<app-loading-spinner [message]="'song-details.loading' | translate"></app-loading-spinner>
 }

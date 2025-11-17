@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-delete-confirmation-modal',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './delete-confirmation-modal.html',
   styleUrl: './delete-confirmation-modal.css',
 })
@@ -32,22 +33,22 @@ export class DeleteConfirmationModal {
   modalTitle = computed(() => {
     switch (this.target.type) {
       case 'comment':
-        return 'Delete Comment';
+        return 'delete-modal.title-comment';
       case 'review':
-        return 'Delete Echo';
+        return 'delete-modal.title-review';
       default:
-        return 'Confirm Deletion';
+        return 'delete-modal.title-default';
     }
   });
 
   confirmationMessage = computed(() => {
     switch (this.target.type) {
       case 'comment':
-        return `Are you sure you want to delete this comment? This action is irreversible.`;
+        return 'delete-modal.msg-comment';
       case 'review':
-        return `Are you sure you want to delete this Echo? This action is irreversible.`;
+        return 'delete-modal.msg-review';
       default:
-        return 'Are you sure you want to proceed with the deletion?';
+        return 'delete-modal.msg-default';
     }
   });
 }

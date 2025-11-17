@@ -1,7 +1,7 @@
 <div class="comment-list-container">
   @if (isLoading()) {
   <div class="loading-state">
-    <app-loading-spinner message="Loading comments..."></app-loading-spinner>
+    <app-loading-spinner [message]="'comment-list.loading' | translate"></app-loading-spinner>
   </div>
   } @else if (error()) {
   <div class="error-state">
@@ -9,7 +9,7 @@
   </div>
   } @else if (comments().length === 0) {
   <div class="empty-state">
-    <p>No comments yet. Be the first to comment!</p>
+    <p>{{"comment-list.empty-comments" | translate}}</p>
   </div>
   } @else {
   <div class="comments-wrapper">
@@ -24,11 +24,11 @@
     }
   </div>
   } @if (isLoadingMore()) {
-  <app-loading-spinner message="Loading reviews..."></app-loading-spinner>
+  <app-loading-spinner [message]="'comment-list.loading-reviews' | translate"></app-loading-spinner>
   } @if (hasMoreComments() && !isLoading() && !isLoadingMore()) {
   <div class="load-more-section">
     <button (click)="loadComments()" class="load-more-btn" [disabled]="isLoadingMore()">
-      Load More Comments
+      {{"comment-list.load-more-comments" | translate}}
     </button>
   </div>
   } @if (isEditModalVisible() && commentToEdit()) {

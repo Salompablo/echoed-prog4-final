@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { ReactivateAccountModal } from '../../components/reactivate-account-modal/reactivate-account-modal';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user';
+import { TranslateModule } from '@ngx-translate/core';
 import { BannedAccountModal } from '../../components/banned-account-modal/banned-account-modal';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, ReactivateAccountModal,BannedAccountModal],
+  imports: [ReactiveFormsModule, CommonModule, ReactivateAccountModal,BannedAccountModal, TranslateModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

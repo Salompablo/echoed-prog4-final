@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-hero',
-  imports: [],
+  imports: [TranslateModule],
   templateUrl: './hero.html',
   styleUrl: './hero.css',
 })

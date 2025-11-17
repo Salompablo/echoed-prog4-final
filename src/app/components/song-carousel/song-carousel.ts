@@ -6,11 +6,12 @@ import { SongSearchResponse } from '../../models/music';
 import { RouterLink } from '@angular/router';
 import { GenericCarouselComponent } from '../generic-carousel/generic-carousel';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-song-carousel',
   standalone: true,
-  imports: [CommonModule, RouterLink, GenericCarouselComponent,LoadingSpinner],
+  imports: [CommonModule, RouterLink, GenericCarouselComponent,LoadingSpinner, TranslateModule],
   templateUrl: './song-carousel.html',
   styleUrls: ['./song-carousel.css'],
 })
