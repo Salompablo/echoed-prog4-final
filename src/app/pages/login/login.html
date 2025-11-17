@@ -71,3 +71,6 @@
 <app-reactivate-account-modal [userId]="userIdToReactivate()!" (close)="closeReactivateModal()">
 </app-reactivate-account-modal>
 }
+@if (isBannedModalVisible()) {
+<app-banned-account-modal (close)="closeBannedModal()"></app-banned-account-modal>
+}
