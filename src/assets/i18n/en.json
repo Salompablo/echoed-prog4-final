@@ -302,7 +302,7 @@
         "loading": "Loading reviews...",
         "author": "Author",
         "rating": "Rating",
-        "snippet": "Content",
+        "content": "Content",
         "item": "Item",
         "type": "Type",
         "date": "Date",

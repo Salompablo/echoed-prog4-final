@@ -1,7 +1,23 @@
-footer{
+footer {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.4em;
     padding: 1rem;
+}
+
+
+.footer-bottom-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+
+.footer-bottom-bar .copyright-text {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin: 0;
 }
