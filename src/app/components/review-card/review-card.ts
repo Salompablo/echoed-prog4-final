@@ -31,6 +31,7 @@ import { ReactionBar } from '../reaction-bar/reaction-bar';
 import { ReviewService } from '../../services/review';
 import { ToastService } from '../../services/toast';
 import { ErrorService } from '../../services/error';
+import { AdminService } from '../../services/admin';
 
 @Component({
   selector: 'app-review-card',
@@ -72,6 +73,7 @@ export class ReviewCard implements OnChanges {
   private reviewService = inject(ReviewService);
   private toastService = inject(ToastService);
   private errorService = inject(ErrorService);
+  private adminService = inject(AdminService);
 
   isCommentListVisible = signal(false);
   isCommentModalVisible = signal(false);
@@ -109,6 +111,10 @@ export class ReviewCard implements OnChanges {
     if (!currentUser || !this.review?.user) return false;
     const reviewUserId = (this.review.user as any).userId ?? (this.review.user as any).id;
     return currentUser.userId === reviewUserId;
+  });
+
+  isAdmin = computed(() => {
+    return this.authService.currentUser()?.roles.includes('ROLE_ADMIN') ?? false;
   });
 
   isAlbumReview(review: MusicReview): review is AlbumReviewResponse {
@@ -241,11 +247,25 @@ export class ReviewCard implements OnChanges {
   onConfirmDelete(): void {
     this.isDeleting.set(true);
     const reviewId = this.reviewId();
-    const reviewType = this.reviewType();
+    // const reviewType = this.reviewType();
 
-    const deleteObservable = reviewType === 'song'
-      ? this.reviewService.deleteSongReview(reviewId)
-      : this.reviewService.deleteAlbumReview(reviewId);
+    let deleteObservable;
+
+    if (this.isOwner()) {
+      const reviewType = this.reviewType();
+      deleteObservable =
+        reviewType === 'song'
+          ? this.reviewService.deleteSongReview(reviewId)
+          : this.reviewService.deleteAlbumReview(reviewId);
+    }else{
+      deleteObservable = this.adminService.deleteReview(reviewId);
+    }
+
+
+    // const deleteObservable =
+    //   reviewType === 'song'
+    //     ? this.reviewService.deleteSongReview(reviewId)
+    //     : this.reviewService.deleteAlbumReview(reviewId);
 
     deleteObservable.subscribe({
       next: () => {
