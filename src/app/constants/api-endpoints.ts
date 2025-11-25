@@ -44,33 +44,37 @@ export const API_ENDPOINTS = {
   COMMENTS: {
     GET_SONG_REVIEW_COMMENTS: (reviewId: number) => `/songreviews/${reviewId}/comments`,
     POST_SONG_REVIEW_COMMENT: (reviewId: number) => `/songreviews/${reviewId}/comments`,
-    PATCH_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) => `/songreviews/${reviewId}/comments/${commentId}`,
-    DELETE_SONG_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/songreviews/${reviewId}/comments/${commentId}`,
+    PATCH_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/songreviews/${reviewId}/comments/${commentId}`,
+    DELETE_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/songreviews/${reviewId}/comments/${commentId}`,
     GET_ALBUM_REVIEW_COMMENTS: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
     POST_ALBUM_REVIEW_COMMENT: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
-    PATCH_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) => `/albumreviews/${reviewId}/comments/${commentId}`,
-    DELETE_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/albumreviews/${reviewId}/comments/${commentId}`,
-
+    PATCH_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/albumreviews/${reviewId}/comments/${commentId}`,
+    DELETE_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/albumreviews/${reviewId}/comments/${commentId}`,
   },
   REACTIONS: {
-    ADD_TO_REVIEW: (reviewId: number | string) =>
-      `/reviews/${reviewId}/reactions`,
-    ADD_TO_COMMENT: (commentId: number | string) =>
-      `/comments/${commentId}/reactions`,
-    UPDATE: (reactionId: number | string) => 
-      `/reactions/${reactionId}`,
+    ADD_TO_REVIEW: (reviewId: number | string) => `/reviews/${reviewId}/reactions`,
+    ADD_TO_COMMENT: (commentId: number | string) => `/comments/${commentId}/reactions`,
+    UPDATE: (reactionId: number | string) => `/reactions/${reactionId}`,
     DELETE: (
       reactedType: 'review' | 'comment',
       parentId: number | string,
       reactionId: number | string
-    ) =>
-      `/${reactedType}s/${parentId}/reactions/${reactionId}`,
+    ) => `/${reactedType}s/${parentId}/reactions/${reactionId}`,
   },
   SONGS: {
     MOST_REVIEWED_SONGS: '/stats/songs/mostReviewed',
   },
   ALBUMS: {
     MOST_REVIEWED_ALBUMS: '/stats/albums/mostReviewed',
+  },
+  ADMIN: {
+    REVIEWS: (pageNumber: number, size: number, sort: string, direction: string) => `/admin/reviews?pageNumber=${pageNumber}&size=${size}&sort=${sort}&direction=${direction}`,
+    DELETE_REVIEW: (reviewId : number) => `/admin/review/${reviewId}`,
+    REACTIVATE_REVIEW: (reviewId : number) => `/admin/review/${reviewId}/reactivate`,
   },
 } as const;
 

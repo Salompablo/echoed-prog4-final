@@ -10,6 +10,8 @@ import { Oauth2Callback } from './pages/oauth2-callback/oauth2-callback';
 import { UserProfile } from './pages/user-profile/user-profile';
 import { authGuard } from './guards/auth-guard';
 import { FinishProfile } from './pages/finish-profile/finish-profile';
+import { AdminReviews } from './pages/admin-reviews/admin-reviews';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -20,6 +22,7 @@ export const routes: Routes = [
   { path: 'profile', component: UserProfile, canActivate: [authGuard] },
   { path: 'profile/:userId', component: UserProfile, canActivate:[authGuard]},
   { path: 'about-us', component: AboutUs },
+  { path: 'admin/reviews', component: AdminReviews, canActivate: [adminGuard]},
   { path: `songs/:spotifyId`, component: SongDetails },
   { path: `albums/:spotifyId`, component: AlbumDetails },
   { path: `artists/:spotifyId`, component: ArtistDetails },

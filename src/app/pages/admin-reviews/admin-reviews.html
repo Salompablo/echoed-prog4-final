@@ -1,0 +1,121 @@
+<section class="admin-container">
+    <div class="header-section">
+        <h2 class="dashboard-title">{{"admin-reviews.title" | translate}}</h2>
+        <p class="subtitle">{{"admin-reviews.subtitle" | translate}}</p>
+    </div>
+
+    @if (isLoading()) {
+    <app-loading-spinner [message]="'admin-reviews.loading' | translate"></app-loading-spinner>
+    } @else {
+    <div class="table-responsive-wrapper">
+        <table class="admin-table">
+            <thead>
+    <tr>
+        <th (click)="onSort('user.username')" class="sortable-header">
+            <div class="th-content">
+                {{"admin-reviews.author" | translate}}
+                <span class="material-symbols-rounded sort-icon">
+                    {{ getSortIcon('user.username') }}
+                </span>
+            </div>
+        </th>
+
+        <th (click)="onSort('rating')" class="sortable-header">
+            <div class="th-content">
+                {{"admin-reviews.rating" | translate}}
+                <span class="material-symbols-rounded sort-icon">
+                    {{ getSortIcon('rating') }}
+                </span>
+            </div>
+        </th>
+
+        <th>{{"admin-reviews.content" | translate}}</th> <th>{{"admin-reviews.item" | translate}}</th>
+        <th>{{"admin-reviews.type" | translate}}</th>
+
+        <th (click)="onSort('date')" class="sortable-header">
+            <div class="th-content">
+                {{"admin-reviews.date" | translate}}
+                <span class="material-symbols-rounded sort-icon">
+                    {{ getSortIcon('date') }}
+                </span>
+            </div>
+        </th>
+
+        <th (click)="onSort('active')" class="sortable-header">
+            <div class="th-content">
+                {{"admin-reviews.status" | translate}}
+                <span class="material-symbols-rounded sort-icon">
+                    {{ getSortIcon('active') }}
+                </span>
+            </div>
+        </th>
+
+        <th>{{"admin-reviews.actions" | translate}}</th>
+    </tr>
+</thead>
+            <tbody>
+                @for (review of reviews(); track $index) {
+                <tr [class.banned-row]="!review.active">
+                    <td>
+                        <div class="user-info">
+                            <strong>&#64;{{ review.user.username }}</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="rating-badge">★ {{ review.rating }}</span>
+                    </td>
+                    <td class="snippet-cell" [title]="review.description">
+                        {{ review.description | slice:0:50 }}{{ review.description.length > 50 ? '...' : '' }}
+                    </td>
+                    <td>
+                        <a [routerLink]="getReviewItemLink(review)" class="item-link">
+                            {{ getItemTitle(review) }}
+                        </a>
+
+                        <span class="material-symbols-rounded small-icon link-icon">
+                            open_in_new
+                        </span>
+                    </td>
+                    <td>
+                        <span class="role-pill">{{ getItemType(review) }}</span>
+                    </td>
+                    <td>{{ review.date | date:'shortDate' }}</td>
+                    <td>
+                        <span class="status-indicator" [class.status-active]="review.active"
+                            [class.status-banned]="!review.active">
+                            {{ (review.active ? 'admin-reviews.active' : 'admin-reviews.inactive') | translate }}
+                        </span>
+                    </td>
+                    <td>
+                        @if (review.active) {
+                        <button class="action-btn deactivate-btn" (click)="deleteReview(review)"
+                            title="Desactivar Reseña">
+                            <span class="material-symbols-rounded">block</span>
+                        </button>
+                        }@else {
+                        <button class="action-btn reactivate-btn" (click)="reActivateReview(review)"
+                            title="Reactivar Reseña">
+                            <span class="material-symbols-rounded">add</span>
+                        </button>
+                        }
+                    </td>
+
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="8" class="no-results-row">{{"admin-reviews.no-reviews" | translate}}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-footer">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage() === 0">{{"admin-reviews.previous" |
+            translate}}</button>
+        <span>{{"admin-reviews.page" | translate}} {{ currentPage() + 1 }} de {{ totalPages() }}</span>
+        <button class="page-btn" (click)="nextPage()"
+            [disabled]="currentPage() >= totalPages() - 1">{{"admin-reviews.next" | translate}}</button>
+    </div>
+    }
+</section>
