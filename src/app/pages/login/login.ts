@@ -12,6 +12,7 @@ import { UserService } from '../../services/user';
 import { TranslateModule } from '@ngx-translate/core';
 import { BannedAccountModal } from '../../components/banned-account-modal/banned-account-modal';
 import { EmailVerificationModal } from '../../components/email-verification-modal/email-verification-modal';
+import { ForgotPasswordModal } from '../../components/forgot-password-modal/forgot-password-modal';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ import { EmailVerificationModal } from '../../components/email-verification-moda
     BannedAccountModal,
     TranslateModule,
     EmailVerificationModal,
+    ForgotPasswordModal
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -38,6 +40,7 @@ export class Login implements OnInit {
   userIdToReactivate = signal<number | string | null>(null);
   isBannedModalVisible = signal(false);
   isVerificationModalVisible = signal(false);
+  isForgotPasswordModalVisible = signal(false);
 
   public errorMessage = signal<string | null>(null);
   public passwordsHidden = true;
@@ -155,5 +158,13 @@ export class Login implements OnInit {
       queryParamsHandling: 'merge',
       replaceUrl: true,
     });
+  }
+
+  openForgotPasswordModal(): void {
+    this.isForgotPasswordModalVisible.set(true);
+  }
+
+  closeForgotPasswordModal(): void {
+    this.isForgotPasswordModalVisible.set(false);
   }
 }

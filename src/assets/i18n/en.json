@@ -88,7 +88,9 @@
         "continue-with": "Or continue with",
         "non-existing-account": "Don't have an account?",
         "sign-up": "Sign Up",
-        "unverified": "Unverified account? "
+        "unverified": "Unverified account? ",
+        "forgot-password": "Did you forgot your password?",
+        "change-password": "Change it"
     },
     "register": {
         "title": "Create Account",
@@ -307,5 +309,27 @@
         "verifying": "Verifying...",
         "verify": "Verify",
         "success": "Account verified successfully! Please login."
+    },
+    "forgot-password": {
+        "title": "Recover Password",
+        "step-1-desc": "Enter your email address and we will send you a recovery code.",
+        "step-2-desc": "Enter the code sent to your email and your new password.",
+        "email-label": "Email Address",
+        "email-required": "Email is required",
+        "email-invalid": "Invalid email",
+        "send-code": "Send Code",
+        "sending": "Sending...",
+        "code-label": "6-digit Code",
+        "code-required": "Code is required",
+        "new-password": "New Password",
+        "password-required": "Password is required",
+        "password-minlength": "Minimum 8 characters",
+        "confirm-password": "Confirm Password",
+        "password-mismatch": "Passwords do not match",
+        "reset-password": "Reset Password",
+        "resetting": "Resetting...",
+        "cancel": "Cancel",
+        "back": "Back",
+        "success": "Password updated successfully! Please login."
     }
 }
