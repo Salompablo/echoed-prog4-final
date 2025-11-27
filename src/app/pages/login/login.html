@@ -62,8 +62,16 @@
             <img src="/assets/google-logo.svg" alt="Google logo" class="oauth-icon" /> Google </a>
     </div>
 
-    <div class="redirect-link">{{"login.non-existing-account" | translate}} <a href="/register">{{"login.sign-up" | translate}}</a>
+    <div class="redirect-link">{{"login.non-existing-account" | translate}} <a href="/register">{{"login.sign-up" |
+            translate}}</a>
     </div>
+
+    <div class="redirect-link" style="margin-top: 1rem; font-size: 0.8rem;">
+        {{"login.unverified" | translate}}
+        <a style="cursor: pointer;" (click)="openVerificationModal()">{{ "email-verification.title" | translate }}</a>
+    </div>
+
+
 </div>
 
 @if (isReactivateModalVisible() && userIdToReactivate()) {
@@ -72,4 +80,9 @@
 }
 @if (isBannedModalVisible()) {
 <app-banned-account-modal (close)="closeBannedModal()"></app-banned-account-modal>
+}
+
+@if (isVerificationModalVisible()) {
+<app-email-verification-modal (close)="closeVerificationModal()" (verified)="closeVerificationModal()">
+</app-email-verification-modal>
 }

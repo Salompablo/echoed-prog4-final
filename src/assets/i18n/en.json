@@ -87,7 +87,8 @@
         "sign-in": "Sign In",
         "continue-with": "Or continue with",
         "non-existing-account": "Don't have an account?",
-        "sign-up": "Sign Up"
+        "sign-up": "Sign Up",
+        "unverified": "Unverified account? "
     },
     "register": {
         "title": "Create Account",
@@ -111,7 +112,8 @@
         "password-error": "Passwords do not match.",
         "sign-up": "Sign Up",
         "continue-with": "Or continue with",
-        "existing-account": "Already have an account?"
+        "existing-account": "Already have an account?",
+        "loading": "Please wait..."
     },
     "song-details": {
         "song": "SONG",
@@ -294,6 +296,16 @@
     "banned-account": {
         "title": "Account Banned",
         "description": "This account has been banned by an administrator and cannot be accessed.",
-        "ok":"Ok"
+        "ok": "Ok"
+    },
+    "email-verification": {
+        "title": "Verify Account",
+        "description": "We have sent a 6-character code to your email. Please enter it below to activate your account.",
+        "code-label": "Verification Code",
+        "code-required": "The 6-character code is required.",
+        "cancel": "Cancel",
+        "verifying": "Verifying...",
+        "verify": "Verify",
+        "success": "Account verified successfully! Please login."
     }
 }

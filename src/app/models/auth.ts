@@ -55,3 +55,7 @@ export enum AuthProvider {
   LOCAL = 'LOCAL',
   GOOGLE = 'GOOGLE',
 }
+
+export interface VerifyTokenRequest{
+  token: string;
+}

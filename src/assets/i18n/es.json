@@ -87,7 +87,8 @@
         "sign-in": "Iniciar sesión",
         "continue-with": "O continúa con",
         "non-existing-account": "¿No tienes una cuenta?",
-        "sign-up": "Registrarse"
+        "sign-up": "Registrarse",
+        "unverified": "¿Cuenta sin verificar? "
     },
     "register": {
         "title": "Crear Cuenta",
@@ -111,7 +112,8 @@
         "password-error": "Las contraseñas no coinciden.",
         "sign-up": "Registrarse",
         "continue-with": "O continúa con",
-        "existing-account": "¿Ya tienes una cuenta?"
+        "existing-account": "¿Ya tienes una cuenta?",
+        "loading": "Espere por favor..."
     },
     "song-details": {
         "song": "CANCIÓN",
@@ -295,5 +297,15 @@
         "title": "Cuenta Bloqueada",
         "description": "Esta cuenta ha sido bloqueada por un administrador y no se puede acceder a ella.",
         "ok": "Ok"
+    },
+    "email-verification": {
+        "title": "Verificar Cuenta",
+        "description": "Hemos enviado un código de 6 caracteres a tu correo electrónico. Por favor ingrésalo a continuación para activar tu cuenta.",
+        "code-label": "Código de Verificación",
+        "code-required": "El código de 6 caracteres es obligatorio.",
+        "cancel": "Cancelar",
+        "verifying": "Verificando...",
+        "verify": "Verificar",
+        "success": "¡Cuenta verificada exitosamente! Por favor inicia sesión."
     }
 }

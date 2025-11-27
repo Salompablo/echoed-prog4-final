@@ -11,14 +11,22 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user';
 import { TranslateModule } from '@ngx-translate/core';
 import { BannedAccountModal } from '../../components/banned-account-modal/banned-account-modal';
+import { EmailVerificationModal } from '../../components/email-verification-modal/email-verification-modal';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, ReactivateAccountModal,BannedAccountModal, TranslateModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    ReactivateAccountModal,
+    BannedAccountModal,
+    TranslateModule,
+    EmailVerificationModal,
+  ],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit{
+export class Login implements OnInit {
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
@@ -29,6 +37,7 @@ export class Login implements OnInit{
   isReactivateModalVisible = signal(false);
   userIdToReactivate = signal<number | string | null>(null);
   isBannedModalVisible = signal(false);
+  isVerificationModalVisible = signal(false);
 
   public errorMessage = signal<string | null>(null);
   public passwordsHidden = true;
@@ -42,28 +51,34 @@ export class Login implements OnInit{
   });
 
   ngOnInit(): void {
-  this.route.queryParams.subscribe(params => {
-    const oauthError = params['oauthError'];
-    if (oauthError) {
-      if (oauthError === 'banned') {
-        this.isBannedModalVisible.set(true);
-      } else if (oauthError === 'deactivated') {
-        const userId = params['userId'];
-        if (userId) {
-          this.userIdToReactivate.set(userId);
-          this.isReactivateModalVisible.set(true);
+    this.route.queryParams.subscribe((params) => {
+      const oauthError = params['oauthError'];
+      if (oauthError) {
+        if (oauthError === 'banned') {
+          this.isBannedModalVisible.set(true);
+        } else if (oauthError === 'deactivated') {
+          const userId = params['userId'];
+          if (userId) {
+            this.userIdToReactivate.set(userId);
+            this.isReactivateModalVisible.set(true);
+          }
+        } else {
+          this.errorMessage.set(
+            'An error occurred during Google authentication. Please try again.'
+          );
         }
-      } else {
-        this.errorMessage.set("An error occurred during Google authentication. Please try again.");
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: null,
+          replaceUrl: true,
+        });
       }
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: null,
-        replaceUrl: true
-      });
-    }
-  });
-}
+
+      if (params['verify'] === 'true') {
+        this.isVerificationModalVisible.set(true);
+      }
+    });
+  }
   public togglePasswordsVisibility(): void {
     this.passwordsHidden = !this.passwordsHidden;
   }
@@ -88,17 +103,26 @@ export class Login implements OnInit{
       error: (err) => {
         this.errorService.logError(err, 'Login');
 
-        if (err instanceof HttpErrorResponse && err.status === 423) {
-          const userId = err.error?.userId; 
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 423) {
+            const userId = err.error?.userId;
 
-          if (userId) {
-            this.userIdToReactivate.set(userId);
-            this.isReactivateModalVisible.set(true);
+            if (userId) {
+              this.userIdToReactivate.set(userId);
+              this.isReactivateModalVisible.set(true);
+            } else {
+              this.isBannedModalVisible.set(true);
+            }
+          } else if (err.status === 428) {
+            this.errorMessage.set(
+              'Account not verified. Please check your email.'
+            );
+            this.isVerificationModalVisible.set(true);
           } else {
-            this.isBannedModalVisible.set(true);
+            this.errorMessage.set(this.errorService.getErrorMessage(err));
           }
         } else {
-          this.errorMessage.set(this.errorService.getErrorMessage(err));
+          this.errorMessage.set('An unexpected error has occurred.');
         }
       },
     });
@@ -117,5 +141,19 @@ export class Login implements OnInit{
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  openVerificationModal(): void {
+    this.isVerificationModalVisible.set(true);
+  }
+
+  closeVerificationModal(): void {
+    this.isVerificationModalVisible.set(false);
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { verify: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 }

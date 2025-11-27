@@ -82,7 +82,8 @@ input[type='email']:focus,
 input[type='password']:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--primary-color) 20%, transparent); /* 3px */
+  box-shadow: 0 0 0 0.1875rem color-mix(in srgb, var(--primary-color) 20%, transparent);
+  /* 3px */
 }
 
 .password-input-wrapper input[type='password'],
@@ -108,6 +109,7 @@ input[type='password']:focus {
   border-radius: 0 0.6875rem 0.6875rem 0;
   transition: color 0.2s ease;
 }
+
 .toggle-password:hover {
   color: var(--primary-color);
 }
@@ -125,9 +127,11 @@ button[type='submit'] {
   transition: background-color 0.3s ease, filter 0.3s ease;
   margin-top: 1rem;
 }
+
 button[type='submit']:hover:not(:disabled) {
   filter: brightness(110%);
 }
+
 button[type='submit']:disabled {
   background-color: var(--secondary-color);
   opacity: 0.7;
@@ -139,9 +143,11 @@ button[type='submit']:disabled {
   margin-top: 0.5rem;
   font-size: 0.875rem;
 }
+
 .error-validation small {
   color: #d9534f;
 }
+
 .error-api {
   color: #d9534f;
   background-color: color-mix(in srgb, #d9534f 15%, transparent);
@@ -159,6 +165,7 @@ button[type='submit']:disabled {
   margin: 1rem 0;
   position: relative;
 }
+
 .separator::before,
 .separator::after {
   content: '';
@@ -168,9 +175,11 @@ button[type='submit']:disabled {
   height: 0.0625rem;
   background-color: var(--card-border-color);
 }
+
 .separator::before {
   left: 0;
 }
+
 .separator::after {
   right: 0;
 }
@@ -180,6 +189,7 @@ button[type='submit']:disabled {
   justify-content: center;
   gap: 1rem;
 }
+
 .oauth-btn {
   flex-grow: 1;
   max-width: 11.25rem;
@@ -197,10 +207,12 @@ button[type='submit']:disabled {
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
+
 .oauth-btn:hover {
   background-color: var(--card-border-color);
   text-decoration: none;
 }
+
 .oauth-btn .oauth-icon {
   width: 1.125rem;
   height: 1.125rem;
@@ -217,4 +229,27 @@ button[type='submit']:disabled {
 .redirect-link a {
   font-weight: 700;
   color: var(--primary-color);
+}
+
+.button-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button[type='submit']:disabled {
+  cursor: wait;
+  opacity: 0.8;
 }
