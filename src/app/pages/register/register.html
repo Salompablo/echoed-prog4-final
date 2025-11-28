@@ -99,8 +99,12 @@
         </div>
         }
 
-        <button type="submit" [disabled]="registerForm.invalid">
-            {{"register.sign-up" | translate}}
+        <button type="submit" [disabled]="registerForm.invalid || isLoading()">
+            @if (isLoading()) {
+                <span class="button-spinner"></span> {{"register.loading" | translate}}
+            } @else {
+                {{"register.sign-up" | translate}}
+            }
         </button>
 
         <div class="separator">{{"register.continue-with" | translate}}</div>

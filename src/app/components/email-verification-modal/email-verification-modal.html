@@ -1,0 +1,39 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+    <div class="modal-content card">
+        <h3 class="modal-title">{{ "email-verification.title" | translate }}</h3>
+        <p>{{ "email-verification.description" | translate }}</p>
+
+        <form [formGroup]="verificationForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="token">{{ "email-verification.code-label" | translate }}</label>
+                <input type="text" id="token" formControlName="token" class="form-input"
+                    [class.input-error]="token?.invalid && token?.touched" placeholder="XXXXXX" />
+                
+                @if (token?.invalid && token?.touched) {
+                <div class="error-validation">
+                    <small>{{ "email-verification.code-required" | translate }}</small>
+                </div>
+                }
+            </div>
+
+            @if (errorMessage()) {
+            <div class="error-api">
+                {{ errorMessage() }}
+            </div>
+            }
+
+            <div class="modal-actions">
+                <button type="button" class="button secondary" (click)="onCancel()" [disabled]="isLoading()">
+                    {{ "email-verification.cancel" | translate }}
+                </button>
+                <button type="submit" class="button primary" [disabled]="verificationForm.invalid || isLoading()">
+                    @if (isLoading()) {
+                    <span>{{ "email-verification.verifying" | translate }}</span>
+                    } @else {
+                    <span>{{ "email-verification.verify" | translate }}</span>
+                    }
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
