@@ -3,5 +3,9 @@
     <p>{{"footer.voice" | translate}}</p>
     <p><a routerLink="about-us">{{"footer.about-us" | translate}}</a></p>
     <p>{{"footer.spotify" | translate}}</p>
-    <p>&copy;{{"footer.rights" | translate}}</p>
+   
+    <div class="footer-bottom-bar">
+        <app-language-dropdown></app-language-dropdown>
+        <p class="copyright-text">&copy;{{"footer.rights" | translate}}</p>
+    </div>
 </footer>
