@@ -41,9 +41,15 @@
             }
         </div>
 
-        <div class="form-check">
-            <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
-            <label for="rememberMe">{{"login.remember-me" | translate}}</label>
+        <div class="form-options-row">
+            <div class="form-check">
+                <input type="checkbox" id="rememberMe" formControlName="rememberMe" />
+                <label for="rememberMe">{{"login.remember-me" | translate}}</label>
+            </div>
+
+            <a class="forgot-password-link" (click)="openForgotPasswordModal()">
+                {{ "login.forgot-password" | translate }}
+            </a>
         </div>
 
         @if (errorMessage()) {
@@ -59,10 +65,20 @@
 
     <div class="oauth-buttons">
         <a [href]="googleOAuthUrl" class="oauth-btn google">
-            <img src="/assets/google-logo.svg" alt="Google logo" class="oauth-icon" /> Google </a>
+            <img src="/assets/google-logo.svg" alt="Google logo" class="oauth-icon" /> Google
+        </a>
     </div>
 
-    <div class="redirect-link">{{"login.non-existing-account" | translate}} <a href="/register">{{"login.sign-up" | translate}}</a>
+    <div class="auth-footer">
+        <div class="footer-link-item">
+            {{"login.non-existing-account" | translate}}
+            <a href="/register">{{"login.sign-up" | translate}}</a>
+        </div>
+
+        <div class="footer-link-item">
+            {{"login.unverified" | translate}}
+            <a (click)="openVerificationModal()">{{ "email-verification.title" | translate }}</a>
+        </div>
     </div>
 </div>
 
@@ -72,4 +88,11 @@
 }
 @if (isBannedModalVisible()) {
 <app-banned-account-modal (close)="closeBannedModal()"></app-banned-account-modal>
+}
+@if (isVerificationModalVisible()) {
+<app-email-verification-modal (close)="closeVerificationModal()" (verified)="closeVerificationModal()">
+</app-email-verification-modal>
+}
+@if (isForgotPasswordModalVisible()) {
+<app-forgot-password-modal (close)="closeForgotPasswordModal()"></app-forgot-password-modal>
 }

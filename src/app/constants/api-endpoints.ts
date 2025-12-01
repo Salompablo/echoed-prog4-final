@@ -5,9 +5,14 @@ export const API_ENDPOINTS = {
     LOGIN: '/auth',
     REGISTER: '/auth/register',
     REFRESH: '/auth/refresh',
+    VERIFY: '/auth/verify',
+    FORGOT_PASSWORD: '/auth/forgot-password', 
+    RESET_PASSWORD: '/auth/reset-password',
   },
   USERS: {
     ME: '/users/me',
+    ADMIN_PAGINATED_SEARCH: (query: string, pageNumber: number, size: number, sort: string = 'createdAt', direction: 'asc' | 'desc' = 'desc') =>
+      `/users/search?query=${query}&pageNumber=${pageNumber}&size=${size}&sort=${sort},${direction}`,
     BY_USERNAME: (username: string) => `/users/username/${username}`,
     BY_USERID: (userId: number) => `/users/${userId}`,
     UPDATE: (userId: number) => `/users/${userId}`,
@@ -18,6 +23,8 @@ export const API_ENDPOINTS = {
     COMPLETE_PROFILE: '/users/complete-profile',
     DEACTIVATE: '/users/deactivate',
     REACTIVATE: (userId: number | string) => `/users/${userId}/reactivate`,
+    BAN: (userId: number | string) => `/users/${userId}/ban`,
+    UNBAN: (userId: number | string) => `/users/${userId}/unban`,
     CHANGE_PASSWORD: '/users/me/change-password',
   },
   SPOTIFY: {

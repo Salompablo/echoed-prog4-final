@@ -2,7 +2,15 @@ import { inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api';
 import { Router } from '@angular/router';
 import { FullUserProfile, UserProfile } from '../models/user';
-import { AuthProvider, AuthRequest, AuthResponse, SignupRequest } from '../models/auth';
+import {
+  AuthProvider,
+  AuthRequest,
+  AuthResponse,
+  ForgotPasswordRequest,
+  ResetPasswordRequest,
+  SignupRequest,
+  VerifyTokenRequest,
+} from '../models/auth';
 import { Observable, tap, throwError } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
@@ -263,5 +271,23 @@ export class AuthService {
       roles: decodedToken.roles || [],
       permissions: decodedToken.permissions || [],
     };
+  }
+
+  /**
+   * Verifies the user account using the 6-digit code.
+   * @param token The verification code sent via email.
+   */
+  public verifyAccount(token: string): Observable<any> {
+    const request: VerifyTokenRequest = { token: token };
+    return this.apiService.post(API_ENDPOINTS.AUTH.VERIFY, request);
+  }
+
+  public forgotPassword(email: string): Observable<any> {
+    const request: ForgotPasswordRequest = { email };
+    return this.apiService.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, request);
+  }
+
+  public resetPassword(data: ResetPasswordRequest): Observable<any> {
+    return this.apiService.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data);
   }
 }

@@ -87,7 +87,10 @@
         "sign-in": "Iniciar sesión",
         "continue-with": "O continúa con",
         "non-existing-account": "¿No tienes una cuenta?",
-        "sign-up": "Registrarse"
+        "sign-up": "Registrarse",
+        "unverified": "¿Cuenta sin verificar? ",
+        "forgot-password": "¿Olvidaste tu contraseña?",
+        "change-password": "Cambiala"
     },
     "register": {
         "title": "Crear Cuenta",
@@ -111,7 +114,8 @@
         "password-error": "Las contraseñas no coinciden.",
         "sign-up": "Registrarse",
         "continue-with": "O continúa con",
-        "existing-account": "¿Ya tienes una cuenta?"
+        "existing-account": "¿Ya tienes una cuenta?",
+        "loading": "Espere por favor..."
     },
     "song-details": {
         "song": "CANCIÓN",
@@ -314,5 +318,36 @@
         "page": "Página ",
         "active": "Activa",
         "inactive": "Inactiva"
+    "email-verification": {
+        "title": "Verificar Cuenta",
+        "description": "Hemos enviado un código de 6 caracteres a tu correo electrónico. Por favor ingrésalo a continuación para activar tu cuenta.",
+        "code-label": "Código de Verificación",
+        "code-required": "El código de 6 caracteres es obligatorio.",
+        "cancel": "Cancelar",
+        "verifying": "Verificando...",
+        "verify": "Verificar",
+        "success": "¡Cuenta verificada exitosamente! Por favor inicia sesión."
+    },
+    "forgot-password": {
+        "title": "Recuperar Contraseña",
+        "step-1-desc": "Ingresa tu correo electrónico y te enviaremos un código de recuperación.",
+        "step-2-desc": "Ingresa el código enviado a tu correo y tu nueva contraseña.",
+        "email-label": "Correo Electrónico",
+        "email-required": "El correo es obligatorio",
+        "email-invalid": "Correo inválido",
+        "send-code": "Enviar Código",
+        "sending": "Enviando...",
+        "code-label": "Código de 6 dígitos",
+        "code-required": "El código es obligatorio",
+        "new-password": "Nueva Contraseña",
+        "password-required": "La contraseña es obligatoria",
+        "password-minlength": "Mínimo 8 caracteres",
+        "confirm-password": "Confirmar Contraseña",
+        "password-mismatch": "Las contraseñas no coinciden",
+        "reset-password": "Cambiar Contraseña",
+        "resetting": "Cambiando...",
+        "cancel": "Cancelar",
+        "back": "Atrás",
+        "success": "¡Contraseña actualizada exitosamente! Por favor inicia sesión."
     }
 }
