@@ -1,0 +1,281 @@
+.admin-container {
+    max-width: 75rem; 
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.dashboard-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+}
+
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-wrapper {
+    position: relative;
+    flex-grow: 1;
+    max-width: 30rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: var(--secondary-color);
+    font-size: 1.4rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+    border: 1px solid var(--card-border-color);
+    border-radius: 9999px;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    transition: border-color 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.pagination-info {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    flex-shrink: 0;
+}
+
+.table-responsive-wrapper {
+    overflow-x: auto;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px; 
+}
+
+.admin-table thead th {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: left;
+    padding: 1rem 1.2rem;
+    border-bottom: 2px solid var(--card-border-color);
+    text-transform: uppercase;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid var(--card-border-color);
+    transition: background-color 0.2s ease;
+}
+.admin-table tbody tr:nth-child(even) {
+    background-color: color-mix(in srgb, var(--card-bg-color) 95%, var(--bg-color) 5%);
+}
+.admin-table tbody tr:hover {
+    background-color: var(--card-border-color);
+}
+
+.admin-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.admin-table td {
+    padding: 1rem 1.2rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.sortable-header {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.sortable-header:hover {
+    color: var(--accent-color);
+}
+.sort-icon {
+    font-size: 1rem;
+    vertical-align: middle;
+    margin-left: 0.2rem;
+    color: var(--secondary-color);
+}
+.sortable-header:hover .sort-icon {
+     color: var(--accent-color);
+}
+
+.status-indicator {
+    padding: 0.3em 0.6em;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.status-active {
+    background-color: #d1e7dd; 
+    color: #0f5132;
+}
+
+.status-deactivated {
+    background-color: #fff3cd; 
+    color: #856404;
+}
+
+.status-banned {
+    background-color: #f8d7da; 
+    color: #721c24;
+}
+
+html.dark .status-active {
+    background-color: #1a3c26; 
+    color: #a7e0b6;
+}
+html.dark .status-deactivated {
+    background-color: #52441c; 
+    color: #fbe59d;
+}
+html.dark .status-banned {
+    background-color: #4d1c21; 
+    color: #f7b3b9;
+}
+
+.role-pills {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.role-pill {
+    padding: 0.2em 0.5em;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: var(--bg-color);
+    border: 1px solid var(--card-border-color);
+    color: var(--text-color);
+}
+.role-pill.role-role_admin {
+    background-color: var(--accent-color);
+    color: var(--btn-text-color);
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, filter 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ban-btn {
+    background-color: #dc2626; 
+    color: white;
+}
+.ban-btn:hover:not(:disabled) {
+    filter: brightness(110%);
+}
+
+.unban-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+.unban-btn:hover:not(:disabled) {
+    filter: brightness(110%);
+}
+
+.action-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.pagination-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem 0;
+}
+
+.page-btn {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--card-border-color);
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.page-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: 700;
+}
+.page-btn:hover:not(:disabled):not(.active) {
+    background-color: var(--bg-color);
+}
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.no-results-row {
+    text-align: center;
+    padding: 2rem !important;
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.empty-state-card {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+.empty-state-card p {
+    color: var(--secondary-color);
+    margin: 0;
+}
+
+@media (max-width: 48rem) {
+    .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search-wrapper {
+        max-width: none;
+    }
+    .table-responsive-wrapper {
+        margin-top: 1rem;
+    }
+}

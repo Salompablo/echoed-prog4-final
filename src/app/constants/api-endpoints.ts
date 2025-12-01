@@ -11,6 +11,8 @@ export const API_ENDPOINTS = {
   },
   USERS: {
     ME: '/users/me',
+    ADMIN_PAGINATED_SEARCH: (query: string, pageNumber: number, size: number, sort: string = 'createdAt', direction: 'asc' | 'desc' = 'desc') =>
+      `/users/search?query=${query}&pageNumber=${pageNumber}&size=${size}&sort=${sort},${direction}`,
     BY_USERNAME: (username: string) => `/users/username/${username}`,
     BY_USERID: (userId: number) => `/users/${userId}`,
     UPDATE: (userId: number) => `/users/${userId}`,
@@ -21,6 +23,8 @@ export const API_ENDPOINTS = {
     COMPLETE_PROFILE: '/users/complete-profile',
     DEACTIVATE: '/users/deactivate',
     REACTIVATE: (userId: number | string) => `/users/${userId}/reactivate`,
+    BAN: (userId: number | string) => `/users/${userId}/ban`,
+    UNBAN: (userId: number | string) => `/users/${userId}/unban`,
     CHANGE_PASSWORD: '/users/me/change-password',
   },
   SPOTIFY: {
@@ -47,27 +51,26 @@ export const API_ENDPOINTS = {
   COMMENTS: {
     GET_SONG_REVIEW_COMMENTS: (reviewId: number) => `/songreviews/${reviewId}/comments`,
     POST_SONG_REVIEW_COMMENT: (reviewId: number) => `/songreviews/${reviewId}/comments`,
-    PATCH_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) => `/songreviews/${reviewId}/comments/${commentId}`,
-    DELETE_SONG_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/songreviews/${reviewId}/comments/${commentId}`,
+    PATCH_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/songreviews/${reviewId}/comments/${commentId}`,
+    DELETE_SONG_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/songreviews/${reviewId}/comments/${commentId}`,
     GET_ALBUM_REVIEW_COMMENTS: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
     POST_ALBUM_REVIEW_COMMENT: (reviewId: number) => `/albumreviews/${reviewId}/comments`,
-    PATCH_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) => `/albumreviews/${reviewId}/comments/${commentId}`,
-    DELETE_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId : number) => `/albumreviews/${reviewId}/comments/${commentId}`,
-
+    PATCH_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/albumreviews/${reviewId}/comments/${commentId}`,
+    DELETE_ALBUM_REVIEW_COMMENT: (reviewId: number, commentId: number) =>
+      `/albumreviews/${reviewId}/comments/${commentId}`,
   },
   REACTIONS: {
-    ADD_TO_REVIEW: (reviewId: number | string) =>
-      `/reviews/${reviewId}/reactions`,
-    ADD_TO_COMMENT: (commentId: number | string) =>
-      `/comments/${commentId}/reactions`,
-    UPDATE: (reactionId: number | string) => 
-      `/reactions/${reactionId}`,
+    ADD_TO_REVIEW: (reviewId: number | string) => `/reviews/${reviewId}/reactions`,
+    ADD_TO_COMMENT: (commentId: number | string) => `/comments/${commentId}/reactions`,
+    UPDATE: (reactionId: number | string) => `/reactions/${reactionId}`,
     DELETE: (
       reactedType: 'review' | 'comment',
       parentId: number | string,
       reactionId: number | string
-    ) =>
-      `/${reactedType}s/${parentId}/reactions/${reactionId}`,
+    ) => `/${reactedType}s/${parentId}/reactions/${reactionId}`,
   },
   SONGS: {
     MOST_REVIEWED_SONGS: '/stats/songs/mostReviewed',

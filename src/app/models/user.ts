@@ -27,11 +27,13 @@ export interface FullUserProfile {
   id: number;
   username: string;
   biography?: string | null;
+  email: string;
   profilePictureUrl?: string | null;
   joinDate: string;
   roles: string[];
   permissions: string[];
   active?: boolean;
+  isBanned: boolean;
   userStats: UserStats | null;
 }
 
