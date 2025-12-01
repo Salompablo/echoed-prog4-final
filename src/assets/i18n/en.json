@@ -318,6 +318,7 @@
         "page": "Page ",
         "active": "Active",
         "inactive": "Inactive"
+    },
     "email-verification": {
         "title": "Verify Account",
         "description": "We have sent a 6-character code to your email. Please enter it below to activate your account.",
