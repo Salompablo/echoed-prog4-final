@@ -74,11 +74,6 @@
             {{"login.non-existing-account" | translate}}
             <a href="/register">{{"login.sign-up" | translate}}</a>
         </div>
-
-        <div class="footer-link-item">
-            {{"login.unverified" | translate}}
-            <a (click)="openVerificationModal()">{{ "email-verification.title" | translate }}</a>
-        </div>
     </div>
 </div>
 
@@ -90,7 +85,10 @@
 <app-banned-account-modal (close)="closeBannedModal()"></app-banned-account-modal>
 }
 @if (isVerificationModalVisible()) {
-<app-email-verification-modal (close)="closeVerificationModal()" (verified)="closeVerificationModal()">
+<app-email-verification-modal 
+    [email]="emailForVerification()" 
+    (close)="closeVerificationModal()" 
+    (verified)="closeVerificationModal()">
 </app-email-verification-modal>
 }
 @if (isForgotPasswordModalVisible()) {

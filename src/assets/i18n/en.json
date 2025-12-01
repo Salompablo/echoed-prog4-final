@@ -308,7 +308,10 @@
         "cancel": "Cancel",
         "verifying": "Verifying...",
         "verify": "Verify",
-        "success": "Account verified successfully! Please login."
+        "success": "Account verified successfully! Please login.",
+        "didnt-receive": "Didn't receive the code?",
+        "resend":"Resend code",
+        "sending" : "Sending..."
     },
     "forgot-password": {
         "title": "Recover Password",
