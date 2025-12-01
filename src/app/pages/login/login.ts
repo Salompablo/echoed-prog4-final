@@ -41,6 +41,7 @@ export class Login implements OnInit {
   isBannedModalVisible = signal(false);
   isVerificationModalVisible = signal(false);
   isForgotPasswordModalVisible = signal(false);
+  emailForVerification = signal<string>('');
 
   public errorMessage = signal<string | null>(null);
   public passwordsHidden = true;
@@ -120,6 +121,7 @@ export class Login implements OnInit {
             this.errorMessage.set(
               'Account not verified. Please check your email.'
             );
+            this.emailForVerification.set(emailOrUsername);
             this.isVerificationModalVisible.set(true);
           } else {
             this.errorMessage.set(this.errorService.getErrorMessage(err));

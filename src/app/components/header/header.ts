@@ -22,15 +22,10 @@ export class Header {
   public i18nService = inject(I18nService);
   private router = inject(Router);
 
-
-  isAdmin = computed(() => {
-    return this.authService.currentUser()?.roles.includes('ROLE_ADMIN');
-  });
+  isAdmin = computed(() => this.authService.currentUser()?.roles?.includes('ROLE_ADMIN') ?? false);
 
   isAuthRoute(): any {
     const currentUrl = this.router.url;
     return currentUrl.includes('/register') || currentUrl.includes('/login');
   }
-
-
 }
