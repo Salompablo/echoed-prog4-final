@@ -300,6 +300,24 @@
         "description": "Esta cuenta ha sido bloqueada por un administrador y no se puede acceder a ella.",
         "ok": "Ok"
     },
+    "admin-reviews": {
+        "title": "Administración de Reseñas",
+        "subtitle": "Monitoreo y moderación de contenido global.",
+        "loading": "Cargando reseñas...",
+        "author": "Autor",
+        "rating": "Rating",
+        "content": "Contenido",
+        "item": "Item",
+        "type": "Tipo",
+        "date": "Fecha",
+        "status": "Estado",
+        "actions": "Acciones",
+        "no-reviews": "No hay reseñas registradas.",
+        "next": "Siguiente",
+        "previous": "Anterior",
+        "page": "Página ",
+        "active": "Activa",
+        "inactive": "Inactiva"
     "email-verification": {
         "title": "Verificar Cuenta",
         "description": "Hemos enviado un código de 6 caracteres a tu correo electrónico. Por favor ingrésalo a continuación para activar tu cuenta.",

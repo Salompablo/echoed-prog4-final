@@ -54,7 +54,7 @@
       [totalLikes]="review.totalLikes" [totalDislikes]="review.totalDislikes" [totalLoves]="review.totalLoves"
       [totalWows]="review.totalWows" (reactionChange)="onReactionChanged($event)" />
 
-    <div class="comment-actions">
+    <!-- <div class="comment-actions">
       <button (click)="toggleCommentList($event)" class="action-button">
         <span class="material-symbols-rounded">
           {{ isCommentListVisible() ? 'forum' : 'forum' }}
@@ -70,6 +70,32 @@
       <button (click)="onEditReview()" class="action-button edit-btn" aria-label="Edit Echo">
         <span class="material-symbols-rounded">edit</span>
       </button>
+      <button (click)="onDeleteReview()" class="action-button delete-btn" aria-label="Delete Echo">
+        <span class="material-symbols-rounded">delete</span>
+      </button>
+      }
+    </div> -->
+
+    <div class="comment-actions">
+      <button (click)="toggleCommentList($event)" class="action-button">
+        <span class="material-symbols-rounded">
+          {{ isCommentListVisible() ? 'forum' : 'forum' }}
+        </span>
+        @if (commentCount() > 0) {
+        <span class="comment-count">{{ commentCount() }}</span>
+        }
+      </button>
+      <button (click)="openCommentModal($event)" class="action-button">
+        <span class="material-symbols-rounded">add_comment</span>
+      </button>
+      
+      @if (isOwner()) {
+      <button (click)="onEditReview()" class="action-button edit-btn" aria-label="Edit Echo">
+        <span class="material-symbols-rounded">edit</span>
+      </button>
+      }
+
+      @if (isOwner() || isAdmin()) {
       <button (click)="onDeleteReview()" class="action-button delete-btn" aria-label="Delete Echo">
         <span class="material-symbols-rounded">delete</span>
       </button>

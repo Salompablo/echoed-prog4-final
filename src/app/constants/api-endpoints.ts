@@ -78,6 +78,11 @@ export const API_ENDPOINTS = {
   ALBUMS: {
     MOST_REVIEWED_ALBUMS: '/stats/albums/mostReviewed',
   },
+  ADMIN: {
+    REVIEWS: (pageNumber: number, size: number, sort: string, direction: string) => `/admin/reviews?pageNumber=${pageNumber}&size=${size}&sort=${sort}&direction=${direction}`,
+    DELETE_REVIEW: (reviewId : number) => `/admin/review/${reviewId}`,
+    REACTIVATE_REVIEW: (reviewId : number) => `/admin/review/${reviewId}/reactivate`,
+  },
 } as const;
 
 export const OAUTH2_LINKS = {
