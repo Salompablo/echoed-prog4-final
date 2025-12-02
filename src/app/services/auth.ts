@@ -290,4 +290,8 @@ export class AuthService {
   public resetPassword(data: ResetPasswordRequest): Observable<any> {
     return this.apiService.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data);
   }
+
+  public resendVerificationCode(email: string): Observable<any> {
+    return this.apiService.post(API_ENDPOINTS.AUTH.LOGIN + '/resend-verification', { email });
+  }
 }

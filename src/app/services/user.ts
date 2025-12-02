@@ -30,9 +30,9 @@ export class UserService {
 
   /**
    * Fetches a user profile by userId.
-   * @param userId - 
+   * @param userId -
    */
-  getUserProfileByUserId(userId : number): Observable<FullUserProfile>{
+  getUserProfileByUserId(userId: number): Observable<FullUserProfile> {
     return this.apiService.get<FullUserProfile>(API_ENDPOINTS.USERS.BY_USERID(userId));
   }
 
@@ -67,10 +67,28 @@ export class UserService {
   }
 
   /**
+   * Bans a user by their ID.
+   * @param userId The ID of the user to ban.
+   * @returns An Observable that completes when the operation succeeds.
+   */
+  banUser(userId: number | string): Observable<void> {
+    return this.apiService.post<void>(API_ENDPOINTS.USERS.BAN(userId), {});
+  }
+
+  /**
+   * Unbans a user by their ID.
+   * @param userId The ID of the user to unban.
+   * @returns An Observable that completes when the operation succeeds.
+   */
+  unbanUser(userId: number | string): Observable<void> {
+    return this.apiService.post<void>(API_ENDPOINTS.USERS.UNBAN(userId), {});
+  }
+
+  /**
    * Calls the backend to change the user's password.
    * This requires the current password for verification.
    * @param request The password update payload
-   * @returns Observable<void> 
+   * @returns Observable<void>
    */
   changePassword(request: PasswordUpdateRequest): Observable<void> {
     return this.apiService.put<void>(API_ENDPOINTS.USERS.CHANGE_PASSWORD, request);
@@ -84,6 +102,23 @@ export class UserService {
   completeProfile(username: string): Observable<AuthResponse> {
     const request = { username };
     return this.apiService.post<AuthResponse>(API_ENDPOINTS.USERS.COMPLETE_PROFILE, request);
+  }
+
+  /**
+   * Retrieves a paginated list of users.
+   * @param page The page number to retrieve.
+   * @param size The number of users to include per page.
+   * @returns An Observable containing a PageResponse with the requested users.
+   */
+  getPaginatedUsers(
+    query: string = '',
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdAt',
+    direction: 'asc' | 'desc' = 'desc'
+  ): Observable<PagedResponse<FullUserProfile>> {
+    const endpoint = API_ENDPOINTS.USERS.ADMIN_PAGINATED_SEARCH(query, page, size, sort, direction);
+    return this.apiService.get<PagedResponse<FullUserProfile>>(endpoint);
   }
 
   /**

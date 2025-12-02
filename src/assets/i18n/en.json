@@ -300,6 +300,25 @@
         "description": "This account has been banned by an administrator and cannot be accessed.",
         "ok": "Ok"
     },
+    "admin-reviews": {
+        "title": "Review Management",
+        "subtitle": "Global content monitoring and moderation.",
+        "loading": "Loading reviews...",
+        "author": "Author",
+        "rating": "Rating",
+        "content": "Content",
+        "item": "Item",
+        "type": "Type",
+        "date": "Date",
+        "status": "Status",
+        "actions": "Actions",
+        "no-reviews": "No reviews found.",
+        "next": "Next",
+        "previous": "Previous",
+        "page": "Page ",
+        "active": "Active",
+        "inactive": "Inactive"
+    },
     "email-verification": {
         "title": "Verify Account",
         "description": "We have sent a 6-character code to your email. Please enter it below to activate your account.",
@@ -308,7 +327,10 @@
         "cancel": "Cancel",
         "verifying": "Verifying...",
         "verify": "Verify",
-        "success": "Account verified successfully! Please login."
+        "success": "Account verified successfully! Please login.",
+        "didnt-receive": "Didn't receive the code?",
+        "resend":"Resend code",
+        "sending" : "Sending..."
     },
     "forgot-password": {
         "title": "Recover Password",
