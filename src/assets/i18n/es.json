@@ -319,6 +319,58 @@
     "active": "Activa",
     "inactive": "Inactiva"
   },
+  "admin-dashboard": {
+    "title": "Gestión de Usuarios",
+    "search-placeholder": "Buscar usuarios...",
+    "col-id": "ID",
+    "col-user": "Usuario",
+    "col-role": "Rol",
+    "col-status": "Estado",
+    "col-actions": "Acciones",
+    "status-active": "Activo",
+    "status-deactivated": "Desactivado",
+    "btn-ban": "Banear",
+    "btn-banning": "Baneando...",
+    "btn-unban": "Desbanear",
+    "btn-unbanning": "Desbaneando...",
+    "ban-success": "Usuario baneado con éxito",
+    "unban-success": "Usuario desbaneado con éxito",
+    "error": "Ocurrió un error"
+  },
+  "email-verification": {
+    "title": "Verificar Cuenta",
+    "description": "Hemos enviado un código de 6 caracteres a tu correo electrónico. Por favor ingrésalo a continuación para activar tu cuenta.",
+    "code-label": "Código de Verificación",
+    "code-required": "El código de 6 caracteres es obligatorio.",
+    "cancel": "Cancelar",
+    "verifying": "Verificando...",
+    "verify": "Verificar",
+    "success": "¡Cuenta verificada exitosamente! Por favor inicia sesión.",
+    "didnt-receive": "No recibiste el código?",
+    "resend": "Reenviar código",
+    "sending": "Enviando..."
+  },
+  "forgot-password": {
+    "title": "Recuperar Contraseña",
+    "step-1-desc": "Ingresa tu correo electrónico y te enviaremos un código de recuperación.",
+    "step-2-desc": "Ingresa el código enviado a tu correo y tu nueva contraseña.",
+    "email-label": "Correo Electrónico",
+    "email-required": "El correo es obligatorio",
+    "email-invalid": "Correo inválido",
+    "send-code": "Enviar Código",
+    "sending": "Enviando...",
+    "code-label": "Código de 6 dígitos",
+    "code-required": "El código es obligatorio",
+    "new-password": "Nueva Contraseña",
+    "password-required": "La contraseña es obligatoria",
+    "password-minlength": "Mínimo 8 caracteres",
+    "confirm-password": "Confirmar Contraseña",
+    "password-mismatch": "Las contraseñas no coinciden",
+    "reset-password": "Cambiar Contraseña",
+    "resetting": "Cambiando...",
+    "cancel": "Cancelar",
+    "back": "Atrás",
+    "success": "¡Contraseña actualizada exitosamente! Por favor inicia sesión."
     "email-verification": {
       "title": "Verificar Cuenta",
       "description": "Hemos enviado un código de 6 caracteres a tu correo electrónico. Por favor ingrésalo a continuación para activar tu cuenta.",
@@ -357,3 +409,4 @@
       "resend":"Reenviar código"
     }
   }
+}

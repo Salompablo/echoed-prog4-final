@@ -8,10 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from "@angular/router";
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [LoadingSpinner, FormsModule, RouterLink, CommonModule],
+  imports: [LoadingSpinner, FormsModule, RouterLink, CommonModule, TranslateModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
@@ -19,6 +21,7 @@ export class AdminDashboard implements OnInit {
   private userService = inject(UserService);
   private toastService = inject(ToastService);
   private errorService = inject(ErrorService);
+  public authService = inject(AuthService);
 
   users = signal<FullUserProfile[]>([]);
   isLoading = signal(true);
@@ -129,6 +132,7 @@ export class AdminDashboard implements OnInit {
     this.userService.banUser(userId).subscribe({
       next: () => {
         this.toastService.success(`User ${userId} successfully banned.`);
+        this.setActionLoading(userId, false);
         this.loadUsers();
       },
       error: (err) => {
@@ -143,6 +147,7 @@ export class AdminDashboard implements OnInit {
     this.userService.unbanUser(userId).subscribe({
       next: () => {
         this.toastService.success(`User ${userId} successfully unbanned.`);
+        this.setActionLoading(userId, false);
         this.loadUsers();
       },
       error: (err) => {

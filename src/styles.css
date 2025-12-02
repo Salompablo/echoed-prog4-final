@@ -44,6 +44,22 @@
   --toast-warning-border: #ffeeba;
   --toast-warning-text: #856404;
 
+  /* Status Colors */
+  --status-active-bg: #d1e7dd;
+  --status-active-text: #0f5132;
+  
+  --status-deactivated-bg: #fff3cd;
+  --status-deactivated-text: #856404;
+  
+  --status-banned-bg: #f8d7da;
+  --status-banned-text: #721c24;
+
+  /* Action Button Colors (Light Mode) */
+  --btn-ban-bg: #dc2626;
+  --btn-ban-text: white;
+  --btn-unban-bg: var(--primary-color); 
+  --btn-unban-text: white;
+
   /* Modals */
   --backdrop-bg-color: rgba(var(--overlay-color-rgb), 0.7);
   --z-index-modal: 1000;
@@ -80,6 +96,20 @@ html.dark {
   --toast-warning-bg: #52441c;
   --toast-warning-border: #997f2c;
   --toast-warning-text: #fbe59d;
+
+  /* Status Colors (Dark) */
+  --status-active-bg: #1a3c26;
+  --status-active-text: #a7e0b6;
+  
+  --status-deactivated-bg: #52441c;
+  --status-deactivated-text: #fbe59d;
+  
+  --status-banned-bg: #4d1c21;
+  --status-banned-text: #f7b3b9;
+
+  /* Action Button Colors (Dark Mode) */
+  --btn-ban-bg: #b91c1c; 
+  --btn-unban-bg: var(--primary-color);
 }
 
 body {

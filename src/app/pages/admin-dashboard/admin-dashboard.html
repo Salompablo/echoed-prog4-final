@@ -1,26 +1,11 @@
-<section class="admin-container">
-    <div class="header-section">
-        <h2 class="dashboard-title">User Administration Dashboard</h2>
-        <p class="subtitle">Manage user accounts, view details, and control access.</p>
-    </div>
+<div class="admin-container">
+    <h2 class="dashboard-title">{{ 'admin-dashboard.title' | translate }}</h2>
 
-    @if (isLoading()) {
-    <app-loading-spinner message="Loading user data..."></app-loading-spinner>
-    } @else if (users().length === 0 && searchQuery() === '') {
-    <div class="empty-state-card">
-        <p>No users found in the database.</p>
-    </div>
-    } @else {
     <div class="controls-bar">
         <div class="search-wrapper">
             <span class="material-symbols-rounded search-icon">search</span>
-            <input type="text" [ngModel]="searchQuery()" (ngModelChange)="onSearchQueryChange($event)"
-                placeholder="Search by Username or Email..." class="search-input" />
-        </div>
-
-        <div class="pagination-info">
-            Showing users {{ currentPage() * pageSize() + 1 }} - {{ (currentPage() * pageSize() + users().length) }} of
-            {{ totalElements() }}
+            <input type="text" class="search-input" [placeholder]="'admin-dashboard.search-placeholder' | translate"
+                [ngModel]="searchQuery()" (ngModelChange)="onSearchQueryChange($event)">
         </div>
     </div>
 
@@ -28,83 +13,88 @@
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th class="sortable-header" (click)="onSort('id')">
-                        ID
-                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('id') }}</span>
+                    <th>
+                        <div class="sortable-header" (click)="onSort('id')">
+                            {{ 'admin-dashboard.col-id' | translate }}
+                            <span class="material-symbols-rounded sort-icon">{{ getSortIcon('id') }}</span>
+                        </div>
                     </th>
-
-                    <th class="sortable-header" (click)="onSort('username')">
-                        Username
-                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('username') }}</span>
+                    <th>
+                        <div class="sortable-header" (click)="onSort('username')">
+                            {{ 'admin-dashboard.col-user' | translate }}
+                            <span class="material-symbols-rounded sort-icon">{{ getSortIcon('username') }}</span>
+                        </div>
                     </th>
-
-                    <th class="sortable-header" (click)="onSort('email')">
-                        Email
-                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('email') }}</span>
-                    </th>
-
-                    <th>Roles</th>
-
-                    <th class="sortable-header" (click)="onSort('active')">
-                        Status
-                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('active') }}</span>
-                    </th>
-
-                    <th class="sortable-header" (click)="onSort('createdAt')">
-                        Joined Date
-                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('createdAt') }}</span>
-                    </th>
-
-                    <th>Actions</th>
+                    <th>{{ 'admin-dashboard.col-role' | translate }}</th>
+                    <th>{{ 'admin-dashboard.col-status' | translate }}</th>
+                    <th class="actions-th">{{ 'admin-dashboard.col-actions' | translate }}</th>
                 </tr>
             </thead>
             <tbody>
                 @for (user of users(); track user.id) {
-                <tr [class.banned-row]="user.isBanned">
-                    <td>{{ user.id }}</td>
+                <tr>
+                    <td>#{{ user.id }}</td>
                     <td>
-                        <a [routerLink]="['/profile', user.id]" class="user-link">@{{ user.username }}</a>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <img [src]="user.profilePictureUrl ? 'assets/images/default-avatars/' + user.profilePictureUrl : 'assets/default-avatar.svg'"
+                                [alt]="user.username"
+                                style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;">
+
+                            <div style="display: flex; flex-direction: column;">
+                                <span style="font-weight: 700;">{{ user.username }}</span>
+                                <span style="font-size: 0.85rem; color: var(--secondary-color);">{{ user.email }}</span>
+                            </div>
+                        </div>
                     </td>
-                    <td>{{ user.email }}</td>
+
                     <td>
                         <div class="role-pills">
                             @for (role of user.roles; track role) {
-                            <span class="role-pill role-{{ role | lowercase }}">{{ role.replace('ROLE_', '') }}</span>
+                            <span class="role-pill" [class.role-role_admin]="role === 'ROLE_ADMIN'">
+                                {{ role.replace('ROLE_', '') }}
+                            </span>
                             }
                         </div>
                     </td>
-                    <td>
-                        <span class="status-indicator" [class.status-banned]="user.isBanned"
-                            [class.status-active]="user.active && !user.isBanned"
-                            [class.status-deactivated]="!user.active && !user.isBanned">
 
-                            @if (user.isBanned) {
-                            Banned
-                            } @else if (user.active) {
-                            Active
-                            } @else {
-                            Deactivated
-                            }
-                        </span>
-                    </td>
-                    <td>{{ user.joinDate | date:'shortDate' }}</td>
                     <td>
-                        @if (user.isBanned) {
-                        <button class="action-btn unban-btn" (click)="onUnbanUser(user.id)"
-                            [disabled]="isActionLoading(user.id)">
+                        @if (user.active) {
+                        <span class="status-indicator status-active">
+                            {{ 'admin-dashboard.status-active' | translate }}
+                        </span>
+                        } @else {
+                        <span class="status-indicator status-deactivated">
+                            {{ 'admin-dashboard.status-deactivated' | translate }}
+                        </span>
+                        }
+                    </td>
+
+                    <td class="actions-cell">
+                        @if (user.active) {
+                        <button class="action-btn ban-btn" (click)="onBanUser(user.id)"
+                            [disabled]="isActionLoading(user.id) || authService.currentUser()?.userId === user.id"
+                            [title]="authService.currentUser()?.userId === user.id ? 'You cannot ban yourself' : ''">
+
                             @if (isActionLoading(user.id)) {
-                            <span>Unbanning...</span>
+                            <span class="button-spinner"></span>
+                            <span>{{ 'admin-dashboard.btn-banning' | translate }}</span>
                             } @else {
-                            <span>Unban</span>
+                            <span class="material-symbols-rounded"
+                                style="margin-right: 0.3rem; font-size: 1.1rem;">gavel</span>
+                            <span>{{ 'admin-dashboard.btn-ban' | translate }}</span>
                             }
                         </button>
                         } @else {
-                        <button class="action-btn ban-btn" (click)="onBanUser(user.id)"
+                        <button class="action-btn unban-btn" (click)="onUnbanUser(user.id)"
                             [disabled]="isActionLoading(user.id)">
+
                             @if (isActionLoading(user.id)) {
-                            <span>Banning...</span>
+                            <span class="button-spinner"></span>
+                            <span>{{ 'admin-dashboard.btn-unbanning' | translate }}</span>
                             } @else {
-                            <span>Ban</span>
+                            <span class="material-symbols-rounded"
+                                style="margin-right: 0.3rem; font-size: 1.1rem;">lock_open</span>
+                            <span>{{ 'admin-dashboard.btn-unban' | translate }}</span>
                             }
                         </button>
                         }
@@ -112,8 +102,12 @@
                 </tr>
                 } @empty {
                 <tr>
-                    <td colspan="7" class="no-results-row">
-                        No users found matching "{{ searchQuery() }}".
+                    <td colspan="5" class="no-results-row">
+                        <div class="empty-state-card">
+                            <span class="material-symbols-rounded"
+                                style="font-size: 2rem; color: var(--secondary-color);">search_off</span>
+                            <p>{{ 'search-bar.no-results' | translate }} "{{ searchQuery() }}"</p>
+                        </div>
                     </td>
                 </tr>
                 }
@@ -121,23 +115,22 @@
         </table>
     </div>
 
+    @if (totalPages() > 1) {
     <div class="pagination-footer">
-        <button class="page-btn" (click)="onPageChange(currentPage() - 1)"
-            [disabled]="currentPage() === 0 || isLoading()">
-            &lt; Previous
+        <button class="page-btn" (click)="onPageChange(currentPage() - 1)" [disabled]="currentPage() === 0">
+            <span class="material-symbols-rounded">chevron_left</span>
         </button>
 
         @for (page of pagesArray(); track page) {
-        <button class="page-btn page-number-btn" [class.active]="page === currentPage()" (click)="onPageChange(page)"
-            [disabled]="isLoading()">
+        <button class="page-btn" [class.active]="currentPage() === page" (click)="onPageChange(page)">
             {{ page + 1 }}
         </button>
         }
 
         <button class="page-btn" (click)="onPageChange(currentPage() + 1)"
-            [disabled]="currentPage() === totalPages() - 1 || isLoading() || totalPages() === 0">
-            Next &gt;
+            [disabled]="currentPage() >= totalPages() - 1">
+            <span class="material-symbols-rounded">chevron_right</span>
         </button>
     </div>
     }
-</section>
+</div>
