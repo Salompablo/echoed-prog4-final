@@ -352,6 +352,8 @@
         "resetting": "Resetting...",
         "cancel": "Cancel",
         "back": "Back",
-        "success": "Password updated successfully! Please login."
+        "success": "Password updated successfully! Please login.",
+        "didnt-receive":"Didn't receive the code?",
+        "resend":"Resend code"
     }
 }

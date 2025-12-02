@@ -79,6 +79,10 @@ export class Login implements OnInit {
       }
 
       if (params['verify'] === 'true') {
+        const emailFromUrl = params['email'];
+        if (emailFromUrl) {
+            this.emailForVerification.set(emailFromUrl);
+        }
         this.isVerificationModalVisible.set(true);
       }
     });

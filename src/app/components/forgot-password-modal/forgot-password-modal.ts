@@ -27,6 +27,7 @@ export class ForgotPasswordModal {
   errorMessage = signal<string | null>(null);
   passwordsHidden = signal(true);
   emailSentTo = signal('');
+  isResending = signal(false);
 
   emailForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -74,6 +75,28 @@ export class ForgotPasswordModal {
     });
   }
 
+  onResendCode(): void {
+    const email = this.emailSentTo();
+    
+    if (!email) {
+      this.toastService.error('No email address found to resend code.');
+      return;
+    }
+
+    this.isResending.set(true);
+
+    this.authService.forgotPassword(email).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        this.isResending.set(false);
+        this.toastService.success('Code sent again! Please check your inbox.');
+      },
+      error: (err) => {
+        this.isResending.set(false);
+        this.toastService.error(this.errorService.getErrorMessage(err));
+      },
+    });
+  }
   onSubmitReset(): void {
     if (this.resetForm.invalid) {
       this.resetForm.markAllAsTouched();
