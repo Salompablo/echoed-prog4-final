@@ -10,6 +10,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../services/admin';
 import { AlbumReviewResponse, MusicReview, SongReviewResponse } from '../../models/interaction';
+import { AdminDashboardResponse } from '../../models/admin-dashboard.model';
 
 type DashboardSection = 'users' | 'reviews' | 'statistics';
 
@@ -51,6 +52,10 @@ export class AdminDashboard implements OnInit {
   reviewsSortColumn = signal('date');
   reviewsSortDirection = signal<'asc' | 'desc'>('desc');
 
+  // Statistics section
+  stats = signal<AdminDashboardResponse | null>(null);
+  statsLoading = signal(true);
+
   ngOnInit(): void {
     this.loadUsers();
 
@@ -68,6 +73,8 @@ export class AdminDashboard implements OnInit {
       this.loadReviews();
     } else if (section === 'users' && this.users().length === 0) {
       this.loadUsers();
+    } else if (section === 'statistics' && this.stats() === null) {
+      this.loadStats();
     }
   }
 
@@ -319,6 +326,23 @@ export class AdminDashboard implements OnInit {
       },
       error: (err) => {
         this.toastService.error('Error reactivating review: ' + this.errorService.getErrorMessage(err));
+      },
+    });
+  }
+
+  // Statistics section methods
+  loadStats(): void {
+    this.statsLoading.set(true);
+    this.adminService.getDashboardStats().subscribe({
+      next: (response) => {
+        this.stats.set(response);
+        this.statsLoading.set(false);
+      },
+      error: (err) => {
+        this.toastService.error(
+          'Failed to load statistics: ' + this.errorService.getErrorMessage(err)
+        );
+        this.statsLoading.set(false);
       },
     });
   }

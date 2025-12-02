@@ -496,20 +496,20 @@ html.dark .status-banned {
 
 /* Action Buttons - Echoed Style */
 .action-btn {
-    padding: 0.65rem 1.25rem;
+    padding: 0.4rem 0.75rem;
     border: none;
-    border-radius: 624.9375rem;
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    gap: 0.3rem;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
 }
 
 .ban-btn {
@@ -654,6 +654,158 @@ html.dark .status-banned {
     font-size: 1rem;
 }
 
+/* Statistics Section */
+.stats-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.stats-category {
+    background: linear-gradient(135deg, var(--card-bg-color), var(--bg-color));
+    border: 2px solid var(--card-border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.stats-category-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.01em;
+}
+
+.stats-category-title .material-symbols-rounded {
+    font-size: 1.75rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.stats-grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    background-color: var(--card-bg-color);
+    border: 2px solid var(--card-border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color);
+}
+
+.stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.stat-icon .material-symbols-rounded {
+    font-size: 2rem;
+    color: white;
+}
+
+/* User stat icons */
+.stat-icon.user-total {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.stat-icon.user-active {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.stat-icon.user-banned {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+/* Content stat icons */
+.stat-icon.content-reviews {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+}
+
+.stat-icon.content-comments {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.stat-icon.content-reactions {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+/* Review breakdown icons */
+.stat-icon.review-album {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-icon.review-song {
+    background: linear-gradient(135deg, #06b6d4, #0891b2);
+}
+
+/* Reaction breakdown icons */
+.stat-icon.reaction-like {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.stat-icon.reaction-love {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+}
+
+.stat-icon.reaction-wow {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.stat-icon.reaction-dislike {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+}
+
+.stat-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.stat-value {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .dashboard-sidebar {
@@ -707,6 +859,19 @@ html.dark .status-banned {
     .section-title {
         font-size: 2rem;
     }
+
+    .stats-grid,
+    .stats-grid-4 {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-category {
+        padding: 1.5rem;
+    }
+
+    .stats-category-title {
+        font-size: 1.25rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -724,5 +889,30 @@ html.dark .status-banned {
 
     .sidebar-title {
         font-size: 1.35rem;
+    }
+
+    .stat-card {
+        padding: 1.25rem;
+    }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .stat-icon .material-symbols-rounded {
+        font-size: 1.75rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .stats-category {
+        padding: 1.25rem;
     }
 }

@@ -341,11 +341,171 @@
                 <p class="section-subtitle">View platform analytics and insights.</p>
             </div>
 
-            <div class="coming-soon-card">
-                <span class="material-symbols-rounded coming-soon-icon">trending_up</span>
-                <h3>Coming Soon</h3>
-                <p>Statistics and analytics features are currently under development.</p>
+            @if (statsLoading()) {
+            <app-loading-spinner message="Loading statistics..."></app-loading-spinner>
+            } @else if (stats() === null) {
+            <div class="empty-state-card">
+                <p>Failed to load statistics.</p>
             </div>
+            } @else {
+            <div class="stats-container">
+                <!-- User Statistics -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">group</span>
+                        User Statistics
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon user-total">
+                                <span class="material-symbols-rounded">people</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalUsers }}</div>
+                                <div class="stat-label">Total Users</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon user-active">
+                                <span class="material-symbols-rounded">verified_user</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.activeUsers }}</div>
+                                <div class="stat-label">Active Users</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon user-banned">
+                                <span class="material-symbols-rounded">block</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.bannedUsers }}</div>
+                                <div class="stat-label">Banned Users</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Statistics -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">library_books</span>
+                        Content Statistics
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon content-reviews">
+                                <span class="material-symbols-rounded">rate_review</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalReviews }}</div>
+                                <div class="stat-label">Total Reviews</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon content-comments">
+                                <span class="material-symbols-rounded">comment</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalComments }}</div>
+                                <div class="stat-label">Total Comments</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon content-reactions">
+                                <span class="material-symbols-rounded">favorite</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalReactions }}</div>
+                                <div class="stat-label">Total Reactions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Breakdown -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">analytics</span>
+                        Review Breakdown
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon review-album">
+                                <span class="material-symbols-rounded">album</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.albumReviews }}</div>
+                                <div class="stat-label">Album Reviews</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon review-song">
+                                <span class="material-symbols-rounded">music_note</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.songReviews }}</div>
+                                <div class="stat-label">Song Reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reaction Breakdown -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">mood</span>
+                        Reaction Breakdown
+                    </h3>
+                    <div class="stats-grid stats-grid-4">
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-like">
+                                <span class="material-symbols-rounded">thumb_up</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.likesCount }}</div>
+                                <div class="stat-label">Likes</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-love">
+                                <span class="material-symbols-rounded">favorite</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.lovesCount }}</div>
+                                <div class="stat-label">Loves</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-wow">
+                                <span class="material-symbols-rounded">bolt</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.wowsCount }}</div>
+                                <div class="stat-label">Wows</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-dislike">
+                                <span class="material-symbols-rounded">thumb_down</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.dislikesCount }}</div>
+                                <div class="stat-label">Dislikes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
         </section>
         }
     </main>
