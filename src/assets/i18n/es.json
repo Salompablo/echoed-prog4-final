@@ -352,6 +352,8 @@
       "resetting": "Cambiando...",
       "cancel": "Cancelar",
       "back": "Atrás",
-      "success": "¡Contraseña actualizada exitosamente! Por favor inicia sesión."
+      "success": "¡Contraseña actualizada exitosamente! Por favor inicia sesión.",
+      "didnt-receive":"No recibiste el código?",
+      "resend":"Reenviar código"
     }
   }
