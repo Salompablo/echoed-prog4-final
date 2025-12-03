@@ -333,7 +333,8 @@
     "btn-unbanning": "Unbanning...",
     "ban-success": "User banned successfully",
     "unban-success": "User unbanned successfully",
-    "error": "An error occurred"
+    "error": "An error occurred",
+    "no-users": "No users found"
   },
   "email-verification": {
     "title": "Verify Account",

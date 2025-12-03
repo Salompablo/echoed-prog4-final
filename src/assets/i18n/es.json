@@ -333,7 +333,8 @@
     "btn-unbanning": "Desbaneando...",
     "ban-success": "Usuario baneado con éxito",
     "unban-success": "Usuario desbaneado con éxito",
-    "error": "Ocurrió un error"
+    "error": "Ocurrió un error",
+    "no-users": "No se encontraron usuarios"
   },
   "email-verification": {
     "title": "Verificar Cuenta",
