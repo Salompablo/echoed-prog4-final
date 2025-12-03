@@ -510,6 +510,7 @@ html.dark .status-banned {
     gap: 0.3rem;
     text-transform: capitalize;
     letter-spacing: 0.02em;
+    min-width: 110px;
 }
 
 .ban-btn {
