@@ -3,7 +3,6 @@
     <aside class="dashboard-sidebar">
         <div class="sidebar-header">
             <h2 class="sidebar-title">Admin Dashboard</h2>
-            <p class="sidebar-subtitle">Manage your platform</p>
         </div>
 
         <nav class="sidebar-nav">
@@ -336,11 +335,6 @@
         <!-- Statistics Section -->
         @if (activeSection() === 'statistics') {
         <section class="content-section">
-            <div class="header-section">
-                <h2 class="section-title">Statistics</h2>
-                <p class="section-subtitle">View platform analytics and insights.</p>
-            </div>
-
             @if (statsLoading()) {
             <app-loading-spinner message="Loading statistics..."></app-loading-spinner>
             } @else if (stats() === null) {
