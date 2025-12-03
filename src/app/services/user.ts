@@ -104,22 +104,6 @@ export class UserService {
     return this.apiService.post<AuthResponse>(API_ENDPOINTS.USERS.COMPLETE_PROFILE, request);
   }
 
-  /**
-   * Retrieves a paginated list of users.
-   * @param page The page number to retrieve.
-   * @param size The number of users to include per page.
-   * @returns An Observable containing a PageResponse with the requested users.
-   */
-  getPaginatedUsers(
-    query: string = '',
-    page: number = 0,
-    size: number = 10,
-    sort: string = 'createdAt',
-    direction: 'asc' | 'desc' = 'desc'
-  ): Observable<PagedResponse<FullUserProfile>> {
-    const endpoint = API_ENDPOINTS.USERS.ADMIN_PAGINATED_SEARCH(query, page, size, sort, direction);
-    return this.apiService.get<PagedResponse<FullUserProfile>>(endpoint);
-  }
 
   /**
    * Fetches a paginated list of song reviews for a specific user ID.
@@ -153,5 +137,24 @@ export class UserService {
   ): Observable<PagedResponse<AlbumReviewResponse>> {
     const endpoint = API_ENDPOINTS.USERS.USER_ALBUM_REVIEWS(userId, pageNumber, size, sort);
     return this.apiService.get<PagedResponse<AlbumReviewResponse>>(endpoint);
+  }
+
+  /**
+   * Fetches all users with pagination and sorting for admin dashboard.
+   * @param query - Search query string
+   * @param page - Page number (0-indexed)
+   * @param size - Number of users per page
+   * @param sort - Sort property
+   * @param direction - Sort direction ('asc' or 'desc')
+   */
+  getAllUsers(
+    query: string = '',
+    page: number = 0,
+    size: number = 10,
+    sort: string = 'createdAt',
+    direction: 'asc' | 'desc' = 'desc'
+  ): Observable<PagedResponse<FullUserProfile>> {
+    const endpoint = `${API_ENDPOINTS.USERS.ALL}?query=${query}&page=${page}&size=${size}&sort=${sort},${direction}`;
+    return this.apiService.get<PagedResponse<FullUserProfile>>(endpoint);
   }
 }

@@ -77,23 +77,22 @@ export class AdminDashboard implements OnInit {
     });
   }
 
-  switchSection(section: DashboardSection): void {
-    this.activeSection.set(section);
+ switchSection(section: DashboardSection): void {
+  this.activeSection.set(section);
 
-    if (section === 'reviews' && this.reviews().length === 0) {
-      this.loadReviews();
-    } else if (section === 'users' && this.users().length === 0) {
-      this.loadUsers();
-    } else if (section === 'statistics' && this.stats() === null) {
-      this.loadStats();
-    }
+  if (section === 'reviews' && (this.reviews()?.length ?? 0) === 0) {
+    this.loadReviews();
+  } else if (section === 'users' && (this.users()?.length ?? 0) === 0) {
+    this.loadUsers();
+  } else if (section === 'statistics' && this.stats() === null) {
+    this.loadStats();
   }
-
+}
   loadUsers(): void {
     this.usersLoading.set(true);
 
     this.userService
-      .getPaginatedUsers(
+      .getAllUsers(
         this.searchQuery(),
         this.currentPage(),
         this.pageSize(),
@@ -173,6 +172,7 @@ export class AdminDashboard implements OnInit {
     this.userService.banUser(userId).subscribe({
       next: () => {
         this.toastService.success(`User ${userId} successfully banned.`);
+        this.setActionLoading(userId, false);
         this.loadUsers();
       },
       error: (err) => {
@@ -187,6 +187,7 @@ export class AdminDashboard implements OnInit {
     this.userService.unbanUser(userId).subscribe({
       next: () => {
         this.toastService.success(`User ${userId} successfully unbanned.`);
+        this.setActionLoading(userId, false);
         this.loadUsers();
       },
       error: (err) => {
