@@ -11,12 +11,14 @@ import { CommonModule } from '@angular/common';
 import { AdminService } from '../../services/admin';
 import { AlbumReviewResponse, MusicReview, SongReviewResponse } from '../../models/interaction';
 import { AdminDashboardResponse } from '../../models/admin-dashboard.model';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth';
 
 type DashboardSection = 'users' | 'reviews' | 'statistics';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [LoadingSpinner, FormsModule, RouterLink, CommonModule],
+  imports: [LoadingSpinner, FormsModule, RouterLink, CommonModule, TranslateModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
@@ -25,6 +27,7 @@ export class AdminDashboard implements OnInit {
   private adminService = inject(AdminService);
   private toastService = inject(ToastService);
   private errorService = inject(ErrorService);
+  authService = inject(AuthService);
 
   // Navigation
   activeSection = signal<DashboardSection>('users');
@@ -45,12 +48,14 @@ export class AdminDashboard implements OnInit {
   // Reviews section
   reviews = signal<MusicReview[]>([]);
   reviewsLoading = signal(true);
+  reviewSearchQuery = signal('');
   reviewsCurrentPage = signal(0);
   reviewsPageSize = signal(10);
   reviewsTotalElements = signal(0);
   reviewsTotalPages = signal(0);
   reviewsSortColumn = signal('date');
   reviewsSortDirection = signal<'asc' | 'desc'>('desc');
+  private reviewSearchSubject = new Subject<string>();
 
   // Statistics section
   stats = signal<AdminDashboardResponse | null>(null);
@@ -63,6 +68,12 @@ export class AdminDashboard implements OnInit {
       this.searchQuery.set(query);
       this.currentPage.set(0);
       this.loadUsers();
+    });
+
+    this.reviewSearchSubject.pipe(debounceTime(400), distinctUntilChanged()).subscribe((query) => {
+      this.reviewSearchQuery.set(query);
+      this.reviewsCurrentPage.set(0);
+      this.loadReviews();
     });
   }
 
@@ -221,6 +232,10 @@ export class AdminDashboard implements OnInit {
           this.reviewsLoading.set(false);
         },
       });
+  }
+
+  onReviewSearchQueryChange(query: string): void {
+    this.reviewSearchSubject.next(query);
   }
 
   onReviewsSort(column: string): void {
