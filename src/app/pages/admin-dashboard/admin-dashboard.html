@@ -350,7 +350,7 @@
                         {{ 'admin-statistics.user-stats' | translate }}
                     </h3>
                     <div class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('users')">
                             <div class="stat-icon user-total">
                                 <span class="material-symbols-rounded">people</span>
                             </div>
@@ -360,7 +360,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('users')">
                             <div class="stat-icon user-active">
                                 <span class="material-symbols-rounded">verified_user</span>
                             </div>
@@ -370,7 +370,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('users')">
                             <div class="stat-icon user-banned">
                                 <span class="material-symbols-rounded">block</span>
                             </div>
@@ -389,7 +389,7 @@
                         {{ 'admin-statistics.content-stats' | translate }}
                     </h3>
                     <div class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon content-reviews">
                                 <span class="material-symbols-rounded">rate_review</span>
                             </div>
@@ -409,7 +409,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon content-reactions">
                                 <span class="material-symbols-rounded">favorite</span>
                             </div>
@@ -428,7 +428,7 @@
                         {{ 'admin-statistics.review-breakdown' | translate }}
                     </h3>
                     <div class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon review-album">
                                 <span class="material-symbols-rounded">album</span>
                             </div>
@@ -438,7 +438,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon review-song">
                                 <span class="material-symbols-rounded">music_note</span>
                             </div>
@@ -457,7 +457,7 @@
                         {{ 'admin-statistics.reaction-breakdown' | translate }}
                     </h3>
                     <div class="stats-grid stats-grid-4">
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon reaction-like">
                                 <span class="material-symbols-rounded">thumb_up</span>
                             </div>
@@ -467,7 +467,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon reaction-love">
                                 <span class="material-symbols-rounded">favorite</span>
                             </div>
@@ -477,7 +477,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon reaction-wow">
                                 <span class="material-symbols-rounded">bolt</span>
                             </div>
@@ -487,7 +487,7 @@
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card clickable" (click)="switchSection('reviews')">
                             <div class="stat-icon reaction-dislike">
                                 <span class="material-symbols-rounded">thumb_down</span>
                             </div>

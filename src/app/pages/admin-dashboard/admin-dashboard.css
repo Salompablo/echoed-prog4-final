@@ -281,6 +281,15 @@
     font-weight: 500;
 }
 
+/* Dashboard Title */
+.dashboard-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 0 2rem 0;
+}
+
 /* Table Styles */
 .table-responsive-wrapper {
     background-color: var(--card-bg-color);
@@ -707,6 +716,14 @@ html.dark .status-banned {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(175, 100, 45, 0.15);
     border-color: var(--primary-color);
+}
+
+.stat-card.clickable {
+    cursor: pointer;
+}
+
+.stat-card.clickable:active {
+    transform: translateY(0);
 }
 
 .stat-icon {
