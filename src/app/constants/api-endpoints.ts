@@ -83,6 +83,9 @@ export const API_ENDPOINTS = {
     DELETE_REVIEW: (reviewId : number) => `/admin/review/${reviewId}`,
     REACTIVATE_REVIEW: (reviewId : number) => `/admin/review/${reviewId}/reactivate`,
   },
+  STATS: {
+    ADMIN_DASHBOARD: '/stats/admin/dashboard',
+  },
 } as const;
 
 export const OAUTH2_LINKS = {

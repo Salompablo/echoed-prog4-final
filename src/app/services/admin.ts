@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PagedResponse } from '../models/api';
 import { MusicReview } from '../models/interaction';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
+import { AdminDashboardResponse } from '../models/admin-dashboard.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,8 @@ export class AdminService {
     return this.api.put<void>(endpoint,{});
   }
 
-  
+  getDashboardStats(): Observable<AdminDashboardResponse> {
+    const endpoint = API_ENDPOINTS.STATS.ADMIN_DASHBOARD;
+    return this.api.get<AdminDashboardResponse>(endpoint);
+  }
 }

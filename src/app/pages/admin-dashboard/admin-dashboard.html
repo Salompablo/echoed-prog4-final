@@ -1,136 +1,518 @@
-<div class="admin-container">
-    <h2 class="dashboard-title">{{ 'admin-dashboard.title' | translate }}</h2>
-
-    <div class="controls-bar">
-        <div class="search-wrapper">
-            <span class="material-symbols-rounded search-icon">search</span>
-            <input type="text" class="search-input" [placeholder]="'admin-dashboard.search-placeholder' | translate"
-                [ngModel]="searchQuery()" (ngModelChange)="onSearchQueryChange($event)">
+<div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">Admin Dashboard</h2>
         </div>
-    </div>
 
-    <div class="table-responsive-wrapper">
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>
-                        <div class="sortable-header" (click)="onSort('id')">
-                            {{ 'admin-dashboard.col-id' | translate }}
-                            <span class="material-symbols-rounded sort-icon">{{ getSortIcon('id') }}</span>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="sortable-header" (click)="onSort('username')">
-                            {{ 'admin-dashboard.col-user' | translate }}
-                            <span class="material-symbols-rounded sort-icon">{{ getSortIcon('username') }}</span>
-                        </div>
-                    </th>
-                    <th>{{ 'admin-dashboard.col-role' | translate }}</th>
-                    <th>{{ 'admin-dashboard.col-status' | translate }}</th>
-                    <th class="actions-th">{{ 'admin-dashboard.col-actions' | translate }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (user of users(); track user.id) {
-                <tr>
-                    <td>#{{ user.id }}</td>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 0.75rem;">
-                            <img [src]="user.profilePictureUrl ? 'assets/images/default-avatars/' + user.profilePictureUrl : 'assets/default-avatar.svg'"
-                                [alt]="user.username"
-                                style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;">
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Management</div>
 
-                            <div style="display: flex; flex-direction: column;">
-                                <span style="font-weight: 700;">{{ user.username }}</span>
-                                <span style="font-size: 0.85rem; color: var(--secondary-color);">{{ user.email }}</span>
-                            </div>
-                        </div>
-                    </td>
+            <button class="nav-item" [class.active]="activeSection() === 'users'" (click)="switchSection('users')">
+                <div class="nav-item-content">
+                    <span class="material-symbols-rounded nav-icon">group</span>
+                    <span class="nav-label">Users</span>
+                </div>
+                <span class="nav-indicator"></span>
+            </button>
 
-                    <td>
-                        <div class="role-pills">
-                            @for (role of user.roles; track role) {
-                            <span class="role-pill" [class.role-role_admin]="role === 'ROLE_ADMIN'">
-                                {{ role.replace('ROLE_', '') }}
-                            </span>
+            <button class="nav-item" [class.active]="activeSection() === 'reviews'" (click)="switchSection('reviews')">
+                <div class="nav-item-content">
+                    <span class="material-symbols-rounded nav-icon">rate_review</span>
+                    <span class="nav-label">Reviews</span>
+                </div>
+                <span class="nav-indicator"></span>
+            </button>
+
+            <div class="nav-section-label">Analytics</div>
+
+            <button class="nav-item" [class.active]="activeSection() === 'statistics'"
+                (click)="switchSection('statistics')">
+                <div class="nav-item-content">
+                    <span class="material-symbols-rounded nav-icon">bar_chart</span>
+                    <span class="nav-label">Statistics</span>
+                </div>
+                <span class="nav-indicator"></span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a routerLink="/" class="back-home-link">
+                <span class="material-symbols-rounded">home</span>
+                <span>Back to Home</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-content">
+        <!-- Users Section -->
+        @if (activeSection() === 'users') {
+        <section class="content-section">
+            @if (usersLoading()) {
+            <app-loading-spinner message="Loading user data..."></app-loading-spinner>
+            } @else {
+            <div class="admin-container">
+                <h2 class="dashboard-title">{{ 'admin-dashboard.title' | translate }}</h2>
+
+                <div class="controls-bar">
+                    <div class="search-wrapper">
+                        <span class="material-symbols-rounded search-icon">search</span>
+                        <input type="text" class="search-input" [placeholder]="'admin-dashboard.search-placeholder' | translate"
+                            [ngModel]="searchQuery()" (ngModelChange)="onSearchQueryChange($event)">
+                    </div>
+                </div>
+
+                <div class="table-responsive-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="sortable-header" (click)="onSort('id')">
+                                        {{ 'admin-dashboard.col-id' | translate }}
+                                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('id') }}</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="sortable-header" (click)="onSort('username')">
+                                        {{ 'admin-dashboard.col-user' | translate }}
+                                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('username') }}</span>
+                                    </div>
+                                </th>
+                                <th>{{ 'admin-dashboard.col-role' | translate }}</th>
+                                <th>{{ 'admin-dashboard.col-status' | translate }}</th>
+                                <th class="actions-th">{{ 'admin-dashboard.col-actions' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (user of users(); track user.id) {
+                            <tr>
+                                <td>#{{ user.id }}</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <img [src]="user.profilePictureUrl ? 'assets/images/default-avatars/' + user.profilePictureUrl : 'assets/default-avatar.svg'"
+                                            [alt]="user.username"
+                                            style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;">
+
+                                        <div style="display: flex; flex-direction: column;">
+                                            <span style="font-weight: 700;">{{ user.username }}</span>
+                                            <span style="font-size: 0.85rem; color: var(--secondary-color);">{{ user.email }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="role-pills">
+                                        @for (role of user.roles; track role) {
+                                        <span class="role-pill" [class.role-role_admin]="role === 'ROLE_ADMIN'">
+                                            {{ role.replace('ROLE_', '') }}
+                                        </span>
+                                        }
+                                    </div>
+                                </td>
+
+                                <td>
+                                    @if (user.active) {
+                                    <span class="status-indicator status-active">
+                                        {{ 'admin-dashboard.status-active' | translate }}
+                                    </span>
+                                    } @else {
+                                    <span class="status-indicator status-deactivated">
+                                        {{ 'admin-dashboard.status-deactivated' | translate }}
+                                    </span>
+                                    }
+                                </td>
+
+                                <td class="actions-cell">
+                                    @if (user.active) {
+                                    <button class="action-btn ban-btn" (click)="onBanUser(user.id)"
+                                        [disabled]="isActionLoading(user.id) || authService.currentUser()?.userId === user.id"
+                                        [title]="authService.currentUser()?.userId === user.id ? 'You cannot ban yourself' : ''">
+
+                                        @if (isActionLoading(user.id)) {
+                                        <span class="button-spinner"></span>
+                                        <span>{{ 'admin-dashboard.btn-banning' | translate }}</span>
+                                        } @else {
+                                        <span class="material-symbols-rounded"
+                                            style="margin-right: 0.3rem; font-size: 1.1rem;">gavel</span>
+                                        <span>{{ 'admin-dashboard.btn-ban' | translate }}</span>
+                                        }
+                                    </button>
+                                    } @else {
+                                    <button class="action-btn unban-btn" (click)="onUnbanUser(user.id)"
+                                        [disabled]="isActionLoading(user.id)">
+
+                                        @if (isActionLoading(user.id)) {
+                                        <span class="button-spinner"></span>
+                                        <span>{{ 'admin-dashboard.btn-unbanning' | translate }}</span>
+                                        } @else {
+                                        <span class="material-symbols-rounded"
+                                            style="margin-right: 0.3rem; font-size: 1.1rem;">lock_open</span>
+                                        <span>{{ 'admin-dashboard.btn-unban' | translate }}</span>
+                                        }
+                                    </button>
+                                    }
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr>
+                                <td colspan="5" class="no-results-row">
+                                    <div class="empty-state-card">
+                                        <span class="material-symbols-rounded"
+                                            style="font-size: 2rem; color: var(--secondary-color);">search_off</span>
+                                        <p>{{ 'search-bar.no-results' | translate }} "{{ searchQuery() }}"</p>
+                                    </div>
+                                </td>
+                            </tr>
                             }
-                        </div>
-                    </td>
+                        </tbody>
+                    </table>
+                </div>
 
-                    <td>
-                        @if (user.active) {
-                        <span class="status-indicator status-active">
-                            {{ 'admin-dashboard.status-active' | translate }}
-                        </span>
-                        } @else {
-                        <span class="status-indicator status-deactivated">
-                            {{ 'admin-dashboard.status-deactivated' | translate }}
-                        </span>
-                        }
-                    </td>
+                @if (totalPages() > 1) {
+                <div class="pagination-footer">
+                    <button class="page-btn" (click)="onPageChange(currentPage() - 1)" [disabled]="currentPage() === 0">
+                        <span class="material-symbols-rounded">chevron_left</span>
+                    </button>
 
-                    <td class="actions-cell">
-                        @if (user.active) {
-                        <button class="action-btn ban-btn" (click)="onBanUser(user.id)"
-                            [disabled]="isActionLoading(user.id) || authService.currentUser()?.userId === user.id"
-                            [title]="authService.currentUser()?.userId === user.id ? 'You cannot ban yourself' : ''">
+                    @for (page of pagesArray(); track page) {
+                    <button class="page-btn" [class.active]="currentPage() === page" (click)="onPageChange(page)">
+                        {{ page + 1 }}
+                    </button>
+                    }
 
-                            @if (isActionLoading(user.id)) {
-                            <span class="button-spinner"></span>
-                            <span>{{ 'admin-dashboard.btn-banning' | translate }}</span>
-                            } @else {
-                            <span class="material-symbols-rounded"
-                                style="margin-right: 0.3rem; font-size: 1.1rem;">gavel</span>
-                            <span>{{ 'admin-dashboard.btn-ban' | translate }}</span>
-                            }
-                        </button>
-                        } @else {
-                        <button class="action-btn unban-btn" (click)="onUnbanUser(user.id)"
-                            [disabled]="isActionLoading(user.id)">
-
-                            @if (isActionLoading(user.id)) {
-                            <span class="button-spinner"></span>
-                            <span>{{ 'admin-dashboard.btn-unbanning' | translate }}</span>
-                            } @else {
-                            <span class="material-symbols-rounded"
-                                style="margin-right: 0.3rem; font-size: 1.1rem;">lock_open</span>
-                            <span>{{ 'admin-dashboard.btn-unban' | translate }}</span>
-                            }
-                        </button>
-                        }
-                    </td>
-                </tr>
-                } @empty {
-                <tr>
-                    <td colspan="5" class="no-results-row">
-                        <div class="empty-state-card">
-                            <span class="material-symbols-rounded"
-                                style="font-size: 2rem; color: var(--secondary-color);">search_off</span>
-                            <p>{{ 'search-bar.no-results' | translate }} "{{ searchQuery() }}"</p>
-                        </div>
-                    </td>
-                </tr>
+                    <button class="page-btn" (click)="onPageChange(currentPage() + 1)"
+                        [disabled]="currentPage() >= totalPages() - 1">
+                        <span class="material-symbols-rounded">chevron_right</span>
+                    </button>
+                </div>
                 }
-            </tbody>
-        </table>
-    </div>
-
-    @if (totalPages() > 1) {
-    <div class="pagination-footer">
-        <button class="page-btn" (click)="onPageChange(currentPage() - 1)" [disabled]="currentPage() === 0">
-            <span class="material-symbols-rounded">chevron_left</span>
-        </button>
-
-        @for (page of pagesArray(); track page) {
-        <button class="page-btn" [class.active]="currentPage() === page" (click)="onPageChange(page)">
-            {{ page + 1 }}
-        </button>
+            </div>
+            }
+        </section>
         }
 
-        <button class="page-btn" (click)="onPageChange(currentPage() + 1)"
-            [disabled]="currentPage() >= totalPages() - 1">
-            <span class="material-symbols-rounded">chevron_right</span>
-        </button>
-    </div>
-    }
+        <!-- Reviews Section -->
+        @if (activeSection() === 'reviews') {
+        <section class="content-section">
+            @if (reviewsLoading()) {
+            <app-loading-spinner message="Loading reviews..."></app-loading-spinner>
+            } @else {
+            <div class="admin-container">
+                <h2 class="dashboard-title">{{ 'admin-reviews.title' | translate }}</h2>
+
+                <div class="controls-bar">
+                    <div class="search-wrapper">
+                        <span class="material-symbols-rounded search-icon">search</span>
+                        <input type="text" class="search-input" [placeholder]="'admin-reviews.search-placeholder' | translate"
+                            [ngModel]="reviewSearchQuery()" (ngModelChange)="onReviewSearchQueryChange($event)">
+                    </div>
+                </div>
+
+                <div class="table-responsive-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="sortable-header" (click)="onReviewsSort('user.username')">
+                                        {{ 'admin-reviews.col-author' | translate }}
+                                        <span class="material-symbols-rounded sort-icon">{{ getReviewsSortIcon('user.username') }}</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="sortable-header" (click)="onReviewsSort('rating')">
+                                        {{ 'admin-reviews.col-rating' | translate }}
+                                        <span class="material-symbols-rounded sort-icon">{{ getReviewsSortIcon('rating') }}</span>
+                                    </div>
+                                </th>
+                                <th>{{ 'admin-reviews.col-content' | translate }}</th>
+                                <th>{{ 'admin-reviews.col-item' | translate }}</th>
+                                <th>{{ 'admin-reviews.col-type' | translate }}</th>
+                                <th>
+                                    <div class="sortable-header" (click)="onReviewsSort('date')">
+                                        {{ 'admin-reviews.col-date' | translate }}
+                                        <span class="material-symbols-rounded sort-icon">{{ getReviewsSortIcon('date') }}</span>
+                                    </div>
+                                </th>
+                                <th>{{ 'admin-reviews.col-status' | translate }}</th>
+                                <th class="actions-th">{{ 'admin-reviews.col-actions' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (review of reviews(); track $index) {
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <img [src]="review.user.profilePictureUrl ? 'assets/images/default-avatars/' + review.user.profilePictureUrl : 'assets/default-avatar.svg'"
+                                            [alt]="review.user.username"
+                                            style="width: 2.5rem; height: 2.5rem; border-radius: 50%; object-fit: cover;">
+
+                                        <div style="display: flex; flex-direction: column;">
+                                            <span style="font-weight: 700;">{{ review.user.username }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <span class="rating-badge">★ {{ review.rating }}</span>
+                                </td>
+
+                                <td class="snippet-cell" [title]="review.description">
+                                    {{ review.description | slice:0:50 }}{{ review.description.length > 50 ? '...' : '' }}
+                                </td>
+
+                                <td>
+                                    <a [routerLink]="getReviewItemLink(review)" class="item-link">
+                                        {{ getItemTitle(review) }}
+                                    </a>
+                                    <span class="material-symbols-rounded small-icon link-icon">
+                                        open_in_new
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="role-pill">{{ getItemType(review) }}</span>
+                                </td>
+
+                                <td>{{ review.date | date:'shortDate' }}</td>
+
+                                <td>
+                                    @if (review.active) {
+                                    <span class="status-indicator status-active">
+                                        {{ 'admin-reviews.status-active' | translate }}
+                                    </span>
+                                    } @else {
+                                    <span class="status-indicator status-deactivated">
+                                        {{ 'admin-reviews.status-inactive' | translate }}
+                                    </span>
+                                    }
+                                </td>
+
+                                <td class="actions-cell">
+                                    @if (review.active) {
+                                    <button class="action-btn ban-btn" (click)="deleteReview(review)"
+                                        title="Deactivate review">
+                                        <span class="material-symbols-rounded"
+                                            style="margin-right: 0.3rem; font-size: 1.1rem;">block</span>
+                                        <span>{{ 'admin-reviews.btn-deactivate' | translate }}</span>
+                                    </button>
+                                    } @else {
+                                    <button class="action-btn unban-btn" (click)="reActivateReview(review)"
+                                        title="Reactivate review">
+                                        <span class="material-symbols-rounded"
+                                            style="margin-right: 0.3rem; font-size: 1.1rem;">check_circle</span>
+                                        <span>{{ 'admin-reviews.btn-activate' | translate }}</span>
+                                    </button>
+                                    }
+                                </td>
+                            </tr>
+                            } @empty {
+                            <tr>
+                                <td colspan="8" class="no-results-row">
+                                    <div class="empty-state-card">
+                                        <span class="material-symbols-rounded"
+                                            style="font-size: 2rem; color: var(--secondary-color);">search_off</span>
+                                        <p>{{ 'search-bar.no-results' | translate }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (reviewsTotalPages() > 1) {
+                <div class="pagination-footer">
+                    <button class="page-btn" (click)="onReviewsPageChange(reviewsCurrentPage() - 1)" [disabled]="reviewsCurrentPage() === 0">
+                        <span class="material-symbols-rounded">chevron_left</span>
+                    </button>
+
+                    @for (page of reviewsPagesArray(); track page) {
+                    <button class="page-btn" [class.active]="reviewsCurrentPage() === page" (click)="onReviewsPageChange(page)">
+                        {{ page + 1 }}
+                    </button>
+                    }
+
+                    <button class="page-btn" (click)="onReviewsPageChange(reviewsCurrentPage() + 1)"
+                        [disabled]="reviewsCurrentPage() >= reviewsTotalPages() - 1">
+                        <span class="material-symbols-rounded">chevron_right</span>
+                    </button>
+                </div>
+                }
+            </div>
+            }
+        </section>
+        }
+
+        <!-- Statistics Section -->
+        @if (activeSection() === 'statistics') {
+        <section class="content-section">
+            @if (statsLoading()) {
+            <app-loading-spinner message="Loading statistics..."></app-loading-spinner>
+            } @else if (stats() === null) {
+            <div class="empty-state-card">
+                <p>Failed to load statistics.</p>
+            </div>
+            } @else {
+            <div class="stats-container">
+                <!-- User Statistics -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">group</span>
+                        User Statistics
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon user-total">
+                                <span class="material-symbols-rounded">people</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalUsers }}</div>
+                                <div class="stat-label">Total Users</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon user-active">
+                                <span class="material-symbols-rounded">verified_user</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.activeUsers }}</div>
+                                <div class="stat-label">Active Users</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon user-banned">
+                                <span class="material-symbols-rounded">block</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.bannedUsers }}</div>
+                                <div class="stat-label">Banned Users</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Statistics -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">library_books</span>
+                        Content Statistics
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon content-reviews">
+                                <span class="material-symbols-rounded">rate_review</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalReviews }}</div>
+                                <div class="stat-label">Total Reviews</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon content-comments">
+                                <span class="material-symbols-rounded">comment</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalComments }}</div>
+                                <div class="stat-label">Total Comments</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon content-reactions">
+                                <span class="material-symbols-rounded">favorite</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.totalReactions }}</div>
+                                <div class="stat-label">Total Reactions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Breakdown -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">analytics</span>
+                        Review Breakdown
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon review-album">
+                                <span class="material-symbols-rounded">album</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.albumReviews }}</div>
+                                <div class="stat-label">Album Reviews</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon review-song">
+                                <span class="material-symbols-rounded">music_note</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.songReviews }}</div>
+                                <div class="stat-label">Song Reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reaction Breakdown -->
+                <div class="stats-category">
+                    <h3 class="stats-category-title">
+                        <span class="material-symbols-rounded">mood</span>
+                        Reaction Breakdown
+                    </h3>
+                    <div class="stats-grid stats-grid-4">
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-like">
+                                <span class="material-symbols-rounded">thumb_up</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.likesCount }}</div>
+                                <div class="stat-label">Likes</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-love">
+                                <span class="material-symbols-rounded">favorite</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.lovesCount }}</div>
+                                <div class="stat-label">Loves</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-wow">
+                                <span class="material-symbols-rounded">bolt</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.wowsCount }}</div>
+                                <div class="stat-label">Wows</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon reaction-dislike">
+                                <span class="material-symbols-rounded">thumb_down</span>
+                            </div>
+                            <div class="stat-details">
+                                <div class="stat-value">{{ stats()!.dislikesCount }}</div>
+                                <div class="stat-label">Dislikes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </section>
+        }
+    </main>
 </div>
