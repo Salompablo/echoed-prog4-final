@@ -283,7 +283,6 @@
 
 /* Table Styles */
 .table-responsive-wrapper {
-    overflow-x: auto;
     background-color: var(--card-bg-color);
     border: 2px solid var(--card-border-color);
     border-radius: 12px;
@@ -293,7 +292,6 @@
 .admin-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px;
 }
 
 .admin-table thead th {
