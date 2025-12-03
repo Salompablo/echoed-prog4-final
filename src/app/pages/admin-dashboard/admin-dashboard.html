@@ -55,14 +55,6 @@
             <div class="admin-container">
                 <h2 class="dashboard-title">{{ 'admin-dashboard.title' | translate }}</h2>
 
-                <div class="controls-bar">
-                    <div class="search-wrapper">
-                        <span class="material-symbols-rounded search-icon">search</span>
-                        <input type="text" class="search-input" [placeholder]="'admin-dashboard.search-placeholder' | translate"
-                            [ngModel]="searchQuery()" (ngModelChange)="onSearchQueryChange($event)">
-                    </div>
-                </div>
-
                 <div class="table-responsive-wrapper">
                     <table class="admin-table">
                         <thead>
@@ -86,7 +78,7 @@
                         </thead>
                         <tbody>
                             @for (user of users(); track user.id) {
-                            <tr>
+                            <tr [class.banned-row]="user.isBanned">
                                 <td>#{{ user.id }}</td>
                                 <td>
                                     <div style="display: flex; align-items: center; gap: 0.75rem;">
@@ -112,7 +104,11 @@
                                 </td>
 
                                 <td>
-                                    @if (user.active) {
+                                    @if (user.isBanned) {
+                                    <span class="status-indicator status-banned">
+                                        {{ 'admin-dashboard.status-banned' | translate }}
+                                    </span>
+                                    } @else if (user.active) {
                                     <span class="status-indicator status-active">
                                         {{ 'admin-dashboard.status-active' | translate }}
                                     </span>
@@ -124,7 +120,20 @@
                                 </td>
 
                                 <td class="actions-cell">
-                                    @if (user.active) {
+                                    @if (user.isBanned) {
+                                    <button class="action-btn unban-btn" (click)="onUnbanUser(user.id)"
+                                        [disabled]="isActionLoading(user.id)">
+
+                                        @if (isActionLoading(user.id)) {
+                                        <span class="button-spinner"></span>
+                                        <span>{{ 'admin-dashboard.btn-unbanning' | translate }}</span>
+                                        } @else {
+                                        <span class="material-symbols-rounded"
+                                            style="margin-right: 0.3rem; font-size: 1.1rem;">lock_open</span>
+                                        <span>{{ 'admin-dashboard.btn-unban' | translate }}</span>
+                                        }
+                                    </button>
+                                    } @else {
                                     <button class="action-btn ban-btn" (click)="onBanUser(user.id)"
                                         [disabled]="isActionLoading(user.id) || authService.currentUser()?.userId === user.id"
                                         [title]="authService.currentUser()?.userId === user.id ? 'You cannot ban yourself' : ''">
@@ -138,19 +147,6 @@
                                         <span>{{ 'admin-dashboard.btn-ban' | translate }}</span>
                                         }
                                     </button>
-                                    } @else {
-                                    <button class="action-btn unban-btn" (click)="onUnbanUser(user.id)"
-                                        [disabled]="isActionLoading(user.id)">
-
-                                        @if (isActionLoading(user.id)) {
-                                        <span class="button-spinner"></span>
-                                        <span>{{ 'admin-dashboard.btn-unbanning' | translate }}</span>
-                                        } @else {
-                                        <span class="material-symbols-rounded"
-                                            style="margin-right: 0.3rem; font-size: 1.1rem;">lock_open</span>
-                                        <span>{{ 'admin-dashboard.btn-unban' | translate }}</span>
-                                        }
-                                    </button>
                                     }
                                 </td>
                             </tr>
@@ -159,8 +155,8 @@
                                 <td colspan="5" class="no-results-row">
                                     <div class="empty-state-card">
                                         <span class="material-symbols-rounded"
-                                            style="font-size: 2rem; color: var(--secondary-color);">search_off</span>
-                                        <p>{{ 'search-bar.no-results' | translate }} "{{ searchQuery() }}"</p>
+                                            style="font-size: 2rem; color: var(--secondary-color);">person_off</span>
+                                        <p>{{ 'admin-dashboard.no-users' | translate }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -200,14 +196,6 @@
             } @else {
             <div class="admin-container">
                 <h2 class="dashboard-title">{{ 'admin-reviews.title' | translate }}</h2>
-
-                <div class="controls-bar">
-                    <div class="search-wrapper">
-                        <span class="material-symbols-rounded search-icon">search</span>
-                        <input type="text" class="search-input" [placeholder]="'admin-reviews.search-placeholder' | translate"
-                            [ngModel]="reviewSearchQuery()" (ngModelChange)="onReviewSearchQueryChange($event)">
-                    </div>
-                </div>
 
                 <div class="table-responsive-wrapper">
                     <table class="admin-table">
@@ -348,10 +336,10 @@
         @if (activeSection() === 'statistics') {
         <section class="content-section">
             @if (statsLoading()) {
-            <app-loading-spinner message="Loading statistics..."></app-loading-spinner>
+            <app-loading-spinner [message]="'admin-statistics.loading' | translate"></app-loading-spinner>
             } @else if (stats() === null) {
             <div class="empty-state-card">
-                <p>Failed to load statistics.</p>
+                <p>{{ 'admin-statistics.error' | translate }}</p>
             </div>
             } @else {
             <div class="stats-container">
@@ -359,7 +347,7 @@
                 <div class="stats-category">
                     <h3 class="stats-category-title">
                         <span class="material-symbols-rounded">group</span>
-                        User Statistics
+                        {{ 'admin-statistics.user-stats' | translate }}
                     </h3>
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -368,7 +356,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.totalUsers }}</div>
-                                <div class="stat-label">Total Users</div>
+                                <div class="stat-label">{{ 'admin-statistics.total-users' | translate }}</div>
                             </div>
                         </div>
 
@@ -378,7 +366,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.activeUsers }}</div>
-                                <div class="stat-label">Active Users</div>
+                                <div class="stat-label">{{ 'admin-statistics.active-users' | translate }}</div>
                             </div>
                         </div>
 
@@ -388,7 +376,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.bannedUsers }}</div>
-                                <div class="stat-label">Banned Users</div>
+                                <div class="stat-label">{{ 'admin-statistics.banned-users' | translate }}</div>
                             </div>
                         </div>
                     </div>
@@ -398,7 +386,7 @@
                 <div class="stats-category">
                     <h3 class="stats-category-title">
                         <span class="material-symbols-rounded">library_books</span>
-                        Content Statistics
+                        {{ 'admin-statistics.content-stats' | translate }}
                     </h3>
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -407,7 +395,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.totalReviews }}</div>
-                                <div class="stat-label">Total Reviews</div>
+                                <div class="stat-label">{{ 'admin-statistics.total-reviews' | translate }}</div>
                             </div>
                         </div>
 
@@ -417,7 +405,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.totalComments }}</div>
-                                <div class="stat-label">Total Comments</div>
+                                <div class="stat-label">{{ 'admin-statistics.total-comments' | translate }}</div>
                             </div>
                         </div>
 
@@ -427,7 +415,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.totalReactions }}</div>
-                                <div class="stat-label">Total Reactions</div>
+                                <div class="stat-label">{{ 'admin-statistics.total-reactions' | translate }}</div>
                             </div>
                         </div>
                     </div>
@@ -437,7 +425,7 @@
                 <div class="stats-category">
                     <h3 class="stats-category-title">
                         <span class="material-symbols-rounded">analytics</span>
-                        Review Breakdown
+                        {{ 'admin-statistics.review-breakdown' | translate }}
                     </h3>
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -446,7 +434,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.albumReviews }}</div>
-                                <div class="stat-label">Album Reviews</div>
+                                <div class="stat-label">{{ 'admin-statistics.album-reviews' | translate }}</div>
                             </div>
                         </div>
 
@@ -456,7 +444,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.songReviews }}</div>
-                                <div class="stat-label">Song Reviews</div>
+                                <div class="stat-label">{{ 'admin-statistics.song-reviews' | translate }}</div>
                             </div>
                         </div>
                     </div>
@@ -466,7 +454,7 @@
                 <div class="stats-category">
                     <h3 class="stats-category-title">
                         <span class="material-symbols-rounded">mood</span>
-                        Reaction Breakdown
+                        {{ 'admin-statistics.reaction-breakdown' | translate }}
                     </h3>
                     <div class="stats-grid stats-grid-4">
                         <div class="stat-card">
@@ -475,7 +463,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.likesCount }}</div>
-                                <div class="stat-label">Likes</div>
+                                <div class="stat-label">{{ 'admin-statistics.likes' | translate }}</div>
                             </div>
                         </div>
 
@@ -485,7 +473,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.lovesCount }}</div>
-                                <div class="stat-label">Loves</div>
+                                <div class="stat-label">{{ 'admin-statistics.loves' | translate }}</div>
                             </div>
                         </div>
 
@@ -495,7 +483,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.wowsCount }}</div>
-                                <div class="stat-label">Wows</div>
+                                <div class="stat-label">{{ 'admin-statistics.wows' | translate }}</div>
                             </div>
                         </div>
 
@@ -505,7 +493,7 @@
                             </div>
                             <div class="stat-details">
                                 <div class="stat-value">{{ stats()!.dislikesCount }}</div>
-                                <div class="stat-label">Dislikes</div>
+                                <div class="stat-label">{{ 'admin-statistics.dislikes' | translate }}</div>
                             </div>
                         </div>
                     </div>

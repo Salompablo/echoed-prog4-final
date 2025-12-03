@@ -10,9 +10,8 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD: '/auth/reset-password',
   },
   USERS: {
+    ALL: '/users',
     ME: '/users/me',
-    ADMIN_PAGINATED_SEARCH: (query: string, pageNumber: number, size: number, sort: string = 'createdAt', direction: 'asc' | 'desc' = 'desc') =>
-      `/users/search?query=${query}&pageNumber=${pageNumber}&size=${size}&sort=${sort},${direction}`,
     BY_USERNAME: (username: string) => `/users/username/${username}`,
     BY_USERID: (userId: number) => `/users/${userId}`,
     UPDATE: (userId: number) => `/users/${userId}`,
