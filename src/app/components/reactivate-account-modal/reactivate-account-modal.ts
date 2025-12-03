@@ -14,6 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ReactivateAccountModal {
   @Input({ required: true }) userId!: number | string;
   @Output() close = new EventEmitter<void>();
+  @Output() codeSent = new EventEmitter<void>();
 
   private userService = inject(UserService);
   private errorService = inject(ErrorService);
@@ -34,7 +35,8 @@ export class ReactivateAccountModal {
     this.userService.reactivateAccount(this.userId).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.toastService.success('¡Account reactivated! Please, login.');
+        this.toastService.success('Verification code sent to your email.');
+        this.codeSent.emit(); 
         this.close.emit();
       },
       error: (err) => {

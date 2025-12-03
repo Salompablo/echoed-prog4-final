@@ -79,6 +79,10 @@ export class Login implements OnInit {
       }
 
       if (params['verify'] === 'true') {
+        const emailFromUrl = params['email'];
+        if (emailFromUrl) {
+            this.emailForVerification.set(emailFromUrl);
+        }
         this.isVerificationModalVisible.set(true);
       }
     });
@@ -101,7 +105,7 @@ export class Login implements OnInit {
     };
 
     this.authService.login(authRequest, rememberMe).subscribe({
-      next: (response) => {
+      next: () => {
         this.router.navigate(['']);
       },
       error: (err) => {
@@ -146,6 +150,16 @@ export class Login implements OnInit {
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  onReactivationCodeSent(): void {
+    this.isReactivateModalVisible.set(false);
+    const email = this.loginForm.get('emailOrUsername')?.value;
+    
+    if (email) {
+        this.emailForVerification.set(email);
+        this.isVerificationModalVisible.set(true);
+    }
   }
 
   openVerificationModal(): void {

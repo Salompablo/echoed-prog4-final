@@ -66,7 +66,7 @@ export class Register {
         this.toastService.success(
           'Registration successful! Please check you email for the verification code.'
         );
-        this.router.navigate(['/login'], { queryParams: { verify: 'true' } });
+        this.router.navigate(['/login'], { queryParams: { verify: 'true' , email: email} });
       },
       error: (err) => {
         this.isLoading.set(false)
