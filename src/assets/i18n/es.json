@@ -390,6 +390,14 @@
     "loves": "Me Encanta",
     "wows": "Wows",
     "dislikes": "No Me Gusta"
+  },
+  "admin-sidebar":{
+    "users":"Usuarios",
+    "reviews":"Reseñas",
+    "statistics":"Estadísticas",
+    "analytics":"Analíticas",
+    "back-to-home":"Volver al inicio",
+    "management":"Gestión"
   }
   }
 
