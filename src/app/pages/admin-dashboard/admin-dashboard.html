@@ -6,12 +6,12 @@
         </div>
 
         <nav class="sidebar-nav">
-            <div class="nav-section-label">Management</div>
+            <div class="nav-section-label">{{ 'admin-sidebar.management' | translate }}</div>
 
             <button class="nav-item" [class.active]="activeSection() === 'users'" (click)="switchSection('users')">
                 <div class="nav-item-content">
                     <span class="material-symbols-rounded nav-icon">group</span>
-                    <span class="nav-label">Users</span>
+                    <span class="nav-label">{{ 'admin-sidebar.users' | translate }}</span>
                 </div>
                 <span class="nav-indicator"></span>
             </button>
@@ -19,18 +19,18 @@
             <button class="nav-item" [class.active]="activeSection() === 'reviews'" (click)="switchSection('reviews')">
                 <div class="nav-item-content">
                     <span class="material-symbols-rounded nav-icon">rate_review</span>
-                    <span class="nav-label">Reviews</span>
+                    <span class="nav-label">{{ 'admin-sidebar.reviews' | translate }}</span>
                 </div>
                 <span class="nav-indicator"></span>
             </button>
 
-            <div class="nav-section-label">Analytics</div>
+            <div class="nav-section-label">{{ 'admin-sidebar.analytics' | translate }}</div>
 
             <button class="nav-item" [class.active]="activeSection() === 'statistics'"
                 (click)="switchSection('statistics')">
                 <div class="nav-item-content">
                     <span class="material-symbols-rounded nav-icon">bar_chart</span>
-                    <span class="nav-label">Statistics</span>
+                    <span class="nav-label">{{ 'admin-sidebar.statistics' | translate }}</span>
                 </div>
                 <span class="nav-indicator"></span>
             </button>
@@ -39,7 +39,7 @@
         <div class="sidebar-footer">
             <a routerLink="/" class="back-home-link">
                 <span class="material-symbols-rounded">home</span>
-                <span>Back to Home</span>
+                <span>{{ 'admin-sidebar.back-to-home' | translate }}</span>
             </a>
         </div>
     </aside>
@@ -60,9 +60,9 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <div class="sortable-header" (click)="onSort('id')">
+                                    <div class="sortable-header" (click)="onSort('userId')">
                                         {{ 'admin-dashboard.col-id' | translate }}
-                                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('id') }}</span>
+                                        <span class="material-symbols-rounded sort-icon">{{ getSortIcon('userId') }}</span>
                                     </div>
                                 </th>
                                 <th>

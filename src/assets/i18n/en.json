@@ -390,5 +390,13 @@
     "loves": "Loves",
     "wows": "Wows",
     "dislikes": "Dislikes"
+  },
+    "admin-sidebar":{
+    "users":"Users",
+    "reviews":"Reviews",
+    "statistics":"Statistics",
+    "analytics":"Analytics",
+    "back-to-home":"Back to Home",
+    "management":"Management"
   }
 }
