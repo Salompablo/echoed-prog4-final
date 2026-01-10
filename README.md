@@ -1,115 +1,162 @@
-# 🎵 Echoed - Music Streaming Platform (Frontend)
+# 🎵 Echoed - Music Streaming Client
 
-![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-17%2B-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.2-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-**Echoed** is the frontend client for a modern music streaming and review platform, designed to interact with our custom **Spring Boot REST API**. Built with **Angular** (Standalone Architecture), it provides a rich and interactive user experience for discovering music, engaging with the community, and managing user profiles.
+**The modern interface for music discovery**. Echoed is a Single Page Application (SPA) built with **Angular (Standalone Architecture)** that offers a rich, interactive, and responsive user experience. It connects seamlessly with our Spring Boot API to bring music, reviews, and social interactions to life.
 
-> This project serves as the User Interface for the backend API located here: [Echoed Backend Repository](https://github.com/frannquir/utnmusicapp)
+🔗 **Quick Links**
+- **Live Demo**: [https://echoed-front.vercel.app](https://echoed-front.vercel.app)
+- **Backend Repository**: [https://github.com/frannquir/utnmusicapp]
 
 ---
 
+### 📸 Interface Preview
+
+The application features a fully responsive design with **Dark/Light Mode** support.
+
+**Home Discovery (Dark)**
+![Home Dark](src/assets/screenshots/Echoed-home-view.png)
+
+|:---:|
+
+**Discovery (Light Mode)**
+![Home Light](src/assets/screenshots/Echoed-home-view-lightmode.png) |
+
+|:---:|
+
+**Album Details**
+![Album View](src/assets/screenshots/Echoed-album-view.png)
+
+|:---:|
+
+**User Profile**
+![Profile View](src/assets/screenshots/Echoed-profile-view.png)
+
+|:---:|
+
+**Admin Dashboard**
+![Admin Dashboard](src/assets/screenshots/Echoed-admin-dashboard-view.png)
+
+|:---:|
+
+**Secure Login**
+![Login View](src/assets/screenshots/Echoed-login-view.png)
+
+|:---:|
+
 ## ✨ Key Features
 
-### 🎧 Discovery & Music
-* **Content Exploration:** Interactive carousels for Albums, Artists, and Songs.
-* **Advanced Search:** Global search bar to quickly find content.
-* **In-Depth Details:** Detailed views for Artists (`artist-details`), Albums (`album-details`), and Songs (`song-details`).
-* **Rating System:** Star rating system (`star-rating`) for albums and songs.
+### 🎧 Immersive Discovery
+* **Dynamic Carousels:** Interactive sliding components (`GenericCarousel`, `SongCarousel`) for Trending Songs, New Releases, and Top Artists.
+* **Smart Search:** Global search bar (`SearchBarComponent`) integrated with Spotify metadata for instant results.
+* **Rich Details:** Dedicated views for every entity:
+    * `ArtistDetails`: Biography, top tracks, and album discography.
+    * `AlbumDetails`: Tracklist, release date, and community ratings.
 
-### 👤 User Management & Profile
-* **Robust Authentication:** Login, Registration, and Password Recovery (`forgot-password`, `change-password`).
-* **OAuth2:** Integration with external providers (Google) via `oauth2-callback`.
-* **Customizable Profile:** Profile editing and avatar selection with a pre-defined collection (Classic Dog, Techno Dog, Metal Wolf, etc.) using `avatar-picker-modal`.
-* **Security:** Handling of expired sessions and email verification.
+### 👤 Social & Community
+* **Review System:** Users can write reviews (`ReviewModal`), rate content (1-5 Stars), and edit their feedback.
+* **Social Interactions:**
+    * **Comments:** Threaded conversations on reviews (`CommentList`, `CommentCard`).
+    * **Reactions:** Like/Dislike system (`ReactionBar`) powered by optimistic UI updates.
+* **User Identity:** Profile management with custom Bio and a fun **Avatar Picker** (`AvatarPickerModal`) featuring exclusive characters (Classic Dog, Techno Dog, Metal Wolf, etc.).
 
-### 💬 Community & Interaction
-* **Reviews & Comments:** Users can leave reviews (`review-card`, `review-modal`) and comment on them.
-* **Reactions:** "Like" system and other reactions (`reaction-bar`).
-* **Moderation:** Features to report or view content status.
-
-### 🛡️ Administration (Back-office)
-* **Admin Dashboard:** Panel for user management.
-* **Account Moderation:** Tools to ban/unban users (`banned-account-modal`) and view account statuses.
-
-### 🌍 UX/UI & Accessibility
-* **Internationalization (i18n):** Multi-language support (English/Spanish) using `ngx-translate`.
-* **Dark/Light Mode:** Integrated theme system (`theme.service`).
-* **Reusable Components:** Confirmation modals, Loading spinners, Toast notifications, and Dropdowns.
-
+### 🛡️ Security & Administration
+* **Robust Auth:** JWT-based authentication with **Google OAuth2** integration.
+    * Components: `Login`, `Register`, `Oauth2Callback`.
+    * Recovery: `ForgotPasswordModal`, `ChangePasswordModal`.
+* **Guards & Interceptors:**
+    * `AuthGuard`: Protects private routes.
+    * `AdminGuard`: Secures back-office panels.
+    * `AuthInterceptor`: Automatically attaches Tokens to requests and handles 401 errors.
+* **Admin Dashboard:** Exclusive panel to visualize user stats, manage reports, and moderate users.
+    * **Moderation Tools:** `BannedAccountModal`, `DeactivateAccountModal`, `ReactivateAccountModal`.
+  
 ---
 
 ## 🛠️ Tech Stack
 
-* **Framework:** Angular (v16+ Standalone Components)
-* **Language:** TypeScript
-* **Styling:** CSS3 (Custom CSS Variables) & Bootstrap
-* **State Management & API:** RxJS, Signals, HttpClient
-* **Internationalization:** @ngx-translate/core
-* **Icons:** Material Symbols Rounded
-* **Build Tool:** Angular CLI / Vite
+This project leverages the latest **Angular (v17+)** features:
 
----
-
-## 🚀 Installation & Setup
-
-Follow these steps to run the project locally:
-
-### Prerequisites
-* Node.js (v18 or higher recommended)
-* npm or yarn
-
-### Steps
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/your-username/echoed-frontend.git](https://github.com/your-username/echoed-frontend.git)
-    cd echoed-frontend
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Configure Environment:**
-    Ensure you have the Echoed backend running or configure the API URL in `src/app/constants/api-endpoints.ts` or your environment files.
-
-4.  **Run Development Server:**
-    ```bash
-    ng serve
-    ```
-    The application will be available at `http://localhost:4200/`.
+* **Architecture:** **Standalone Components** (No NgModules), lazy loading routes.
+* **State Management:** Angular **Signals** & RxJS for reactive data flow.
+* **Styling:** CSS Variables for theming (Dark/Light) + Bootstrap 5 for layout grid.
+* **Internationalization:** `@ngx-translate` for real-time English/Spanish switching.
+* **Forms:** Reactive Forms for validation (Login/Register/Reviews).
 
 ---
 
 ## 📂 Project Structure
 
-The main structure within `src/app` is as follows:
+Organized by feature and domain logic (Angular Standalone Architecture):
 
-```text
-src/app
-├── components/          # Reusable components (UI, Modals, Cards)
-│   ├── album-carousel/
-│   ├── comment-card/
-│   ├── header/
-│   ├── reaction-bar/
-│   └── ...
-├── pages/               # Main Views (Routes)
-│   ├── home/
-│   ├── login/
-│   ├── admin-dashboard/
-│   ├── song-details/
-│   └── ...
-├── models/              # Interfaces and Types (User, Music, Auth)
-├── services/            # Business logic and API communication
-├── guards/              # Route guards (AuthGuard)
-├── interceptors/        # HTTP Token and Error handling
-└── assets/
-    ├── i18n/            # Translation files (en.json, es.json)
-    └── images/          # Graphic resources and avatars
 ```
+src/app/
+├── components/          # Reusable UI Blocks (Dumb Components)
+│   ├── album-carousel/  # Horizontal scroll for albums
+│   ├── artist-albums-carousel/
+│   ├── avatar-picker-modal/ # Gamified avatar selection
+│   ├── comment-list/    # Threaded comments & recursion
+│   ├── reaction-bar/    # Like/Dislike logic component
+│   ├── review-modal/    # Form for creating/editing reviews
+│   ├── star-rating/     # Interactive rating stars
+│   ├── toast-container/ # Global notification system
+│   └── ... (Modals: banned-account, delete-confirmation, etc.)
+├── pages/               # Full Views (Smart Components)
+│   ├── home/            # Landing page with carousels
+│   ├── song-details/    # /song/:id
+│   ├── admin-dashboard/ # /admin (Protected)
+│   ├── oauth2-callback/ # Google Login handler
+│   └── ...
+├── services/            # API Communication (Singleton)
+│   ├── auth.service.ts  # Login/Register/OAuth
+│   ├── theme.service.ts # Dark/Light toggle logic
+│   ├── admin.service.ts # Back-office operations
+│   └── ...
+├── models/              # TypeScript Interfaces (DTOs)
+├── guards/              # Route protection logic
+├── interceptors/        # HttpInterceptorFn (Token injection)
+└── assets/
+    ├── i18n/            # en.json, es.json
+    └── screenshots/     # Images for README
+```
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+* Node.js v18+
+* NPM or Yarn
+* Angular CLI (npm install -g @angular/cli)
+
+### Steps
+
+1.  **Clone & Install:**
+    ```
+    git clone [https://github.com/Salompablo/echoed-prog4-final.git](https://github.com/Salompablo/echoed-prog4-final.git)
+    cd echoed-frontend
+    npm install
+    ```
+
+2.  **Environment Configuration:**
+    Create `src/environments/environment.ts` connecting to your local or deployed backend:
+  ```
+  export const environment = {
+    production: false,
+    apiUrl: 'http://localhost:8080/api/v1' // Or your Render URL
+  };
+  ```
+    
+3.  **Run Development Server:**
+    ```
+    ng serve
+    ```
+    Navigate to `http://localhost:4200/`.
+
 ---
 
 ## 🤝 Contribution
