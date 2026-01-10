@@ -19,34 +19,35 @@
 The application features a fully responsive design with **Dark/Light Mode** support.
 
 **Home Discovery (Dark)**
+
 ![Home Dark](src/assets/screenshots/Echoed-home-view.png)
 
-|:---:|
 
 **Discovery (Light Mode)**
+
 ![Home Light](src/assets/screenshots/Echoed-home-view-lightmode.png) |
 
-|:---:|
 
 **Album Details**
+
 ![Album View](src/assets/screenshots/Echoed-album-view.png)
 
-|:---:|
 
 **User Profile**
+
 ![Profile View](src/assets/screenshots/Echoed-profile-view.png)
 
-|:---:|
 
 **Admin Dashboard**
+
 ![Admin Dashboard](src/assets/screenshots/Echoed-admin-dashboard-view.png)
 
-|:---:|
 
 **Secure Login**
+
 ![Login View](src/assets/screenshots/Echoed-login-view.png)
 
-|:---:|
+---
 
 ## ✨ Key Features
 
