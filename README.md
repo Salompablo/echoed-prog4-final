@@ -25,7 +25,7 @@ The application features a fully responsive design with **Dark/Light Mode** supp
 
 **Discovery (Light Mode)**
 
-![Home Light](src/assets/screenshots/Echoed-home-view-lightmode.png) |
+![Home Light](src/assets/screenshots/Echoed-home-view-lightmode.png) 
 
 
 **Album Details**
