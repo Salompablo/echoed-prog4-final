@@ -23,7 +23,7 @@ import { ForgotPasswordModal } from '../../components/forgot-password-modal/forg
     BannedAccountModal,
     TranslateModule,
     EmailVerificationModal,
-    ForgotPasswordModal
+    ForgotPasswordModal,
   ],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -78,6 +78,12 @@ export class Login implements OnInit {
         });
       }
 
+      const emailFromUrl = params['email'];
+      if (emailFromUrl) {
+        this.loginForm.patchValue({ emailOrUsername: emailFromUrl });
+      }
+
+      /*
       if (params['verify'] === 'true') {
         const emailFromUrl = params['email'];
         if (emailFromUrl) {
@@ -85,8 +91,10 @@ export class Login implements OnInit {
         }
         this.isVerificationModalVisible.set(true);
       }
+      */
     });
   }
+
   public togglePasswordsVisibility(): void {
     this.passwordsHidden = !this.passwordsHidden;
   }
@@ -121,13 +129,14 @@ export class Login implements OnInit {
             } else {
               this.isBannedModalVisible.set(true);
             }
-          } else if (err.status === 428) {
-            this.errorMessage.set(
-              'Account not verified. Please check your email.'
-            );
-            this.emailForVerification.set(emailOrUsername);
-            this.isVerificationModalVisible.set(true);
-          } else {
+          } // else if (err.status === 428) {
+          //   this.errorMessage.set(
+          //     'Account not verified. Please check your email.'
+          //   );
+          //   this.emailForVerification.set(emailOrUsername);
+          //   this.isVerificationModalVisible.set(true);
+          //}
+          else {
             this.errorMessage.set(this.errorService.getErrorMessage(err));
           }
         } else {
@@ -155,10 +164,10 @@ export class Login implements OnInit {
   onReactivationCodeSent(): void {
     this.isReactivateModalVisible.set(false);
     const email = this.loginForm.get('emailOrUsername')?.value;
-    
+
     if (email) {
-        this.emailForVerification.set(email);
-        this.isVerificationModalVisible.set(true);
+      this.emailForVerification.set(email);
+      this.isVerificationModalVisible.set(true);
     }
   }
 
