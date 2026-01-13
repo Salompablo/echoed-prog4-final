@@ -76,12 +76,21 @@ export class SearchBar {
    * Clears the search input, results, and resets state.
    * Called when the clear ('X') button is clicked.
    */
-  clearSearch(): void {
+  clearSearch(event?: Event): void {
+    if (event) {
+      event.preventDefault(); 
+      event.stopPropagation(); 
+    }
     this.searchTerm.set('');
     this.searchResults.set(null);
     this.error.set(null);
     this.isLoading.set(false);
     this.searchSubject.next('');
+    const inputEl = document.getElementById('searchInput');
+    if (inputEl) {
+      (inputEl as HTMLInputElement).value = ''; 
+      inputEl.focus();
+    }
   }
 
   /**
