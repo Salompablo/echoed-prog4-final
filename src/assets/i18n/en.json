@@ -398,5 +398,21 @@
     "analytics":"Analytics",
     "back-to-home":"Back to Home",
     "management":"Management"
+  },
+  "errors": {
+    "network": "Unable to connect to the server. Please check your connection and try again.",
+    "unexpected": "An unexpected error occurred. Please try again.",
+    "unknown": "An unknown error occurred. Please try again.",
+    "session-expired": "Your session has expired. Please log in again.",
+    "permission-denied": "You do not have permission to perform this action.",
+    "not-found": "The requested resource was not found.",
+    "conflict": "A conflict occurred. The resource may already exist.",
+    "validation-failed": "Validation failed. Please check your input.",
+    "server-error": "An unexpected error occurred. Please try again later.",
+    "service-unavailable": "The service is temporarily unavailable. Please try again in a few moments.",
+    "invalid-request": "Invalid request. Please check your input and try again.",
+    "oauth-error": "An error occurred during Google authentication. Please try again.",
+    "invalid-credentials": "Invalid credentials. Please check your username and password.",
+    "username-taken": "Username is already taken. Please choose another one."
   }
 }

@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ReactivateAccountModal } from '../../components/reactivate-account-modal/reactivate-account-modal';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BannedAccountModal } from '../../components/banned-account-modal/banned-account-modal';
 import { EmailVerificationModal } from '../../components/email-verification-modal/email-verification-modal';
 import { ForgotPasswordModal } from '../../components/forgot-password-modal/forgot-password-modal';
@@ -35,6 +35,7 @@ export class Login implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
   private errorService = inject(ErrorService);
+  private translate = inject(TranslateService);
 
   isReactivateModalVisible = signal(false);
   userIdToReactivate = signal<number | string | null>(null);
@@ -68,7 +69,7 @@ export class Login implements OnInit {
           }
         } else {
           this.errorMessage.set(
-            'An error occurred during Google authentication. Please try again.'
+            this.translate.instant('errors.oauth-error')
           );
         }
         this.router.navigate([], {
@@ -140,7 +141,7 @@ export class Login implements OnInit {
             this.errorMessage.set(this.errorService.getErrorMessage(err));
           }
         } else {
-          this.errorMessage.set('An unexpected error has occurred.');
+          this.errorMessage.set(this.translate.instant('errors.unexpected'));
         }
       },
     });
