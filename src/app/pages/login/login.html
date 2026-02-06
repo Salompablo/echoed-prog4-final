@@ -11,7 +11,7 @@
       @if (emailOrUsername?.invalid && (emailOrUsername?.dirty || emailOrUsername?.touched)) {
       <div class="error-validation">
         @if (emailOrUsername?.errors?.['required']) {
-        <small>This field is required.</small>
+        <small>{{ 'login.required' | translate }}</small>
         }
       </div>
       }

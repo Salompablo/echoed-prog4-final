@@ -275,7 +275,7 @@
     "echo": "Tu Eco",
     "description-placeholder": "Comparte tus pensamientos...",
     "description-required": "La descripción es obligatoria",
-    "minlength-error": "Debe tener al menos {{ MIN_CHARS }} caracteres",
+    "minlength": "Debe tener al menos {{ MIN_CHARS }} caracteres",
     "min-hint": "(mín {{ MIN_CHARS }})",
     "cancel": "Cancelar",
     "submitting": "Enviando...",

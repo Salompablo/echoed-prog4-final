@@ -275,7 +275,7 @@
     "echo": "Your Echo",
     "description-placeholder": "'Share your thoughts...'",
     "description-required": "Description is required",
-    "description-minlength": "Must be at least {{ MIN_CHARS }} characters",
+    "minlength": "Must be at least {{ MIN_CHARS }} characters",
     "min-hint": "(min {{ MIN_CHARS }})",
     "cancel": "Cancel",
     "submitting": "Submitting...",
