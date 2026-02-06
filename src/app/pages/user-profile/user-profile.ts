@@ -354,15 +354,7 @@ export class UserProfile implements OnInit, OnDestroy {
       });
     } catch (error) {
       this.errorService.logError(error, 'UserProfile.saveProfile');
-      if (
-        error instanceof HttpErrorResponse &&
-        error.status === 400 &&
-        error.error?.message?.includes('Username already taken')
-      ) {
-        this.toastService.error('Username is already taken. Please choose another one.');
-      } else {
-        this.toastService.error(this.errorService.getErrorMessage(error));
-      }
+      this.toastService.error(this.errorService.getErrorMessage(error));
     } finally {
       this.saving.set(false);
     }

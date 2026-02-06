@@ -255,7 +255,7 @@
   },
   "loading-spinner": {
     "loading-default": "Cargando...",
-    "loading-content-sr": "Cargando contenido"
+    "loading-content": "Cargando contenido"
   },
   "profile-dropdown": {
     "my-profile": "Mi Perfil",
@@ -271,7 +271,7 @@
     "yes": "Sí"
   },
   "review-modal": {
-    "rating-error": "Por favor, selecciona una calificación",
+    "rating": "Por favor, selecciona una calificación",
     "echo": "Tu Eco",
     "description-placeholder": "Comparte tus pensamientos...",
     "description-required": "La descripción es obligatoria",
@@ -398,6 +398,22 @@
     "analytics":"Analíticas",
     "back-to-home":"Volver al inicio",
     "management":"Gestión"
+  },
+  "errors": {
+    "network": "No se puede conectar al servidor. Por favor verifica tu conexión e intenta nuevamente.",
+    "unexpected": "Ocurrió un error inesperado. Por favor intenta nuevamente.",
+    "unknown": "Ocurrió un error desconocido. Por favor intenta nuevamente.",
+    "session-expired": "Tu sesión ha expirado. Por favor inicia sesión nuevamente.",
+    "permission-denied": "No tienes permiso para realizar esta acción.",
+    "not-found": "El recurso solicitado no fue encontrado.",
+    "conflict": "Ocurrió un conflicto. El recurso puede ya existir.",
+    "validation-failed": "La validación falló. Por favor verifica tu información.",
+    "server-error": "Ocurrió un error inesperado. Por favor intenta más tarde.",
+    "service-unavailable": "El servicio está temporalmente no disponible. Por favor intenta en unos momentos.",
+    "invalid-request": "Solicitud inválida. Por favor verifica tu información e intenta nuevamente.",
+    "oauth-error": "Ocurrió un error durante la autenticación con Google. Por favor intenta nuevamente.",
+    "invalid-credentials": "Credenciales inválidas. Por favor verifica tu usuario y contraseña.",
+    "username-taken": "El nombre de usuario ya está en uso. Por favor elige otro."
   }
   }
 
