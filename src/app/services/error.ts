@@ -1,47 +1,16 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * @class ErrorService
  * @description Centralized service for processing HTTP errors from the backend API.
- * Converts backend error responses into user-friendly, internationalized messages.
+ * Converts backend error responses into user-friendly messages.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorService {
-  private translate = inject(TranslateService);
 
-  /**
-   * Maps known backend error messages to translation keys.
-   * This allows us to translate backend messages that are hardcoded in English.
-   */
-  private readonly backendMessageMap: Record<string, string> = {
-    // Authentication errors
-    'Invalid credentials.': 'errors.invalid-credentials',
-    'Bad credentials': 'errors.invalid-credentials',
-    
-    // Validation errors
-    'Validation failed': 'errors.validation-failed',
-    'Username already taken': 'errors.username-taken',
-    
-    // Spotify-related errors
-    'Spotify resource not found': 'errors.not-found',
-    'Could not connect to Spotify service': 'errors.service-unavailable',
-    
-    // Account status errors
-    'Account is deactivated': 'errors.session-expired',
-    'Account is banned': 'errors.permission-denied',
-    'Account not verified': 'errors.validation-failed',
-    
-    // Duplicate/conflict errors
-    'You have already reviewed this': 'errors.conflict',
-    'Review already exists': 'errors.conflict',
-    
-    // Server errors
-    'Internal server error': 'errors.server-error',
-  };
 
   /**
    * Processes an HTTP error and returns a user-friendly message.
@@ -54,32 +23,13 @@ export class ErrorService {
     }
 
     if (error instanceof Error) {
-      return this.translate.instant('errors.unexpected');
+      return 'An unexpected error occurred. Please try again.';
     }
 
-    return this.translate.instant('errors.unknown');
+     return 'An unknown error occurred. Please try again.';
   }
 
-  /**
-   * Maps a backend error message to a translation key if known.
-   * @param {string} backendMessage The error message from the backend.
-   * @returns {string | null} The translated message or null if not found.
-   */
-  private mapBackendMessage(backendMessage: string): string | null {
-    // Try exact match first
-    if (this.backendMessageMap[backendMessage]) {
-      return this.translate.instant(this.backendMessageMap[backendMessage]);
-    }
 
-    // Try partial match for messages that contain known patterns
-    for (const [pattern, translationKey] of Object.entries(this.backendMessageMap)) {
-      if (backendMessage.includes(pattern)) {
-        return this.translate.instant(translationKey);
-      }
-    }
-
-    return null;
-  }
 
   /**
    * Handles HTTP errors based on status codes.
@@ -89,45 +39,45 @@ export class ErrorService {
   private handleHttpError(error: HttpErrorResponse): string {
     // Client-side or network error (status 0 means network is down or CORS issue)
     if (error.status === 0 || error.error instanceof ErrorEvent) {
-      return this.translate.instant('errors.network');
+      return 'Unable to connect to the server. Please check your connection and try again.';
     }
 
     // Backend error - try to extract and map message from backend response
     const backendMessage = error.error?.message;
-    const mappedMessage = backendMessage ? this.mapBackendMessage(backendMessage) : null;
 
     // Map common HTTP status codes to user-friendly messages
     switch (error.status) {
       case 400:
-        return mappedMessage || this.translate.instant('errors.invalid-request');
+        return backendMessage || 'Invalid request. Please check your input and try again.';
 
       case 401:
-        return mappedMessage || this.translate.instant('errors.session-expired');
+        return backendMessage || 'Your session has expired. Please log in again.';
 
       case 403:
-        return mappedMessage || this.translate.instant('errors.permission-denied');
+        return 'You do not have permission to perform this action.';
 
       case 404:
-        return mappedMessage || this.translate.instant('errors.not-found');
+        return 'The requested resource was not found.';
 
       case 409:
-        return mappedMessage || this.translate.instant('errors.conflict');
+        return backendMessage || 'A conflict occurred. The resource may already exist.';
 
       case 422:
+        return backendMessage || 'Validation failed. Please check your input.';
       case 428: // Account not verified
-        return mappedMessage || this.translate.instant('errors.validation-failed');
+        return backendMessage || 'Your account is not verified. Please verify your account and try again.';
 
       case 423: // Account locked/deactivated/banned
-        return mappedMessage || this.translate.instant('errors.permission-denied');
+        return backendMessage || 'Your account is deactivated or banned. Please contact support.';
 
       case 500:
-        return mappedMessage || this.translate.instant('errors.server-error');
+        return 'An unexpected error occurred. Please try again later.';
 
       case 503:
-        return mappedMessage || this.translate.instant('errors.service-unavailable');
+        return 'The service is temporarily unavailable. Please try again in a few moments.';
 
       default:
-        return mappedMessage || this.translate.instant('errors.unexpected');
+         return backendMessage || 'An unexpected error occurred. Please try again.';
     }
   }
 

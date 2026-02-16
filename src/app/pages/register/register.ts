@@ -59,16 +59,15 @@ export class Register {
     const { username, email, password } = this.registerForm.value;
     const signupRequest: SignupRequest = { username, email, password };
 
-    this.registerForm.disable();
-
     this.authService.register(signupRequest, false).subscribe({
       next: () => {
-        this.toastService.success('Registration successful! Please login.');
-        this.router.navigate(['/login'], { queryParams: { email: email } });
+        this.toastService.success(
+          'Registration successful! Please check you email for the verification code.'
+        );
+        this.router.navigate(['/login'], { queryParams: { verify: 'true' , email: email} });
       },
       error: (err) => {
-        this.registerForm.enable();
-        this.isLoading.set(false);
+        this.isLoading.set(false)
         this.errorMessage = this.errorService.getErrorMessage(err);
         this.errorService.logError(err, 'Register');
       },

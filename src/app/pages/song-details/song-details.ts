@@ -10,13 +10,12 @@ import { ReviewService } from '../../services/review';
 import { ErrorService } from '../../services/error';
 import { ToastService } from '../../services/toast';
 import { ReviewList } from '../../components/review-list/review-list';
-import { DatePipe } from '@angular/common';
 import { LoadingSpinner } from '../../components/loading-spinner/loading-spinner';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-song-details',
-  imports: [RouterLink, ReviewModal, ReviewList, DatePipe,LoadingSpinner, TranslateModule],
+  imports: [RouterLink, ReviewModal, ReviewList,LoadingSpinner, TranslateModule],
   templateUrl: './song-details.html',
   styleUrl: './song-details.css',
 })

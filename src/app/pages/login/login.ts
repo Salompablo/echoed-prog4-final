@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ReactivateAccountModal } from '../../components/reactivate-account-modal/reactivate-account-modal';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserService } from '../../services/user';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { BannedAccountModal } from '../../components/banned-account-modal/banned-account-modal';
 import { EmailVerificationModal } from '../../components/email-verification-modal/email-verification-modal';
 import { ForgotPasswordModal } from '../../components/forgot-password-modal/forgot-password-modal';
@@ -35,7 +35,7 @@ export class Login implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
   private errorService = inject(ErrorService);
-  private translate = inject(TranslateService);
+
 
   isReactivateModalVisible = signal(false);
   userIdToReactivate = signal<number | string | null>(null);
@@ -69,7 +69,7 @@ export class Login implements OnInit {
           }
         } else {
           this.errorMessage.set(
-            this.translate.instant('errors.oauth-error')
+            'An error occurred during Google authentication. Please try again.'
           );
         }
         this.router.navigate([], {
@@ -79,12 +79,8 @@ export class Login implements OnInit {
         });
       }
 
-      const emailFromUrl = params['email'];
-      if (emailFromUrl) {
-        this.loginForm.patchValue({ emailOrUsername: emailFromUrl });
-      }
 
-      /*
+  
       if (params['verify'] === 'true') {
         const emailFromUrl = params['email'];
         if (emailFromUrl) {
@@ -92,7 +88,7 @@ export class Login implements OnInit {
         }
         this.isVerificationModalVisible.set(true);
       }
-      */
+
     });
   }
 
@@ -130,18 +126,18 @@ export class Login implements OnInit {
             } else {
               this.isBannedModalVisible.set(true);
             }
-          } // else if (err.status === 428) {
-          //   this.errorMessage.set(
-          //     'Account not verified. Please check your email.'
-          //   );
-          //   this.emailForVerification.set(emailOrUsername);
-          //   this.isVerificationModalVisible.set(true);
-          //}
+          } else if (err.status === 428) {
+            this.errorMessage.set(
+               'Account not verified. Please check your email.'
+            );
+            this.emailForVerification.set(emailOrUsername);
+             this.isVerificationModalVisible.set(true);
+          }
           else {
             this.errorMessage.set(this.errorService.getErrorMessage(err));
           }
         } else {
-          this.errorMessage.set(this.translate.instant('errors.unexpected'));
+          this.errorMessage.set('An unexpected error has occurred.');
         }
       },
     });

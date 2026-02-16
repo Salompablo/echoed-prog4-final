@@ -6,13 +6,12 @@ import { Router, RouterLink } from '@angular/router';
 import { Logo } from '../logo/logo';
 import { TranslateModule } from '@ngx-translate/core';
 import { I18nService } from '../../services/i18n';
-import { LanguageDropdown } from '../language-dropdown/language-dropdown';
 import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [SearchBar, ProfileDropdown, Logo, TranslateModule, LanguageDropdown, RouterLink],
+  imports: [SearchBar, ProfileDropdown, Logo, TranslateModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
