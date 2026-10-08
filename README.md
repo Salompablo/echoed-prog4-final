@@ -11,7 +11,7 @@
 🔗 **Quick Links**
 - **Live Demo**: [https://echoed-front.vercel.app](https://echoed-front.vercel.app)
 - **Backend Repository**: [frannquir/utnmusicapp](https://github.com/frannquir/utnmusicapp) (team repo, Spring Boot + PostgreSQL)
-- **My role**: team lead of a 4-person team (Jira, agile sprints) and top contributor to the backend repository (94 commits).
+- **My role**: full-stack developer in a 4-person team (Jira, agile sprints) and top contributor to the backend repository (94 commits).
 
 ---
 
