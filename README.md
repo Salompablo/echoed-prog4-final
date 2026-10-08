@@ -1,6 +1,6 @@
-# 🎵 Echoed - Music Streaming Client
+# 🎵 Echoed - Music Review Social Platform (Frontend)
 
-![Angular](https://img.shields.io/badge/Angular-17%2B-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-20-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.2-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?style=for-the-badge&logo=vercel&logoColor=white)
@@ -10,7 +10,8 @@
 
 🔗 **Quick Links**
 - **Live Demo**: [https://echoed-front.vercel.app](https://echoed-front.vercel.app)
-- **Backend Repository**: [https://github.com/frannquir/utnmusicapp]
+- **Backend Repository**: [frannquir/utnmusicapp](https://github.com/frannquir/utnmusicapp) (team repo, Spring Boot + PostgreSQL)
+- **My role**: team lead of a 4-person team (Jira, agile sprints) and top contributor to the backend repository (94 commits).
 
 ---
 
@@ -80,7 +81,7 @@ The application features a fully responsive design with **Dark/Light Mode** supp
 
 ## 🛠️ Tech Stack
 
-This project leverages the latest **Angular (v17+)** features:
+This project leverages the latest **Angular 20** features:
 
 * **Architecture:** **Standalone Components** (No NgModules), lazy loading routes.
 * **State Management:** Angular **Signals** & RxJS for reactive data flow.
@@ -138,8 +139,8 @@ src/app/
 
 1.  **Clone & Install:**
     ```
-    git clone [https://github.com/Salompablo/echoed-prog4-final.git](https://github.com/Salompablo/echoed-prog4-final.git)
-    cd echoed-frontend
+    git clone https://github.com/Salompablo/echoed-prog4-final.git
+    cd echoed-prog4-final
     npm install
     ```
 
