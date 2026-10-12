@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SongCarousel } from './song-carousel';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('SongCarousel', () => {
   let component: SongCarousel;
@@ -8,7 +9,8 @@ describe('SongCarousel', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SongCarousel]
+      imports: [SongCarousel],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

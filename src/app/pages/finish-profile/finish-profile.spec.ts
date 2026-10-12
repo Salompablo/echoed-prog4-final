@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FinishProfile } from './finish-profile';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('FinishProfile', () => {
   let component: FinishProfile;
@@ -8,7 +9,8 @@ describe('FinishProfile', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FinishProfile]
+      imports: [FinishProfile],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

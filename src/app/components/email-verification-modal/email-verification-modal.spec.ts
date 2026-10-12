@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmailVerificationModal } from './email-verification-modal';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('EmailVerificationModal', () => {
   let component: EmailVerificationModal;
@@ -8,7 +9,8 @@ describe('EmailVerificationModal', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmailVerificationModal]
+      imports: [EmailVerificationModal],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

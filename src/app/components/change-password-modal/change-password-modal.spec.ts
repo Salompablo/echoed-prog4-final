@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangePasswordModal } from './change-password-modal';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('ChangePasswordModal', () => {
   let component: ChangePasswordModal;
@@ -8,7 +9,8 @@ describe('ChangePasswordModal', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChangePasswordModal]
+      imports: [ChangePasswordModal],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

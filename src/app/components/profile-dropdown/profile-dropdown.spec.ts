@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileDropdown } from './profile-dropdown';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('ProfileDropdown', () => {
   let component: ProfileDropdown;
@@ -8,7 +9,8 @@ describe('ProfileDropdown', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProfileDropdown]
+      imports: [ProfileDropdown],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

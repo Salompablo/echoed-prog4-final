@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoadingSpinner } from './loading-spinner';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('LoadingSpinner', () => {
   let component: LoadingSpinner;
@@ -8,7 +9,8 @@ describe('LoadingSpinner', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoadingSpinner]
+      imports: [LoadingSpinner],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

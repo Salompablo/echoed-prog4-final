@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommentList } from './comment-list';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('CommentList', () => {
   let component: CommentList;
@@ -8,7 +9,8 @@ describe('CommentList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommentList]
+      imports: [CommentList],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

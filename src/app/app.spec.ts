@@ -1,10 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
+import { provideComponentTestDeps } from '../testing/component-test-providers';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [...provideComponentTestDeps()],
     }).compileComponents();
   });
 

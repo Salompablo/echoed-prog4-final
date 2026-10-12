@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AlbumCarousel } from './album-carousel';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('AlbumCarousel', () => {
   let component: AlbumCarousel;
@@ -8,7 +9,8 @@ describe('AlbumCarousel', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AlbumCarousel]
+      imports: [AlbumCarousel],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 
