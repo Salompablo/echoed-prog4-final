@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToastContainer } from './toast-container';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('ToastContainer', () => {
   let component: ToastContainer;
@@ -8,7 +9,8 @@ describe('ToastContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ToastContainer]
+      imports: [ToastContainer],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

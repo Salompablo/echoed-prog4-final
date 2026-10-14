@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BannedAccountModal } from './banned-account-modal';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('BannedAccountModal', () => {
   let component: BannedAccountModal;
@@ -8,7 +9,8 @@ describe('BannedAccountModal', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BannedAccountModal]
+      imports: [BannedAccountModal],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

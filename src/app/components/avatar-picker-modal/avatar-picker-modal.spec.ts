@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AvatarPickerModal } from './avatar-picker-modal';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('AvatarPickerModal', () => {
   let component: AvatarPickerModal;
@@ -8,7 +9,8 @@ describe('AvatarPickerModal', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AvatarPickerModal]
+      imports: [AvatarPickerModal],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

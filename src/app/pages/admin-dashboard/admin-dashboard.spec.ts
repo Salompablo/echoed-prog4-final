@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminDashboard } from './admin-dashboard';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('AdminDashboard', () => {
   let component: AdminDashboard;
@@ -8,7 +9,8 @@ describe('AdminDashboard', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdminDashboard]
+      imports: [AdminDashboard],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 

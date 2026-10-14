@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReviewCarousel } from './review-carousel';
+import { provideComponentTestDeps } from '../../../testing/component-test-providers';
 
 describe('ReviewCarousel', () => {
   let component: ReviewCarousel;
@@ -8,7 +9,8 @@ describe('ReviewCarousel', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReviewCarousel]
+      imports: [ReviewCarousel],
+      providers: [...provideComponentTestDeps()],
     })
     .compileComponents();
 
